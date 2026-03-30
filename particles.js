@@ -37,8 +37,8 @@ const Particles = (() => {
 
   /* ── Quantas estrelas ── */
   function targetCount() {
-    if (reduced) return 40;
-    return mobile() ? 100 : 220;
+    if (reduced) return 60;
+    return mobile() ? 180 : 420;
   }
 
   /* ── Criar uma estrela ──
