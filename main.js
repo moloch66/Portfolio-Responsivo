@@ -330,9 +330,10 @@ function initIntro() {
     overlay.classList.add('is-hidden');
     document.body.style.overflow = '';
     // Remove from DOM after transition completes
-    overlay.addEventListener('transitionend', () => {
-      overlay.style.display = 'none';
-    }, { once: true });
+    const hideOverlay = () => { overlay.style.display = 'none'; };
+    overlay.addEventListener('transitionend', hideOverlay, { once: true });
+    // Fallback: force hide after transition duration + buffer
+    setTimeout(hideOverlay, 1100);
   }, delay);
 }
 
