@@ -24,13 +24,13 @@
   // Trail particles: [{ x, y, life, vx, vy }]
   const particles = [];
 
-  // Palette (purple → indigo → violet → cyan)
+  // Palette (white ice)
   const PALETTE = [
-    [168, 85,  247],   // a855f7
-    [124, 58,  237],   // 7c3aed
-    [79,  70,  229],   // 4f46e5
-    [0,   200, 255],   // 00c8ff
-    [168, 85,  247],
+    [240, 248, 255],   // alice blue
+    [220, 235, 245],   // ice white
+    [200, 220, 240],   // light ice
+    [225, 240, 255],   // white ice
+    [240, 248, 255],   // alice blue
   ];
 
   function pickColor(t) {

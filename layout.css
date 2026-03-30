@@ -39,13 +39,7 @@ body::before {
 
 /* ---- Isometric background canvas ---- */
 #iso-canvas {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1; /* acima dos glows atmosféricos (-2), abaixo do conteúdo */
-  pointer-events: none;
-  display: block;
+  display: none;
 }
 
 /* ---- Falling particles canvas ---- */
