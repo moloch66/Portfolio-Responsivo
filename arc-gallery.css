@@ -1,0 +1,84 @@
+/* =========================================
+   Arc Gallery — Carrossel Infinito
+   ========================================= */
+
+.arc-gallery {
+  position: relative;
+  width: 100%;
+  padding-block: var(--space-20);
+  overflow: hidden;
+}
+
+/* Fade nas bordas */
+.arc-gallery::before,
+.arc-gallery::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 180px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.arc-gallery::before {
+  left: 0;
+  background: linear-gradient(to right, #050a0a 0%, transparent 100%);
+}
+
+.arc-gallery::after {
+  right: 0;
+  background: linear-gradient(to left, #050a0a 0%, transparent 100%);
+}
+
+.arc-gallery__track {
+  display: flex;
+  gap: 16px;
+  width: max-content;
+  will-change: transform;
+}
+
+.arc-gallery__item {
+  flex-shrink: 0;
+  width: 220px;
+  height: 280px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: rgba(220, 220, 220, 0.05);
+  border: 1px solid rgba(220, 220, 220, 0.1);
+  transition: border-color 0.35s ease,
+              box-shadow 0.35s ease,
+              transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.arc-gallery__item:hover {
+  border-color: rgba(0, 245, 255, 0.35);
+  box-shadow: 0 8px 40px rgba(0, 245, 255, 0.08);
+  transform: translateY(-6px) scale(1.02);
+}
+
+.arc-gallery__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+
+@media (max-width: 767px) {
+  .arc-gallery {
+    padding-block: var(--space-12);
+  }
+
+  .arc-gallery::before,
+  .arc-gallery::after {
+    width: 80px;
+  }
+
+  .arc-gallery__item {
+    width: 160px;
+    height: 200px;
+  }
+}

@@ -1,0 +1,144 @@
+/* =========================================
+   Services Section — Fabrica dark list style
+   ========================================= */
+
+.services {
+  background: transparent;
+  position: relative;
+}
+
+/* ---- Head ---- */
+.services__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-10);
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+/* ---- Service list ---- */
+.services-list {
+  border-top: 1px solid rgba(220,220,220,0.1);
+}
+
+/* ---- Each service row ---- */
+.service-row {
+  display: grid;
+  grid-template-columns: 3rem 1fr auto;
+  align-items: center;
+  gap: var(--space-6);
+  padding: var(--space-8) var(--space-2);
+  border-bottom: 1px solid rgba(220,220,220,0.08);
+  cursor: default;
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast);
+  border-radius: var(--radius-sm);
+}
+
+.service-row:hover {
+  background: rgba(220,220,220,0.03);
+  border-bottom-color: rgba(220,220,220,0.18);
+}
+
+/* Number */
+.service-row__num {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  color: rgba(220,220,220,0.25);
+  align-self: flex-start;
+  padding-top: 4px;
+}
+
+/* Content block */
+.service-row__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.service-row__title {
+  font-family: var(--font-headline);
+  font-size: clamp(1.2rem, 2.5vw, 1.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+  line-height: var(--leading-snug);
+  transition: color var(--transition-fast);
+}
+
+.service-row:hover .service-row__title {
+  color: rgba(220,220,220,0.95);
+}
+
+.service-row__desc {
+  font-size: var(--text-sm);
+  color: rgba(220,220,220,0.4);
+  line-height: var(--leading-normal);
+  max-width: 480px;
+}
+
+/* Arrow */
+.service-row__arrow {
+  font-size: 1.2rem;
+  color: rgba(220,220,220,0.2);
+  transition: color var(--transition-fast), transform var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.service-row:hover .service-row__arrow {
+  color: rgba(220,220,220,0.7);
+  transform: translateX(4px);
+}
+
+/* ---- Pill CTA ---- */
+.services__cta-wrap {
+  margin-top: var(--space-12);
+  display: flex;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.btn-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4) var(--space-12);
+  background: rgba(220,220,220,0.06);
+  color: var(--color-text);
+  border: 1.5px solid rgba(220,220,220,0.2);
+  border-radius: var(--radius-full);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast),
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.btn-pill:hover {
+  background: rgba(220,220,220,0.1);
+  border-color: rgba(220,220,220,0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(220,220,220,0.08);
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .service-row {
+    grid-template-columns: 2rem 1fr auto;
+    gap: var(--space-3);
+    padding: var(--space-6) var(--space-1);
+  }
+  .service-row__arrow { display: none; }
+}

@@ -1,0 +1,17 @@
+# Local dev server — not needed for hosting
+server.cjs
+node_modules/
+
+# Unused assets
+assets/man-hero.png
+assets/foto-cv.png
+assets/models/
+
+# Unused JS files (replaced by current implementation)
+js/three-scene.js
+js/glb-scene.js
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.log

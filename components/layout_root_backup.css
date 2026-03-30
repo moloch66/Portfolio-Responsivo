@@ -1,0 +1,162 @@
+/* =========================================
+   Global Layout
+   ========================================= */
+
+html {
+  scroll-behavior: smooth;
+  /* overflow-x no html é seguro — não quebra position:fixed do cursor */
+  overflow-x: clip;
+}
+
+body {
+  /* Pure black base — colour accents scattered via ::before */
+  background: #000000;
+  background-attachment: fixed;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  /* NÃO usar overflow-x: hidden no body — quebra position:fixed no Safari/Chrome */
+  overflow-x: clip;
+  min-height: 100vh;
+}
+
+/* Micro accent glows — muito sutis, fundo permanece preto */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 30% 25% at  8% 12%,
+      rgba(124, 58, 237, 0.09) 0%, transparent 70%),
+    radial-gradient(ellipse 25% 20% at 88% 88%,
+      rgba(79,  70, 229, 0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 20% 18% at 52% 52%,
+      rgba(0,  200, 255, 0.04) 0%, transparent 65%);
+}
+
+/* ---- Isometric background canvas ---- */
+#iso-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* acima dos glows atmosféricos (-2), abaixo do conteúdo */
+  pointer-events: none;
+  display: block;
+}
+
+/* ---- Falling particles canvas ---- */
+#particles-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  display: block;
+}
+
+/* Mobile: hide iso canvas, keep body::before gradients */
+@media (max-width: 767px) {
+  #iso-canvas { display: none; }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(79, 70, 229, 0.4);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent-violet);
+}
+
+/* Container */
+.container {
+  width: 100%;
+  max-width: var(--container-xl);
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
+}
+
+/* Section base */
+.section {
+  padding-block: var(--space-20);
+  position: relative;
+}
+
+@media (min-width: 1024px) {
+  .section { padding-block: var(--space-24); }
+}
+
+/* Section label */
+.section__label {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-accent-primary);
+  opacity: 0.7;
+  margin-bottom: var(--space-4);
+}
+
+/* Section heading — typography-heavy */
+.section__heading {
+  font-family: var(--font-headline);
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  color: var(--color-text);
+  margin-bottom: var(--space-12);
+}
+
+/* Focus visible */
+:focus-visible {
+  outline: 2px solid var(--color-accent-primary);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* No-js fallback */
+.no-js .js-only { display: none; }
+
+/* Utility: visually hidden (accessible) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Utility: body scroll lock */
+body.modal-open {
+  overflow: hidden;
+}
+
+/* Scroll progress indicator */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--color-accent-primary), var(--color-accent-secondary));
+  z-index: var(--z-toast);
+  transition: width 50ms linear;
+  pointer-events: none;
+}

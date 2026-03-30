@@ -1,0 +1,134 @@
+{
+  "nav": {
+    "about": "Sobre",
+    "portfolio": "Portfólio",
+    "services": "Serviços",
+    "contact": "Contato"
+  },
+  "langToggle": {
+    "label": "Mudar idioma para Inglês",
+    "current": "PT"
+  },
+  "hero": {
+    "greeting": "Olá, eu sou",
+    "name": "Janderson Vinicius",
+    "subtitle": "jandervs",
+    "title": "Visual Studio",
+    "tagline": "Transformo problemas complexos em experiências digitais intuitivas e memoráveis.",
+    "cta_projects": "Ver Projetos",
+    "cta_contact": "Entrar em Contato"
+  },
+  "about": {
+    "section_label": "Sobre mim",
+    "heading": "Criando experiências que importam",
+    "bio_1": "Sou um(a) designer UX/UI com mais de 5 anos de experiência criando produtos digitais que equilibram beleza estética e funcionalidade. Acredito que bom design é invisível — ele simplesmente funciona.",
+    "bio_2": "Trabalho com startups e empresas consolidadas para transformar ideias em interfaces que os usuários amam. Meu processo começa sempre com pesquisa e termina com impacto mensurável.",
+    "bio_3": "Quando não estou desenhando, estou explorando novas tecnologias, estudando psicologia cognitiva ou experimentando com animações e interfaces generativas.",
+    "skills_heading": "Ferramentas & Habilidades",
+    "skills": ["Figma", "Adobe XD", "Illustrator", "Photoshop", "After Effects", "Protopie", "Framer", "HTML/CSS", "Pesquisa UX", "Design System"]
+  },
+  "portfolio": {
+    "section_label": "Portfólio",
+    "heading": "Projetos Selecionados",
+    "filter_all": "Todos",
+    "filter_ux": "UX",
+    "filter_ui": "UI",
+    "filter_branding": "Branding",
+    "filter_motion": "Motion",
+    "projects": [
+      {
+        "id": "project-1",
+        "title": "App de Finanças Pessoais",
+        "category": "ux",
+        "category_label": "UX Design",
+        "description": "Redesign completo de um app fintech focado em reduzir a ansiedade financeira dos usuários.",
+        "full_description": "Conduzi pesquisa com 40 usuários para identificar pontos de fricção no app original. O redesign resultou em 35% de aumento no engajamento diário e redução de 60% nas solicitações de suporte.",
+        "tags": ["Pesquisa UX", "Prototipação", "Teste de Usabilidade"],
+        "link": "#"
+      },
+      {
+        "id": "project-2",
+        "title": "Design System — E-commerce",
+        "category": "ui",
+        "category_label": "UI Design",
+        "description": "Criação de design system escalável para plataforma de e-commerce com +200 componentes.",
+        "full_description": "Desenvolvei um design system do zero usando tokens de design e componentes atômicos. Reduziu o tempo de desenvolvimento de novas features em 40% e garantiu consistência visual em todos os produtos.",
+        "tags": ["Design System", "Figma", "Tokens"],
+        "link": "#"
+      },
+      {
+        "id": "project-3",
+        "title": "Identidade Visual — Studio Créatif",
+        "category": "branding",
+        "category_label": "Branding",
+        "description": "Identidade visual completa para estúdio criativo boutique em São Paulo.",
+        "full_description": "Da estratégia de marca ao manual de identidade visual. Inclui logotipo, tipografia, paleta de cores, papelaria e guidelines para aplicação digital e impressa.",
+        "tags": ["Identidade Visual", "Logotipo", "Branding"],
+        "link": "#"
+      }
+    ],
+    "modal_close": "Fechar projeto",
+    "modal_visit": "Ver projeto online",
+    "modal_tags": "Tags"
+  },
+  "services": {
+    "section_label": "Serviços",
+    "heading": "O que eu faço",
+    "cta": "Vamos conversar?",
+    "items": [
+      {
+        "icon": "ux",
+        "title": "UX Research & Design",
+        "description": "Pesquisa com usuários, mapeamento de jornada, wireframes e prototipagem para criar experiências fundamentadas em dados reais."
+      },
+      {
+        "icon": "ui",
+        "title": "UI Design",
+        "description": "Interfaces visuais de alta fidelidade, design systems e guidelines para produtos digitais coesos e escaláveis."
+      },
+      {
+        "icon": "branding",
+        "title": "Branding Digital",
+        "description": "Identidade visual, logotipos e sistemas de marca que comunicam o posicionamento único do seu negócio."
+      },
+      {
+        "icon": "motion",
+        "title": "Motion & Interação",
+        "description": "Animações de interface, micro-interações e protótipos animados que elevam a experiência do usuário."
+      }
+    ]
+  },
+  "contact": {
+    "section_label": "Contato",
+    "heading": "Vamos trabalhar juntos",
+    "cta": "Contratar profissional",
+    "subheading": "Tem um projeto em mente? Me conta.",
+    "form": {
+      "name_label": "Nome",
+      "name_placeholder": "Seu nome completo",
+      "email_label": "E-mail",
+      "email_placeholder": "seu@email.com",
+      "message_label": "Mensagem",
+      "message_placeholder": "Conte um pouco sobre seu projeto...",
+      "submit": "Enviar mensagem",
+      "submitting": "Enviando...",
+      "char_count": "caracteres restantes"
+    },
+    "errors": {
+      "name_required": "Nome é obrigatório",
+      "name_min": "Nome deve ter pelo menos 2 caracteres",
+      "email_required": "E-mail é obrigatório",
+      "email_invalid": "Formato de e-mail inválido",
+      "message_required": "Mensagem é obrigatória",
+      "message_min": "Mensagem deve ter pelo menos 10 caracteres",
+      "message_max": "Mensagem deve ter no máximo 1000 caracteres"
+    },
+    "success": "Mensagem enviada com sucesso! Entrarei em contato em breve.",
+    "error": "Erro ao enviar. Tente novamente ou me envie um e-mail diretamente."
+  },
+  "footer": {
+    "made_with": "Feito com",
+    "and": "e muito café",
+    "rights": "Todos os direitos reservados"
+  }
+}

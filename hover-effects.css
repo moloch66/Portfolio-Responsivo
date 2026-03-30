@@ -1,0 +1,73 @@
+/* =========================================
+   Shimmer Sweep Hover — cards & tags
+   Inspired by the "Book a Free Call" CTA
+   on landio.framer.website
+   ========================================= */
+
+/* ── Base: every target needs a stacking context ── */
+.project-card,
+.service-card,
+.filter-btn,
+.skill-tag {
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Shimmer pseudo-element ── */
+.project-card::before,
+.service-card::before,
+.filter-btn::before,
+.skill-tag::before {
+  content: '';
+  position: absolute;
+  inset: 0;                  /* full overlay */
+  /* Diagonal bright stripe */
+  background: linear-gradient(
+    108deg,
+    transparent          0%,
+    transparent         38%,
+    rgba(255,255,255,0.07) 48%,
+    rgba(255,255,255,0.13) 50%,
+    rgba(255,255,255,0.07) 52%,
+    transparent         62%,
+    transparent        100%
+  );
+  /* Start off-screen to the left */
+  transform: translateX(-100%);
+  transition: transform 0s;  /* no transition at rest */
+  pointer-events: none;
+  z-index: 10;
+  border-radius: inherit;
+}
+
+/* ── On hover: slide the stripe across ── */
+.project-card:hover::before,
+.service-card:hover::before,
+.filter-btn:hover::before,
+.skill-tag:hover::before {
+  transform: translateX(200%);
+  transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ── Edge glow: subtle inner border brightens on hover ── */
+.project-card:hover,
+.service-card:hover {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.07),
+    0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.filter-btn:hover,
+.skill-tag:hover {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.10);
+}
+
+/* ── Reduced motion: no sweep, keep the rest ── */
+@media (prefers-reduced-motion: reduce) {
+  .project-card::before,
+  .service-card::before,
+  .filter-btn::before,
+  .skill-tag::before {
+    display: none;
+  }
+}

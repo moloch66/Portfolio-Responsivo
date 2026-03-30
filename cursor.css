@@ -1,0 +1,41 @@
+/* =========================================
+   Custom Cursor — dot + canvas trail only
+   ========================================= */
+
+/* Hide default cursor on desktop */
+@media (min-width: 768px) and (hover: hover) {
+  html, body { cursor: none !important; }
+  a, button, [role="button"], input, textarea, select, label {
+    cursor: none !important;
+  }
+}
+
+/* Canvas for trail (positioned fixed, full page) */
+#cursor-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9998;
+}
+
+/* Center dot */
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #e8e8e8;
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  box-shadow: 0 0 8px rgba(232, 232, 232, 0.9), 0 0 18px rgba(200, 200, 200, 0.5);
+}
+
+.cursor-dot.visible { opacity: 1; }

@@ -1,0 +1,55 @@
+/* =========================================
+   Marquee Band — scrolling text strip
+   ========================================= */
+
+.marquee-band {
+  width: 100%;
+  overflow: hidden;
+  background: transparent;
+  border-top: 1px solid rgba(220, 220, 220, 0.08);
+  border-bottom: 1px solid rgba(220, 220, 220, 0.08);
+  padding-block: var(--space-16);
+  position: relative;
+  z-index: 5;
+  transform: translateY(-25%);
+  margin-bottom: -3rem;
+}
+
+.marquee-track {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  width: max-content;
+  animation: marqueeScroll 30s linear infinite;
+  will-change: transform;
+}
+
+.marquee-band:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.marquee-item {
+  font-family: var(--font-headline);
+  font-size: clamp(1.25rem, 3.5vw, 1.75rem);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(220, 220, 220, 0.45);
+  white-space: nowrap;
+  transition: color var(--transition-fast);
+}
+
+.marquee-item:hover {
+  color: rgba(220, 220, 220, 0.9);
+}
+
+.marquee-sep {
+  font-size: 0.75rem;
+  color: rgba(220, 220, 220, 0.2);
+  flex-shrink: 0;
+}

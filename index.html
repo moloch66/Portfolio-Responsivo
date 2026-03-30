@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="pt" class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portfólio de Janderson Vinicius — Designer UX/UI especializado em criar experiências digitais intuitivas e memoráveis.">
+  <meta name="theme-color" content="#050a0a">
+
+  <!-- Open Graph -->
+  <meta property="og:title"       content="Janderson VS — Designer UX/UI">
+  <meta property="og:description" content="Transformo problemas complexos em experiências digitais intuitivas.">
+  <meta property="og:type"        content="website">
+
+  <title>Janderson VS — Designer UX/UI</title>
+
+  <!-- Preconnect fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="reset.css">
+  <link rel="stylesheet" href="variables.css">
+  <link rel="stylesheet" href="layout.css">
+  <link rel="stylesheet" href="header.css">
+  <link rel="stylesheet" href="hero.css">
+  <link rel="stylesheet" href="about.css">
+  <link rel="stylesheet" href="portfolio.css">
+  <link rel="stylesheet" href="services.css">
+  <link rel="stylesheet" href="contact.css">
+  <link rel="stylesheet" href="modal.css">
+  <link rel="stylesheet" href="cursor.css">
+  <link rel="stylesheet" href="marquee.css">
+  <link rel="stylesheet" href="hover-effects.css">
+  <link rel="stylesheet" href="intro.css">
+
+  <script>document.documentElement.classList.remove('no-js');</script>
+</head>
+<body>
+
+  <!-- ===================== INTRO OVERLAY ===================== -->
+  <div id="intro-overlay" aria-hidden="true">
+    <span class="intro-label">jandervs.</span>
+    <span class="intro-text">Visual Studio</span>
+    <div class="intro-progress"></div>
+  </div>
+
+  <!-- ===================== ISO BACKGROUND ===================== -->
+  <canvas id="iso-canvas" aria-hidden="true"></canvas>
+
+  <!-- ===================== PARTICLES ===================== -->
+  <canvas id="particles-canvas" aria-hidden="true"></canvas>
+
+  <!-- Scroll progress bar -->
+  <div class="scroll-progress" aria-hidden="true"></div>
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="header" role="banner">
+    <div class="header__inner">
+      <a href="https://wa.me/5531986961461" class="header__logo" aria-label="Ir para o início">
+        jandervs<span>.</span>
+      </a>
+
+      <nav class="nav" role="navigation" aria-label="Navegação principal">
+        <a href="#about"     class="nav__link" data-i18n="nav.about">Sobre</a>
+        <a href="#portfolio" class="nav__link" data-i18n="nav.portfolio">Portfólio</a>
+        <a href="#services"  class="nav__link" data-i18n="nav.services">Serviços</a>
+        <a href="#contact"   class="nav__link" data-i18n="nav.contact">Contato</a>
+      </nav>
+
+      <div class="header__actions">
+        <button class="lang-toggle"
+                aria-label="Mudar idioma para Inglês"
+                data-i18n-aria="langToggle.label">
+          <span class="lang-toggle__item active" data-lang="pt">PT</span>
+          <span class="lang-toggle__sep" aria-hidden="true">|</span>
+          <span class="lang-toggle__item" data-lang="en">EN</span>
+        </button>
+
+        <button class="hamburger"
+                aria-label="Abrir menu"
+                aria-expanded="false"
+                aria-controls="mobile-menu">
+          <span class="hamburger__line"></span>
+          <span class="hamburger__line"></span>
+          <span class="hamburger__line"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile menu -->
+  <nav class="mobile-menu" id="mobile-menu" aria-label="Menu mobile" aria-hidden="true">
+    <a href="#about"     class="mobile-menu__link" data-i18n="nav.about">Sobre</a>
+    <a href="#portfolio" class="mobile-menu__link" data-i18n="nav.portfolio">Portfólio</a>
+    <a href="#services"  class="mobile-menu__link" data-i18n="nav.services">Serviços</a>
+    <a href="#contact"   class="mobile-menu__link" data-i18n="nav.contact">Contato</a>
+  </nav>
+
+  <main id="main-content">
+
+    <!-- ===================== HERO ===================== -->
+    <section id="hero" class="hero" aria-label="Apresentação">
+
+      <!-- Full-section video background -->
+      <div class="hero__video-wrap" aria-hidden="true">
+        <video
+          class="hero__video"
+          src="hero-bg.mp4"
+          autoplay
+          loop
+          muted
+          playsinline
+          webkit-playsinline
+          preload="auto"
+          disableremoteplayback
+        ></video>
+        <div class="hero__video-overlay"></div>
+      </div>
+
+      <!-- Left: Text content -->
+      <div class="hero__content">
+        <h1 class="hero__name" data-i18n="hero.name">Janderson Vinicius</h1>
+        <h2 class="hero__title" data-i18n="hero.title">Visual Studio</h2>
+        <p class="hero__subtitle" data-i18n="hero.subtitle">jandervs</p>
+        <div class="hero__ctas">
+          <a href="https://wa.me/5531986961461" target="_blank" rel="noopener noreferrer" class="btn btn--outline" data-i18n="hero.cta_contact">
+            Entrar em Contato
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== MARQUEE BAND ===================== -->
+    <div class="marquee-band" aria-hidden="true">
+      <div class="marquee-track">
+        <span class="marquee-item">UI/UX Design</span><span class="marquee-sep">✦</span>
+        <span class="marquee-item">Design Digital</span><span class="marquee-sep">✦</span>
+        <span class="marquee-item">Graphic Design</span><span class="marquee-sep">✦</span>
+        <span class="marquee-item">Visual Studio</span><span class="marquee-sep">✦</span>
+        <span class="marquee-item">Jandervs</span><span class="marquee-sep">✦</span>
+        <span class="marquee-item">UI/UX Design</span><span class="marquee-sep">✦</span>
+        <span class="marquee-item">Design Digital</span><span class="marquee-sep">✦</span>
+        <span class="marquee-item">Graphic Design</span><span class="marquee-sep">✦</span>
+        <span class="marquee-item">Visual Studio</span><span class="marquee-sep">✦</span>
+        <span class="marquee-item">Jandervs</span><span class="marquee-sep">✦</span>
+        <span class="marquee-item">UI/UX Design</span><span class="marquee-sep">✦</span>
+        <span class="marquee-item">Design Digital</span><span class="marquee-sep">✦</span>
+        <span class="marquee-item">Graphic Design</span><span class="marquee-sep">✦</span>
+        <span class="marquee-item">Visual Studio</span><span class="marquee-sep">✦</span>
+        <span class="marquee-item">Jandervs</span><span class="marquee-sep">✦</span>
+      </div>
+    </div>
+
+    <!-- ===================== ABOUT ===================== -->
+    <section id="about" class="about section" aria-label="Sobre">
+      <div class="container">
+
+        <div class="about__head">
+          <span class="section-tag"><span class="section-tag__plus">⊕</span> Sobre</span>
+          <span class="section-tag-year">(2025©)</span>
+        </div>
+
+        <div class="about__grid">
+
+          <!-- Left: Headline + bio -->
+          <div class="about__left">
+            <h2 class="about__headline" data-i18n="about.headline">Design centrado em experiência e resultado.</h2>
+            <div class="about__bio">
+              <p data-i18n="about.bio_1"></p>
+              <p data-i18n="about.bio_2"></p>
+            </div>
+          </div>
+
+          <!-- Right: Stats + skills -->
+          <div class="about__right">
+            <div class="about__stats">
+              <div class="about__stat-card">
+                <span class="about__stat-num">5+</span>
+                <span class="about__stat-label" data-i18n="about.stat_exp">Anos de experiência</span>
+              </div>
+              <div class="about__stat-card">
+                <span class="about__stat-num">50+</span>
+                <span class="about__stat-label" data-i18n="about.stat_proj">Projetos entregues</span>
+              </div>
+              <div class="about__stat-card">
+                <span class="about__stat-num">98%</span>
+                <span class="about__stat-label" data-i18n="about.stat_sat">Satisfação</span>
+              </div>
+              <div class="about__stat-card">
+                <span class="about__stat-num">10k+</span>
+                <span class="about__stat-label" data-i18n="about.stat_users">Usuários impactados</span>
+              </div>
+            </div>
+
+            <div class="about__skills">
+              <p class="about__skills-heading" data-i18n="about.skills_heading">Ferramentas &amp; Habilidades</p>
+              <div class="skills-grid" id="skills-grid">
+                <span class="skill-tag">Figma</span>
+                <span class="skill-tag">Adobe XD</span>
+                <span class="skill-tag">Illustrator</span>
+                <span class="skill-tag">Photoshop</span>
+                <span class="skill-tag">After Effects</span>
+                <span class="skill-tag">Protopie</span>
+                <span class="skill-tag">Framer</span>
+                <span class="skill-tag">HTML/CSS</span>
+                <span class="skill-tag">Pesquisa UX</span>
+                <span class="skill-tag">Design System</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PORTFOLIO ===================== -->
+    <section id="portfolio" class="portfolio section" aria-label="Portfólio">
+      <div class="container">
+
+        <div class="portfolio__head">
+          <div class="portfolio__head-left">
+            <span class="section-tag"><span class="section-tag__plus">⊕</span> <span data-i18n="portfolio.section_label">Portfólio</span></span>
+            <span class="section-tag-count">(05)</span>
+          </div>
+          <div class="portfolio__filters" role="group" aria-label="Filtrar projetos">
+            <button class="filter-btn active" data-filter="all" data-i18n="portfolio.filter_all">Todos</button>
+            <button class="filter-btn" data-filter="ux"       data-i18n="portfolio.filter_ux">UX</button>
+            <button class="filter-btn" data-filter="ui"       data-i18n="portfolio.filter_ui">UI</button>
+            <button class="filter-btn" data-filter="branding" data-i18n="portfolio.filter_branding">Branding</button>
+            <button class="filter-btn" data-filter="motion"   data-i18n="portfolio.filter_motion">Motion</button>
+          </div>
+        </div>
+
+        <!-- 2-column project grid -->
+        <div class="projects-grid" id="projects-grid" role="list">
+
+          <article class="project-card"
+                   data-project-id="project-1"
+                   data-category="ux"
+                   tabindex="0" role="listitem"
+                   aria-label="App de Finanças Pessoais">
+            <div class="project-card__img-wrap">
+              <img src="https://placehold.co/800x500/0a0a0a/1a1a1a?text=+"
+                   alt="App de Finanças Pessoais" class="project-card__img" loading="lazy" width="800" height="500">
+              <div class="project-card__overlay" aria-hidden="true">Ver Projeto →</div>
+            </div>
+            <div class="project-card__meta">
+              <div class="project-card__meta-left">
+                <h3 class="project-card__title">App de Finanças Pessoais</h3>
+                <span class="project-card__category">UX Design</span>
+              </div>
+              <div class="project-card__meta-right">
+                <span class="project-card__year">/2024</span>
+                <span class="project-card__dots" aria-hidden="true">···</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card"
+                   data-project-id="project-2"
+                   data-category="ui"
+                   tabindex="0" role="listitem"
+                   aria-label="Design System — E-commerce">
+            <div class="project-card__img-wrap">
+              <img src="https://placehold.co/800x500/0a0a0a/1a1a1a?text=+"
+                   alt="Design System E-commerce" class="project-card__img" loading="lazy" width="800" height="500">
+              <div class="project-card__overlay" aria-hidden="true">Ver Projeto →</div>
+            </div>
+            <div class="project-card__meta">
+              <div class="project-card__meta-left">
+                <h3 class="project-card__title">Design System — E-commerce</h3>
+                <span class="project-card__category">UI Design</span>
+              </div>
+              <div class="project-card__meta-right">
+                <span class="project-card__year">/2024</span>
+                <span class="project-card__dots" aria-hidden="true">···</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card"
+                   data-project-id="project-3"
+                   data-category="branding"
+                   tabindex="0" role="listitem"
+                   aria-label="Identidade Visual — Studio Créatif">
+            <div class="project-card__img-wrap">
+              <img src="https://placehold.co/800x500/0a0a0a/1a1a1a?text=+"
+                   alt="Identidade Visual Studio Créatif" class="project-card__img" loading="lazy" width="800" height="500">
+              <div class="project-card__overlay" aria-hidden="true">Ver Projeto →</div>
+            </div>
+            <div class="project-card__meta">
+              <div class="project-card__meta-left">
+                <h3 class="project-card__title">Identidade Visual — Studio Créatif</h3>
+                <span class="project-card__category">Branding</span>
+              </div>
+              <div class="project-card__meta-right">
+                <span class="project-card__year">/2023</span>
+                <span class="project-card__dots" aria-hidden="true">···</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card"
+                   data-project-id="project-4"
+                   data-category="motion"
+                   tabindex="0" role="listitem"
+                   aria-label="Motion Design — Reels">
+            <div class="project-card__img-wrap">
+              <img src="https://placehold.co/800x500/0a0a0a/1a1a1a?text=+"
+                   alt="Motion Design Reels" class="project-card__img" loading="lazy" width="800" height="500">
+              <div class="project-card__overlay" aria-hidden="true">Ver Projeto →</div>
+            </div>
+            <div class="project-card__meta">
+              <div class="project-card__meta-left">
+                <h3 class="project-card__title">Motion Design — Reels</h3>
+                <span class="project-card__category">Motion</span>
+              </div>
+              <div class="project-card__meta-right">
+                <span class="project-card__year">/2024</span>
+                <span class="project-card__dots" aria-hidden="true">···</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card project-card--wide"
+                   data-project-id="project-5"
+                   data-category="ux"
+                   tabindex="0" role="listitem"
+                   aria-label="Plataforma SaaS — Dashboard">
+            <div class="project-card__img-wrap">
+              <img src="https://placehold.co/800x400/0a0a0a/1a1a1a?text=+"
+                   alt="Plataforma SaaS Dashboard" class="project-card__img" loading="lazy" width="800" height="400">
+              <div class="project-card__overlay" aria-hidden="true">Ver Projeto →</div>
+            </div>
+            <div class="project-card__meta">
+              <div class="project-card__meta-left">
+                <h3 class="project-card__title">Plataforma SaaS — Dashboard</h3>
+                <span class="project-card__category">UX Design</span>
+              </div>
+              <div class="project-card__meta-right">
+                <span class="project-card__year">/2024</span>
+                <span class="project-card__dots" aria-hidden="true">···</span>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SERVICES ===================== -->
+    <section id="services" class="services section" aria-label="Serviços">
+      <div class="container">
+
+        <div class="services__head">
+          <span class="section-tag section-tag--light"><span class="section-tag__plus">⊕</span> <span data-i18n="services.section_label">O que faço</span></span>
+          <span class="section-tag-count section-tag-count--light">(4)</span>
+        </div>
+
+        <div class="services-list">
+
+          <!-- 01 -->
+          <div class="service-row" tabindex="0">
+            <span class="service-row__num">01</span>
+            <div class="service-row__content">
+              <h3 class="service-row__title" data-i18n="services.items.0.title">UX Research &amp; Design</h3>
+              <p class="service-row__desc" data-i18n="services.items.0.description">Pesquisa com usuários, mapeamento de jornada, wireframes e prototipagem.</p>
+            </div>
+            <span class="service-row__arrow" aria-hidden="true">→</span>
+          </div>
+
+          <!-- 02 -->
+          <div class="service-row" tabindex="0">
+            <span class="service-row__num">02</span>
+            <div class="service-row__content">
+              <h3 class="service-row__title" data-i18n="services.items.1.title">UI Design</h3>
+              <p class="service-row__desc" data-i18n="services.items.1.description">Interfaces visuais de alta fidelidade e design systems escaláveis.</p>
+            </div>
+            <span class="service-row__arrow" aria-hidden="true">→</span>
+          </div>
+
+          <!-- 03 -->
+          <div class="service-row" tabindex="0">
+            <span class="service-row__num">03</span>
+            <div class="service-row__content">
+              <h3 class="service-row__title" data-i18n="services.items.2.title">Branding Digital</h3>
+              <p class="service-row__desc" data-i18n="services.items.2.description">Identidade visual e sistemas de marca com posicionamento único.</p>
+            </div>
+            <span class="service-row__arrow" aria-hidden="true">→</span>
+          </div>
+
+          <!-- 04 -->
+          <div class="service-row" tabindex="0">
+            <span class="service-row__num">04</span>
+            <div class="service-row__content">
+              <h3 class="service-row__title" data-i18n="services.items.3.title">Motion &amp; Interação</h3>
+              <p class="service-row__desc" data-i18n="services.items.3.description">Animações de interface e micro-interações que elevam a experiência.</p>
+            </div>
+            <span class="service-row__arrow" aria-hidden="true">→</span>
+          </div>
+
+        </div>
+
+        <!-- Dark pill CTA -->
+        <div class="services__cta-wrap">
+          <a href="#contact" class="btn-pill" data-i18n="services.cta">Vamos conversar?</a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===================== CONTACT ===================== -->
+    <section id="contact" class="contact section">
+
+      <!-- Hero video from landio — background layer -->
+      <video
+        class="contact__bg-video"
+        src="https://framerusercontent.com/assets/1g8IkhtJmlWcC4zEYWKUmeGWzI.mp4"
+        autoplay
+        loop
+        muted
+        playsinline
+        webkit-playsinline
+        preload="auto"
+        disableremoteplayback
+        aria-hidden="true"
+      ></video>
+      <div class="contact__bg-overlay" aria-hidden="true"></div>
+
+      <div class="container">
+        <div class="contact__inner">
+          <p class="contact__eyebrow" data-i18n="contact.section_label">Disponível para projetos</p>
+          <h2 class="contact__headline" data-i18n="contact.heading">Vamos criar algo<br>extraordinário.</h2>
+          <a href="https://wa.me/5531986961461" class="contact__cta-btn" target="_blank" rel="noopener noreferrer" data-i18n="contact.cta">
+            Entrar em contato
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__inner">
+        <p class="footer__text">
+          <span data-i18n="footer.made_with">Feito com</span>
+          <span class="footer__heart" aria-hidden="true"> ♥ </span>
+          <span data-i18n="footer.and">e muito café</span>
+          &mdash; Janderson VS &copy; <span id="footer-year"></span>
+        </p>
+        <p class="footer__text" data-i18n="footer.rights">Todos os direitos reservados</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================== MODAL ===================== -->
+  <div class="modal-backdrop"
+       id="project-modal"
+       role="dialog"
+       aria-modal="true"
+       aria-label="Detalhes do projeto">
+    <div class="modal">
+      <button class="modal__close" aria-label="Fechar projeto">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <line x1="2" y1="2" x2="14" y2="14"/>
+          <line x1="14" y1="2" x2="2" y2="14"/>
+        </svg>
+      </button>
+
+      <div class="modal__gallery">
+        <img src="" alt="" loading="lazy" width="760" height="427">
+      </div>
+
+      <div class="modal__body">
+        <span class="modal__category"></span>
+        <h2 class="modal__title"></h2>
+        <p class="modal__desc"></p>
+
+        <div>
+          <p class="modal__tags-label" data-i18n="portfolio.modal_tags">Tags</p>
+          <div class="modal__tags"></div>
+        </div>
+
+        <a href="#" class="modal__link" target="_blank" rel="noopener noreferrer">
+          <span data-i18n="portfolio.modal_visit">Ver projeto online</span>
+          <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 12 L12 2"/>
+            <path d="M5 2 H12 V9"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== SCRIPTS ===================== -->
+
+  <!-- Three.js — defer garante ordem com os demais scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r158/three.min.js" defer></script>
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+
+  <!-- Anime.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js" defer></script>
+
+  <!-- App (carregam em ordem após Three.js) -->
+  <script src="i18n.js"        defer></script>
+  <script src="particles.js"   defer></script>
+  <script src="iso-scene.js"   defer></script>
+  <script src="animations.js"  defer></script>
+  <script src="form.js"        defer></script>
+  <script src="main.js"        defer></script>
+  <!-- Custom cursor -->
+  <script src="cursor.js" defer></script>
+</body>
+</html>

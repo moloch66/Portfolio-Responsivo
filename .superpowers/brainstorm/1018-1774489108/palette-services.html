@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Preview</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #000;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    padding: 32px 24px 64px;
+  }
+  h2 { font-size: 1.4rem; font-weight: 700; margin-bottom: 6px; color: #fff; }
+  .subtitle { color: rgba(255,255,255,0.45); font-size: 0.85rem; margin-bottom: 32px; }
+
+  /* ---- Palette strip ---- */
+  .palette-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+  }
+  .swatch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.7rem;
+  }
+  .swatch-dot {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .swatch-label { color: rgba(255,255,255,0.5); }
+  .swatch-new .swatch-dot { box-shadow: 0 0 12px rgba(220,220,220,0.3); }
+  .arrow { align-self: center; color: rgba(255,255,255,0.25); font-size: 1.2rem; padding-top: 4px; }
+
+  /* ---- Section label ---- */
+  .sec-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #e2e2e2;
+    opacity: 0.7;
+    margin-bottom: 6px;
+  }
+  .sec-heading {
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: #fff;
+    margin-bottom: 32px;
+  }
+
+  /* ---- Service Cards (original style, ice-white palette) ---- */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  @media (max-width: 900px) {
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .service-card {
+    position: relative;
+    background: transparent;
+    border: 1px solid rgba(220, 220, 220, 0.09);
+    border-radius: 16px;
+    padding: 28px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: border-color 0.35s ease, background 0.35s ease;
+    cursor: pointer;
+  }
+  .service-card:hover {
+    border-color: rgba(220, 220, 220, 0.32);
+    background: rgba(220, 220, 220, 0.03);
+  }
+
+  /* SVG border trace (visual only) */
+  .service-card__border {
+    position: absolute;
+    inset: 0; width: 100%; height: 100%;
+    border-radius: 16px;
+    pointer-events: none;
+    overflow: visible;
+  }
+  .service-card__border rect {
+    fill: none;
+    stroke: #e2e2e2;
+    stroke-width: 1;
+    stroke-dasharray: 600;
+    stroke-dashoffset: 200;
+    vector-effect: non-scaling-stroke;
+    opacity: 0.18;
+  }
+  .service-card:hover .service-card__border rect { opacity: 0.5; }
+
+  .svc-icon {
+    width: 36px; height: 36px;
+    color: rgba(220,220,220,0.5);
+    transition: color 0.3s ease;
+  }
+  .service-card:hover .svc-icon { color: rgba(220,220,220,0.9); }
+
+  .svc-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.01em;
+    transition: color 0.3s ease;
+  }
+  .service-card:hover .svc-title { color: #e2e2e2; }
+
+  .svc-desc {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.42);
+    line-height: 1.7;
+  }
+
+  /* ---- Project card (carousel) ---- */
+  .proj-label { font-size: 0.75rem; color: rgba(255,255,255,0.45); margin-bottom: 20px; letter-spacing: 0.12em; text-transform: uppercase; }
+  .project-cards-row { display: flex; gap: 20px; overflow: hidden; margin-bottom: 48px; }
+  .project-card {
+    flex: 0 0 300px;
+    background: rgba(255,255,255,0.025);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease;
+    cursor: pointer;
+  }
+  .project-card:hover {
+    border-color: rgba(220,220,220,0.3);
+    box-shadow: 0 12px 50px rgba(0,0,0,0.6), 0 0 40px rgba(220,220,220,0.07);
+    transform: translateY(-6px) scale(1.02);
+  }
+  .proj-img {
+    height: 140px;
+    background: linear-gradient(135deg, rgba(220,220,220,0.06) 0%, rgba(180,180,180,0.02) 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .proj-img-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(220,220,220,0.3);
+  }
+  .project-card:hover .proj-img-label { color: rgba(220,220,220,0.7); }
+  .proj-body { padding: 16px 18px; }
+  .proj-category {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #e2e2e2;
+    margin-bottom: 6px;
+    opacity: 0.6;
+  }
+  .proj-title { font-size: 0.95rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  .proj-desc { font-size: 0.78rem; color: rgba(255,255,255,0.4); line-height: 1.6; }
+  .proj-tags { display: flex; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
+  .proj-tag {
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 9999px;
+    border: 1px solid rgba(220,220,220,0.18);
+    color: rgba(220,220,220,0.6);
+  }
+
+  /* ---- Scrollbar preview ---- */
+  .scrollbar-row { display: flex; align-items: center; gap: 16px; margin-bottom: 48px; }
+  .scrollbar-track {
+    width: 6px; height: 80px;
+    background: #03040d;
+    border-radius: 9999px;
+  }
+  .scrollbar-thumb {
+    width: 6px; height: 30px;
+    background: rgba(220, 220, 220, 0.35);
+    border-radius: 9999px;
+    margin-top: 8px;
+  }
+  .scrollbar-note { font-size: 0.8rem; color: rgba(255,255,255,0.45); }
+
+  /* ---- Section label + heading demo ---- */
+  .demo-block { margin-bottom: 40px; }
+  .demo-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #e2e2e2;
+    opacity: 0.65;
+    margin-bottom: 6px;
+    display: inline-block;
+  }
+
+  /* ---- CTA button ---- */
+  .cta-btn {
+    display: inline-block;
+    padding: 14px 36px;
+    background: rgba(220,220,220,0.08);
+    border: 1px solid rgba(220,220,220,0.3);
+    border-radius: 9999px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    margin-top: 8px;
+  }
+  .cta-btn:hover {
+    background: rgba(220,220,220,0.14);
+    border-color: rgba(220,220,220,0.55);
+    box-shadow: 0 0 28px rgba(220,220,220,0.12);
+  }
+
+  /* ---- Divider ---- */
+  .divider { border: none; border-top: 1px solid rgba(255,255,255,0.07); margin: 40px 0; }
+  .section-title { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 20px; }
+</style>
+</head>
+<body>
+
+<h2>Preview do redesign — paleta branco gelo</h2>
+<p class="subtitle">Cards de serviços restaurados (estilo original) + todos os acentos violet/indigo/cyan substituídos por branco gelo</p>
+
+<!-- PALETTE SWAP -->
+<div class="section-title">Troca de paleta</div>
+<div class="palette-row">
+  <div class="swatch">
+    <div class="swatch-dot" style="background:#7c3aed;"></div>
+    <span class="swatch-label">#7c3aed<br>violet</span>
+  </div>
+  <div class="arrow">→</div>
+  <div class="swatch swatch-new">
+    <div class="swatch-dot" style="background:#e2e2e2;"></div>
+    <span class="swatch-label">#e2e2e2<br>ice white</span>
+  </div>
+
+  <div style="width:24px"></div>
+
+  <div class="swatch">
+    <div class="swatch-dot" style="background:#4f46e5;"></div>
+    <span class="swatch-label">#4f46e5<br>indigo</span>
+  </div>
+  <div class="arrow">→</div>
+  <div class="swatch swatch-new">
+    <div class="swatch-dot" style="background:#c8c8c8;"></div>
+    <span class="swatch-label">#c8c8c8<br>ice mid</span>
+  </div>
+
+  <div style="width:24px"></div>
+
+  <div class="swatch">
+    <div class="swatch-dot" style="background:#00c8ff;"></div>
+    <span class="swatch-label">#00c8ff<br>cyan</span>
+  </div>
+  <div class="arrow">→</div>
+  <div class="swatch swatch-new">
+    <div class="swatch-dot" style="background:#f0f0f0;"></div>
+    <span class="swatch-label">#f0f0f0<br>ice light</span>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- SERVICES SECTION -->
+<div class="demo-block">
+  <div class="section-title">Seção "O que eu faço" — cards restaurados</div>
+  <span class="demo-label">Serviços</span>
+  <div class="sec-heading">O que eu faço</div>
+
+  <div class="services-grid">
+    <!-- Card 1 -->
+    <div class="service-card" onmouseenter="this.querySelector('.svc-icon').style.color='rgba(220,220,220,0.9)';this.querySelector('.svc-title').style.color='#e2e2e2'" onmouseleave="this.querySelector('.svc-icon').style.color='rgba(220,220,220,0.5)';this.querySelector('.svc-title').style.color='#fff'">
+      <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m2 12 20 0M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+      </svg>
+      <div class="svc-title">UX Research &amp; Design</div>
+      <div class="svc-desc">Pesquisa com usuários, mapeamento de jornada, wireframes e prototipagem.</div>
+    </div>
+    <!-- Card 2 -->
+    <div class="service-card" onmouseenter="this.querySelector('.svc-icon').style.color='rgba(220,220,220,0.9)';this.querySelector('.svc-title').style.color='#e2e2e2'" onmouseleave="this.querySelector('.svc-icon').style.color='rgba(220,220,220,0.5)';this.querySelector('.svc-title').style.color='#fff'">
+      <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>
+      </svg>
+      <div class="svc-title">UI Design</div>
+      <div class="svc-desc">Interfaces visuais de alta fidelidade e design systems escaláveis.</div>
+    </div>
+    <!-- Card 3 -->
+    <div class="service-card" onmouseenter="this.querySelector('.svc-icon').style.color='rgba(220,220,220,0.9)';this.querySelector('.svc-title').style.color='#e2e2e2'" onmouseleave="this.querySelector('.svc-icon').style.color='rgba(220,220,220,0.5)';this.querySelector('.svc-title').style.color='#fff'">
+      <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+      </svg>
+      <div class="svc-title">Branding Digital</div>
+      <div class="svc-desc">Identidade visual e sistemas de marca com posicionamento único.</div>
+    </div>
+    <!-- Card 4 -->
+    <div class="service-card" onmouseenter="this.querySelector('.svc-icon').style.color='rgba(220,220,220,0.9)';this.querySelector('.svc-title').style.color='#e2e2e2'" onmouseleave="this.querySelector('.svc-icon').style.color='rgba(220,220,220,0.5)';this.querySelector('.svc-title').style.color='#fff'">
+      <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+      <div class="svc-title">Motion &amp; Interação</div>
+      <div class="svc-desc">Animações de interface e micro-interações que elevam a experiência.</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- PROJECT CARDS -->
+<div class="demo-block">
+  <div class="section-title">Cards do portfólio — hover branco gelo</div>
+  <div class="project-cards-row">
+    <div class="project-card">
+      <div class="proj-img"><span class="proj-img-label">→ Ver projeto</span></div>
+      <div class="proj-body">
+        <div class="proj-category">UX Design</div>
+        <div class="proj-title">Finance App</div>
+        <div class="proj-desc">Redesign que aumentou engajamento em 35%</div>
+        <div class="proj-tags">
+          <span class="proj-tag">Figma</span>
+          <span class="proj-tag">UX Research</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="proj-img"><span class="proj-img-label">→ Ver projeto</span></div>
+      <div class="proj-body">
+        <div class="proj-category">UI Design</div>
+        <div class="proj-title">Dashboard Analytics</div>
+        <div class="proj-desc">Sistema de visualização de dados em tempo real</div>
+        <div class="proj-tags">
+          <span class="proj-tag">Figma</span>
+          <span class="proj-tag">Prototyping</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="proj-img"><span class="proj-img-label">→ Ver projeto</span></div>
+      <div class="proj-body">
+        <div class="proj-category">Branding</div>
+        <div class="proj-title">Studio Visual ID</div>
+        <div class="proj-desc">Identidade visual completa para estúdio criativo</div>
+        <div class="proj-tags">
+          <span class="proj-tag">Branding</span>
+          <span class="proj-tag">Motion</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- OUTROS ELEMENTOS -->
+<div class="demo-block">
+  <div class="section-title">Outros elementos — scrollbar + labels + CTA</div>
+  <div style="display:flex; gap:48px; flex-wrap:wrap; align-items:flex-start;">
+    <!-- Scrollbar -->
+    <div>
+      <div style="font-size:0.7rem;color:rgba(255,255,255,0.35);margin-bottom:10px;">Scrollbar</div>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <div class="scrollbar-track"><div class="scrollbar-thumb"></div></div>
+        <div class="scrollbar-note">Thumb branco gelo<br><span style="opacity:0.5">rgba(220,220,220,0.35)</span></div>
+      </div>
+    </div>
+    <!-- Section label -->
+    <div>
+      <div style="font-size:0.7rem;color:rgba(255,255,255,0.35);margin-bottom:10px;">Section labels</div>
+      <span class="demo-label">Portfólio</span><br>
+      <span class="demo-label" style="margin-top:4px;">Serviços</span><br>
+      <span class="demo-label" style="margin-top:4px;">Contato</span>
+    </div>
+    <!-- CTA -->
+    <div>
+      <div style="font-size:0.7rem;color:rgba(255,255,255,0.35);margin-bottom:10px;">Botão CTA (hover)</div>
+      <div class="cta-btn">Contratar profissional</div>
+    </div>
+    <!-- Filter buttons -->
+    <div>
+      <div style="font-size:0.7rem;color:rgba(255,255,255,0.35);margin-bottom:10px;">Filter buttons (active)</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <span style="padding:5px 14px;border-radius:9999px;border:1px solid rgba(220,220,220,0.35);color:#e2e2e2;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;">Todos</span>
+        <span style="padding:5px 14px;border-radius:9999px;border:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.4);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;">UX</span>
+        <span style="padding:5px 14px;border-radius:9999px;border:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.4);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;">UI</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Inject the brainstorm helper
+const s = document.createElement('script');
+s.src = '/helper.js';
+document.head.appendChild(s);
+</script>
+</body>
+</html>

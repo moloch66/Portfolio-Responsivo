@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preview — Portfolio + Serviços</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #050510; color: #fff; font-family: 'Space Grotesk', system-ui, sans-serif; padding: 40px 24px; }
+  h1 { font-size: 13px; letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 48px; text-align: center; }
+
+  /* ── SECTION LABEL ── */
+  .section-label { font-family: monospace; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: rgba(0,200,255,0.7); margin-bottom: 12px; }
+  .section-heading { font-size: 32px; font-weight: 800; letter-spacing: -0.03em; color: #fff; margin-bottom: 40px; line-height: 1.05; }
+
+  /* ── SECTION WRAPPER ── */
+  .section { max-width: 1100px; margin: 0 auto 80px; }
+  .divider { height: 1px; background: linear-gradient(to right, transparent, rgba(255,255,255,0.06), transparent); margin-bottom: 80px; }
+
+  /* ═══════════════════════════════════
+     PORTFOLIO — glassmorphism carousel
+  ═══════════════════════════════════ */
+  .filters { display: flex; gap: 8px; margin-bottom: 32px; flex-wrap: wrap; }
+  .filter-btn { font-family: monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; padding: 6px 14px; border-radius: 99px; border: 1px solid rgba(255,255,255,0.08); background: transparent; color: rgba(255,255,255,0.4); cursor: pointer; transition: all 0.2s; }
+  .filter-btn.active, .filter-btn:hover { color: #00c8ff; border-color: rgba(0,200,255,0.35); }
+
+  .cards-row { display: flex; gap: 20px; overflow: hidden; }
+
+  .proj-card {
+    flex: 0 0 300px;
+    border: 1px solid rgba(124,58,237,0.25);
+    border-radius: 16px;
+    background: rgba(124,58,237,0.05);
+    padding: 22px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+  }
+  .proj-card::before {
+    content: '';
+    position: absolute;
+    top: -40px; left: -40px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124,58,237,0.18) 0%, transparent 70%);
+    transition: opacity 0.3s;
+  }
+  .proj-card:hover { border-color: rgba(124,58,237,0.7); transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(124,58,237,0.15); }
+  .proj-card:hover::before { opacity: 2; }
+
+  .proj-category { font-family: monospace; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: #7c3aed; margin-bottom: 10px; }
+  .proj-title { font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 8px; line-height: 1.2; }
+  .proj-desc { font-size: 12px; color: rgba(255,255,255,0.45); line-height: 1.6; margin-bottom: 18px; }
+  .proj-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
+  .proj-tag { font-family: monospace; font-size: 9px; padding: 3px 10px; border: 1px solid rgba(0,200,255,0.28); border-radius: 99px; color: rgba(0,200,255,0.8); }
+  .proj-divider { height: 1px; background: linear-gradient(to right, rgba(124,58,237,0.5), transparent); margin-bottom: 14px; }
+  .proj-cta { font-family: monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.3); transition: color 0.2s; display: flex; align-items: center; gap: 6px; }
+  .proj-card:hover .proj-cta { color: #00c8ff; }
+  .proj-cta::after { content: '→'; transition: transform 0.2s; }
+  .proj-card:hover .proj-cta::after { transform: translateX(4px); }
+
+  /* hover state demo */
+  .proj-card.demo-hover {
+    border-color: rgba(124,58,237,0.7);
+    transform: translateY(-6px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(124,58,237,0.15);
+  }
+  .proj-card.demo-hover .proj-cta { color: #00c8ff; }
+
+  .carousel-hint { margin-top: 12px; font-family: monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.15); text-align: center; }
+
+  /* ═══════════════════════════════
+     SERVIÇOS — accordion
+  ═══════════════════════════════ */
+  .accordion { display: flex; flex-direction: column; gap: 8px; max-width: 720px; }
+
+  .acc-item {
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: border-color 0.3s;
+    cursor: pointer;
+  }
+  .acc-item.open { border-color: rgba(124,58,237,0.55); background: rgba(124,58,237,0.06); }
+
+  .acc-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 20px;
+    transition: background 0.2s;
+  }
+  .acc-item:not(.open):hover .acc-header { background: rgba(255,255,255,0.03); }
+
+  .acc-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    border: 1px solid rgba(124,58,237,0.35);
+    background: rgba(124,58,237,0.12);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .acc-item.open .acc-icon { border-color: rgba(124,58,237,0.7); background: rgba(124,58,237,0.2); }
+
+  .acc-title { font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.7); flex: 1; transition: color 0.2s; }
+  .acc-item.open .acc-title { color: #fff; }
+
+  .acc-toggle { width: 24px; height: 24px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 14px; color: rgba(255,255,255,0.3); flex-shrink: 0; transition: all 0.3s; }
+  .acc-item.open .acc-toggle { border-color: rgba(124,58,237,0.5); color: #7c3aed; transform: rotate(45deg); }
+
+  .acc-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1);
+  }
+  .acc-item.open .acc-body { max-height: 200px; }
+
+  .acc-body-inner {
+    padding: 0 20px 20px 70px;
+  }
+  .acc-desc { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.7; margin-bottom: 14px; }
+  .acc-tools { display: flex; gap: 6px; flex-wrap: wrap; }
+  .acc-tool { font-family: monospace; font-size: 9px; padding: 3px 10px; border: 1px solid rgba(0,200,255,0.25); border-radius: 99px; color: rgba(0,200,255,0.75); }
+
+  .services-cta { margin-top: 36px; }
+  .services-cta a {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: monospace; font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: #00c8ff; border-bottom: 1px solid rgba(0,200,255,0.3); padding-bottom: 2px;
+    text-decoration: none; transition: color 0.2s, border-color 0.2s;
+  }
+
+  .label-note { display: inline-block; margin-top: 6px; font-family: monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.04); padding: 4px 10px; border-radius: 99px; }
+</style>
+</head>
+<body>
+
+<h1>Preview — Design Proposto</h1>
+
+<!-- ══════ PORTFÓLIO ══════ -->
+<div class="section">
+  <p class="section-label">Portfólio</p>
+  <h2 class="section-heading">Projetos Selecionados</h2>
+
+  <div class="filters">
+    <button class="filter-btn active">Todos</button>
+    <button class="filter-btn">UX</button>
+    <button class="filter-btn">UI</button>
+    <button class="filter-btn">Branding</button>
+    <button class="filter-btn">Motion</button>
+  </div>
+
+  <div class="cards-row">
+
+    <!-- card 1 — hover state demo -->
+    <div class="proj-card demo-hover">
+      <div class="proj-category">UX Design</div>
+      <div class="proj-title">App de Finanças Pessoais</div>
+      <div class="proj-desc">Redesign completo focado em reduzir ansiedade financeira dos usuários.</div>
+      <div class="proj-tags">
+        <span class="proj-tag">Figma</span>
+        <span class="proj-tag">UX Research</span>
+        <span class="proj-tag">Protopie</span>
+      </div>
+      <div class="proj-divider"></div>
+      <div class="proj-cta">Ver projeto</div>
+    </div>
+
+    <!-- card 2 — rest state -->
+    <div class="proj-card">
+      <div class="proj-category">UI Design</div>
+      <div class="proj-title">Design System — E-commerce</div>
+      <div class="proj-desc">Design system escalável com +200 componentes atômicos.</div>
+      <div class="proj-tags">
+        <span class="proj-tag">Design System</span>
+        <span class="proj-tag">Tokens</span>
+      </div>
+      <div class="proj-divider"></div>
+      <div class="proj-cta">Ver projeto</div>
+    </div>
+
+    <!-- card 3 -->
+    <div class="proj-card">
+      <div class="proj-category">Branding</div>
+      <div class="proj-title">Identidade Visual — Studio Créatif</div>
+      <div class="proj-desc">Da estratégia de marca ao manual de identidade visual completo.</div>
+      <div class="proj-tags">
+        <span class="proj-tag">Logotipo</span>
+        <span class="proj-tag">Branding</span>
+      </div>
+      <div class="proj-divider"></div>
+      <div class="proj-cta">Ver projeto</div>
+    </div>
+
+  </div>
+  <div class="carousel-hint">← scroll automático · pause ao passar o mouse →</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ══════ SERVIÇOS ══════ -->
+<div class="section">
+  <p class="section-label">Serviços</p>
+  <h2 class="section-heading">O que eu faço</h2>
+
+  <div class="accordion">
+
+    <!-- item 1 — open -->
+    <div class="acc-item open">
+      <div class="acc-header">
+        <div class="acc-icon">◎</div>
+        <div class="acc-title">UX Research & Design</div>
+        <div class="acc-toggle">+</div>
+      </div>
+      <div class="acc-body">
+        <div class="acc-body-inner">
+          <div class="acc-desc">Pesquisa com usuários, mapeamento de jornada, wireframes e prototipagem para criar experiências fundamentadas em dados reais.</div>
+          <div class="acc-tools">
+            <span class="acc-tool">Figma</span>
+            <span class="acc-tool">Maze</span>
+            <span class="acc-tool">Hotjar</span>
+            <span class="acc-tool">Protopie</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- item 2 — closed -->
+    <div class="acc-item">
+      <div class="acc-header">
+        <div class="acc-icon" style="border-color:rgba(79,70,229,0.35);background:rgba(79,70,229,0.12);">▦</div>
+        <div class="acc-title">UI Design</div>
+        <div class="acc-toggle">+</div>
+      </div>
+      <div class="acc-body">
+        <div class="acc-body-inner">
+          <div class="acc-desc">Interfaces visuais de alta fidelidade, design systems e guidelines para produtos digitais coesos e escaláveis.</div>
+          <div class="acc-tools">
+            <span class="acc-tool">Figma</span>
+            <span class="acc-tool">Framer</span>
+            <span class="acc-tool">Adobe XD</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- item 3 — closed -->
+    <div class="acc-item">
+      <div class="acc-header">
+        <div class="acc-icon" style="border-color:rgba(168,85,247,0.35);background:rgba(168,85,247,0.12);">△</div>
+        <div class="acc-title">Branding Digital</div>
+        <div class="acc-toggle">+</div>
+      </div>
+      <div class="acc-body">
+        <div class="acc-body-inner">
+          <div class="acc-desc">Identidade visual, logotipos e sistemas de marca que comunicam o posicionamento único do seu negócio.</div>
+          <div class="acc-tools">
+            <span class="acc-tool">Illustrator</span>
+            <span class="acc-tool">Photoshop</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- item 4 — closed -->
+    <div class="acc-item">
+      <div class="acc-header">
+        <div class="acc-icon" style="border-color:rgba(0,200,255,0.35);background:rgba(0,200,255,0.08);">▷</div>
+        <div class="acc-title">Motion & Interação</div>
+        <div class="acc-toggle">+</div>
+      </div>
+      <div class="acc-body">
+        <div class="acc-body-inner">
+          <div class="acc-desc">Animações de interface, micro-interações e protótipos animados que elevam a experiência do usuário.</div>
+          <div class="acc-tools">
+            <span class="acc-tool">After Effects</span>
+            <span class="acc-tool">Protopie</span>
+            <span class="acc-tool">Framer</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="services-cta">
+    <a href="#">Vamos conversar? →</a>
+  </div>
+</div>
+
+<script>
+  // Make accordion interactive in preview
+  document.querySelectorAll('.acc-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.acc-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+  // Make filter buttons interactive
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>

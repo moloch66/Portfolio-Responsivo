@@ -1,0 +1,134 @@
+{
+  "nav": {
+    "about": "About",
+    "portfolio": "Portfolio",
+    "services": "Services",
+    "contact": "Contact"
+  },
+  "langToggle": {
+    "label": "Switch language to Portuguese",
+    "current": "EN"
+  },
+  "hero": {
+    "greeting": "Hi, I'm",
+    "name": "Janderson Vinicius",
+    "subtitle": "jandervs",
+    "title": "Visual Studio",
+    "tagline": "I turn complex problems into intuitive and memorable digital experiences.",
+    "cta_projects": "View Projects",
+    "cta_contact": "Get in Touch"
+  },
+  "about": {
+    "section_label": "About me",
+    "heading": "Creating experiences that matter",
+    "bio_1": "I'm a UX/UI designer with 5+ years of experience creating digital products that balance aesthetic beauty and functionality. I believe good design is invisible — it just works.",
+    "bio_2": "I work with startups and established companies to transform ideas into interfaces users love. My process always starts with research and ends with measurable impact.",
+    "bio_3": "When I'm not designing, I'm exploring new technologies, studying cognitive psychology, or experimenting with animations and generative interfaces.",
+    "skills_heading": "Tools & Skills",
+    "skills": ["Figma", "Adobe XD", "Illustrator", "Photoshop", "After Effects", "Protopie", "Framer", "HTML/CSS", "UX Research", "Design System"]
+  },
+  "portfolio": {
+    "section_label": "Portfolio",
+    "heading": "Selected Work",
+    "filter_all": "All",
+    "filter_ux": "UX",
+    "filter_ui": "UI",
+    "filter_branding": "Branding",
+    "filter_motion": "Motion",
+    "projects": [
+      {
+        "id": "project-1",
+        "title": "Personal Finance App",
+        "category": "ux",
+        "category_label": "UX Design",
+        "description": "Complete redesign of a fintech app focused on reducing financial anxiety for users.",
+        "full_description": "I conducted research with 40 users to identify friction points in the original app. The redesign resulted in 35% increase in daily engagement and 60% reduction in support requests.",
+        "tags": ["UX Research", "Prototyping", "Usability Testing"],
+        "link": "#"
+      },
+      {
+        "id": "project-2",
+        "title": "Design System — E-commerce",
+        "category": "ui",
+        "category_label": "UI Design",
+        "description": "Creation of a scalable design system for an e-commerce platform with 200+ components.",
+        "full_description": "I built a design system from scratch using design tokens and atomic components. Reduced time to develop new features by 40% and ensured visual consistency across all products.",
+        "tags": ["Design System", "Figma", "Tokens"],
+        "link": "#"
+      },
+      {
+        "id": "project-3",
+        "title": "Brand Identity — Studio Créatif",
+        "category": "branding",
+        "category_label": "Branding",
+        "description": "Complete visual identity for a boutique creative studio in São Paulo.",
+        "full_description": "From brand strategy to the visual identity manual. Includes logotype, typography, color palette, stationery, and guidelines for digital and print applications.",
+        "tags": ["Visual Identity", "Logo", "Branding"],
+        "link": "#"
+      }
+    ],
+    "modal_close": "Close project",
+    "modal_visit": "View live project",
+    "modal_tags": "Tags"
+  },
+  "services": {
+    "section_label": "Services",
+    "heading": "What I do",
+    "cta": "Let's talk?",
+    "items": [
+      {
+        "icon": "ux",
+        "title": "UX Research & Design",
+        "description": "User research, journey mapping, wireframes and prototyping to create experiences grounded in real data."
+      },
+      {
+        "icon": "ui",
+        "title": "UI Design",
+        "description": "High-fidelity visual interfaces, design systems and guidelines for cohesive and scalable digital products."
+      },
+      {
+        "icon": "branding",
+        "title": "Digital Branding",
+        "description": "Visual identity, logos and brand systems that communicate your business's unique positioning."
+      },
+      {
+        "icon": "motion",
+        "title": "Motion & Interaction",
+        "description": "Interface animations, micro-interactions and animated prototypes that elevate the user experience."
+      }
+    ]
+  },
+  "contact": {
+    "section_label": "Contact",
+    "heading": "Let's work together",
+    "cta": "Hire a professional",
+    "subheading": "Have a project in mind? Tell me about it.",
+    "form": {
+      "name_label": "Name",
+      "name_placeholder": "Your full name",
+      "email_label": "Email",
+      "email_placeholder": "your@email.com",
+      "message_label": "Message",
+      "message_placeholder": "Tell me a bit about your project...",
+      "submit": "Send message",
+      "submitting": "Sending...",
+      "char_count": "characters remaining"
+    },
+    "errors": {
+      "name_required": "Name is required",
+      "name_min": "Name must be at least 2 characters",
+      "email_required": "Email is required",
+      "email_invalid": "Invalid email format",
+      "message_required": "Message is required",
+      "message_min": "Message must be at least 10 characters",
+      "message_max": "Message must be at most 1000 characters"
+    },
+    "success": "Message sent successfully! I'll get back to you soon.",
+    "error": "Failed to send. Please try again or email me directly."
+  },
+  "footer": {
+    "made_with": "Made with",
+    "and": "and lots of coffee",
+    "rights": "All rights reserved"
+  }
+}
