@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <radialGradient id="bgGlow" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#1a0f00"/>
+      <stop offset="100%" stop-color="#050505"/>
+    </radialGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="18" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="500" fill="url(#bgGlow)"/>
+
+  <!-- Subtle grid lines -->
+  <g stroke="#FF9F4D" stroke-opacity="0.04" stroke-width="1">
+    <line x1="0" y1="100" x2="800" y2="100"/>
+    <line x1="0" y1="200" x2="800" y2="200"/>
+    <line x1="0" y1="300" x2="800" y2="300"/>
+    <line x1="0" y1="400" x2="800" y2="400"/>
+    <line x1="160" y1="0" x2="160" y2="500"/>
+    <line x1="320" y1="0" x2="320" y2="500"/>
+    <line x1="480" y1="0" x2="480" y2="500"/>
+    <line x1="640" y1="0" x2="640" y2="500"/>
+  </g>
+
+  <!-- Glow halo behind logo -->
+  <ellipse cx="400" cy="250" rx="220" ry="130" fill="#FF9F4D" fill-opacity="0.07" filter="url(#softGlow)"/>
+
+  <!-- Cocktail glass icon (centered left of text) -->
+  <g transform="translate(258, 180)" fill="#FF9F4D" filter="url(#glow)">
+    <!-- Glass top (trapezoid via polygon) -->
+    <polygon points="0,0 84,0 58,80 26,80" fill="#FF9F4D"/>
+    <!-- Glass stem -->
+    <rect x="38" y="80" width="8" height="38" fill="#FF9F4D"/>
+    <!-- Glass base -->
+    <rect x="20" y="118" width="44" height="7" rx="3" fill="#FF9F4D"/>
+    <!-- Drink fill inside glass (slightly lighter) -->
+    <polygon points="8,12 76,12 56,70 28,70" fill="#0a0600" opacity="0.5"/>
+    <!-- Olive/garnish line -->
+    <line x1="12" y1="8" x2="72" y2="8" stroke="#FF9F4D" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <!-- FILABAR logotype text -->
+  <text
+    x="374"
+    y="272"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="86"
+    font-weight="900"
+    font-style="italic"
+    fill="#FF9F4D"
+    letter-spacing="-2"
+    filter="url(#glow)"
+  >FILABAR</text>
+
+  <!-- Tagline -->
+  <text
+    x="400"
+    y="318"
+    font-family="Arial, sans-serif"
+    font-size="13"
+    font-weight="500"
+    fill="#FF9F4D"
+    fill-opacity="0.55"
+    letter-spacing="5"
+    text-anchor="middle"
+  >GESTÃO DE FILAS · UX DESIGN</text>
+</svg>

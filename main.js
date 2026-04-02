@@ -244,8 +244,11 @@ function openModal(projectId) {
   const link     = modal.querySelector('.modal__link');
 
   if (img) {
+    const coverMap = {
+      'project-1': 'assets/filabar-cover.svg'
+    };
     const idx = parseInt(projectId.split('-')[1]) || 1;
-    img.src = `https://placehold.co/760x427/050a0a/00f5ff?text=Project+${idx}`;
+    img.src = coverMap[projectId] || `https://placehold.co/760x427/050a0a/00f5ff?text=Project+${idx}`;
     img.alt = project.title;
   }
   if (category) category.textContent = project.category_label;
