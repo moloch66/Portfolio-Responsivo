@@ -156,12 +156,32 @@ nav a:hover::after{transform:scaleX(1)}
 }
 .hero-grid{
   position:absolute;inset:0;
-  background-image:
-    linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);
-  background-size:60px 60px;
+  display:grid;
   mask-image:radial-gradient(ellipse 90% 90% at 50% 40%,black 30%,transparent 100%);
+  pointer-events:none;
 }
+.hero-cell{
+  border-right:1px solid rgba(255,255,255,.022);
+  border-bottom:1px solid rgba(255,255,255,.022);
+  position:relative;
+  pointer-events:auto;
+  transition:
+    background 200ms ease,
+    transform 200ms cubic-bezier(.22,1,.36,1),
+    box-shadow 200ms ease;
+  transform-style:preserve-3d;
+  will-change:transform,background;
+}
+.hero-cell:hover{
+  background:rgba(200,245,96,.045);
+  transform:translateZ(18px) scale(1.04);
+  box-shadow:
+    0 0 0 1px rgba(200,245,96,.18),
+    0 8px 32px rgba(0,0,0,.55),
+    inset 0 0 12px rgba(200,245,96,.06);
+  z-index:2;
+}
+#hero{perspective:800px}
 .hero-blob{
   position:absolute;
   border-radius:50%;
@@ -909,6 +929,32 @@ document.querySelectorAll('.filter-btn').forEach(btn=>{
     });
   });
 });
+
+// ── HERO GRID interactive cells
+(function(){
+  const grid = document.querySelector('.hero-grid');
+  if(!grid) return;
+  const SIZE = 60;
+  function build(){
+    grid.innerHTML='';
+    const cols = Math.ceil(grid.offsetWidth / SIZE) + 1;
+    const rows = Math.ceil(grid.offsetHeight / SIZE) + 1;
+    grid.style.gridTemplateColumns = `repeat(${cols}, ${SIZE}px)`;
+    grid.style.gridTemplateRows    = `repeat(${rows}, ${SIZE}px)`;
+    const total = cols * rows;
+    for(let i=0;i<total;i++){
+      const c = document.createElement('div');
+      c.className = 'hero-cell';
+      grid.appendChild(c);
+    }
+  }
+  build();
+  let raf;
+  window.addEventListener('resize',()=>{
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(build);
+  });
+})();
 
 // ── PARALLAX on hero blobs
 window.addEventListener('scroll',()=>{
