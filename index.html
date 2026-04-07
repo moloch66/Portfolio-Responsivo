@@ -131,6 +131,7 @@ nav a:hover::after{transform:scaleX(1)}
   font-weight:900;
   letter-spacing:-.04em;
   overflow:hidden;
+  padding-bottom:.18em;
 }
 #intro-name span{display:inline-block;transform:translateY(110%)}
 #intro-sub{
@@ -664,12 +665,14 @@ footer{
       <button class="filter-btn active" data-f="all">Todos</button>
       <button class="filter-btn" data-f="ux">UX</button>
       <button class="filter-btn" data-f="ui">UI</button>
+      <button class="filter-btn" data-f="game">Game IA</button>
       <button class="filter-btn" data-f="branding">Branding</button>
       <button class="filter-btn" data-f="motion">Motion</button>
     </div>
   </div>
 
   <div class="projects-grid reveal">
+    <!-- Row 1: FilaBar + Stellar Fix -->
     <article class="project-card" data-cat="ux" style="cursor:pointer" onclick="window.open('https://moloch66.github.io/filabar','_blank')">
       <div class="proj-img-wrap">
         <img src="assets/filabar-cover.svg" alt="Filabar"
@@ -685,6 +688,22 @@ footer{
       </div>
     </article>
 
+    <article class="project-card" data-cat="game" style="cursor:pointer" onclick="window.open('https://moloch66.github.io/stellar-fix/','_blank')">
+      <div class="proj-img-wrap">
+        <img src="assets/stellar-fix-cover.svg" alt="Stellar Fix — Pixel Art Game"
+             loading="lazy" width="800" height="500">
+        <div class="proj-overlay">Ver Projeto →</div>
+      </div>
+      <div class="proj-meta">
+        <div>
+          <div class="proj-title">Stellar Fix</div>
+          <div class="proj-cat">Game com IA · Browser · Unity 2D</div>
+        </div>
+        <div class="proj-year">/2025</div>
+      </div>
+    </article>
+
+    <!-- Row 2: Design System + Branding -->
     <article class="project-card" data-cat="ui">
       <div class="proj-img-wrap">
         <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=500&fit=crop&q=80"
@@ -715,10 +734,11 @@ footer{
       </div>
     </article>
 
-    <article class="project-card" data-cat="motion">
+    <!-- Row 3: Motion wide -->
+    <article class="project-card project-card--wide" data-cat="motion">
       <div class="proj-img-wrap">
         <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=500&fit=crop&q=80"
-             alt="Motion Design Reels" loading="lazy" width="800" height="500">
+             alt="Motion Design Reels" loading="lazy" width="1200" height="400">
         <div class="proj-overlay">Ver Projeto →</div>
       </div>
       <div class="proj-meta">
@@ -727,21 +747,6 @@ footer{
           <div class="proj-cat">Motion</div>
         </div>
         <div class="proj-year">/2024</div>
-      </div>
-    </article>
-
-    <article class="project-card project-card--wide" data-cat="ui" style="cursor:pointer" onclick="window.open('https://moloch66.github.io/stellar-fix/','_blank')">
-      <div class="proj-img-wrap">
-        <img src="assets/stellar-fix-cover.svg" alt="Stellar Fix — Pixel Art Game"
-             loading="lazy" width="1200" height="400">
-        <div class="proj-overlay">Ver Projeto →</div>
-      </div>
-      <div class="proj-meta">
-        <div>
-          <div class="proj-title">Stellar Fix — Pixel Art Game</div>
-          <div class="proj-cat">Game Design · UI Design · Unity 2D</div>
-        </div>
-        <div class="proj-year">/2025</div>
       </div>
     </article>
   </div>
