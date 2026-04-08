@@ -1,18 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
   <defs>
-    <radialGradient id="bgGlow" cx="50%" cy="50%" r="55%">
-      <stop offset="0%" stop-color="#1a0f00"/>
+    <radialGradient id="bgGlow" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#180d00"/>
       <stop offset="100%" stop-color="#050505"/>
     </radialGradient>
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
       <feMerge>
         <feMergeNode in="coloredBlur"/>
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
-    <filter id="softGlow">
-      <feGaussianBlur stdDeviation="18" result="coloredBlur"/>
+    <filter id="haloGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="22" result="coloredBlur"/>
       <feMerge>
         <feMergeNode in="coloredBlur"/>
         <feMergeNode in="SourceGraphic"/>
@@ -23,58 +23,60 @@
   <!-- Background -->
   <rect width="800" height="500" fill="url(#bgGlow)"/>
 
-  <!-- Subtle grid lines -->
+  <!-- Subtle grid -->
   <g stroke="#FF9F4D" stroke-opacity="0.04" stroke-width="1">
-    <line x1="0" y1="100" x2="800" y2="100"/>
-    <line x1="0" y1="200" x2="800" y2="200"/>
-    <line x1="0" y1="300" x2="800" y2="300"/>
-    <line x1="0" y1="400" x2="800" y2="400"/>
-    <line x1="160" y1="0" x2="160" y2="500"/>
-    <line x1="320" y1="0" x2="320" y2="500"/>
-    <line x1="480" y1="0" x2="480" y2="500"/>
-    <line x1="640" y1="0" x2="640" y2="500"/>
+    <line x1="0" y1="125" x2="800" y2="125"/>
+    <line x1="0" y1="250" x2="800" y2="250"/>
+    <line x1="0" y1="375" x2="800" y2="375"/>
+    <line x1="200" y1="0" x2="200" y2="500"/>
+    <line x1="400" y1="0" x2="400" y2="500"/>
+    <line x1="600" y1="0" x2="600" y2="500"/>
   </g>
 
-  <!-- Glow halo behind logo -->
-  <ellipse cx="400" cy="250" rx="220" ry="130" fill="#FF9F4D" fill-opacity="0.07" filter="url(#softGlow)"/>
+  <!-- Radial halo behind composition -->
+  <ellipse cx="400" cy="230" rx="200" ry="110" fill="#FF9F4D" fill-opacity="0.06" filter="url(#haloGlow)"/>
 
-  <!-- Cocktail glass icon (centered left of text) -->
-  <g transform="translate(258, 180)" fill="#FF9F4D" filter="url(#glow)">
-    <!-- Glass top (trapezoid via polygon) -->
-    <polygon points="0,0 84,0 58,80 26,80" fill="#FF9F4D"/>
-    <!-- Glass stem -->
-    <rect x="38" y="80" width="8" height="38" fill="#FF9F4D"/>
-    <!-- Glass base -->
-    <rect x="20" y="118" width="44" height="7" rx="3" fill="#FF9F4D"/>
-    <!-- Drink fill inside glass (slightly lighter) -->
-    <polygon points="8,12 76,12 56,70 28,70" fill="#0a0600" opacity="0.5"/>
-    <!-- Olive/garnish line -->
-    <line x1="12" y1="8" x2="72" y2="8" stroke="#FF9F4D" stroke-width="3" stroke-linecap="round"/>
+  <!-- Cocktail glass — centered at x=400, top at y=100 -->
+  <g transform="translate(358, 100)" filter="url(#glow)">
+    <!-- Glass body trapezoid -->
+    <polygon points="0,0 84,0 60,88 24,88" fill="#FF9F4D" opacity="0.92"/>
+    <!-- Drink fill (darker inside) -->
+    <polygon points="8,14 76,14 56,76 28,76" fill="#1a0900" opacity="0.55"/>
+    <!-- Rim line -->
+    <line x1="4" y1="10" x2="80" y2="10" stroke="#FF9F4D" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+    <!-- Stem -->
+    <rect x="38" y="88" width="8" height="40" fill="#FF9F4D" opacity="0.85"/>
+    <!-- Base -->
+    <rect x="18" y="128" width="48" height="7" rx="3.5" fill="#FF9F4D" opacity="0.85"/>
   </g>
 
-  <!-- FILABAR logotype text -->
+  <!-- FILABAR — centered -->
   <text
-    x="374"
-    y="272"
+    x="400"
+    y="310"
     font-family="Georgia, 'Times New Roman', serif"
-    font-size="86"
+    font-size="80"
     font-weight="900"
     font-style="italic"
     fill="#FF9F4D"
-    letter-spacing="-2"
+    letter-spacing="-1"
+    text-anchor="middle"
     filter="url(#glow)"
   >FILABAR</text>
 
-  <!-- Tagline -->
+  <!-- Divider line -->
+  <line x1="320" y1="330" x2="480" y2="330" stroke="#FF9F4D" stroke-opacity="0.2" stroke-width="1"/>
+
+  <!-- Tagline — centered, proper spacing -->
   <text
     x="400"
-    y="318"
-    font-family="Arial, sans-serif"
-    font-size="13"
-    font-weight="500"
+    y="358"
+    font-family="Arial, Helvetica, sans-serif"
+    font-size="11"
+    font-weight="400"
     fill="#FF9F4D"
-    fill-opacity="0.55"
-    letter-spacing="5"
+    fill-opacity="0.5"
+    letter-spacing="6"
     text-anchor="middle"
-  >GESTÃO DE FILAS · UX DESIGN</text>
+  >GESTÃO DE FILAS  ·  UX DESIGN</text>
 </svg>
