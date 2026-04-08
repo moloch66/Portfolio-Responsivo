@@ -507,6 +507,164 @@ footer{
 .reveal-delay-2{transition-delay:.2s}
 .reveal-delay-3{transition-delay:.3s}
 
+/* ── JOURNEY ─────────────────────────────── */
+#journey{background:var(--bg2)}
+.journey-timeline{position:relative;margin-top:4rem;padding-left:3rem}
+.journey-timeline::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:1px;
+  background:linear-gradient(to bottom,var(--accent) 0%,rgba(200,245,96,.2) 60%,transparent 100%);
+}
+.journey-item{position:relative;margin-bottom:3rem}
+.journey-item:last-child{margin-bottom:0}
+.journey-item::before{
+  content:'';position:absolute;left:-3.38rem;top:.35rem;
+  width:9px;height:9px;border-radius:50%;
+  background:var(--accent);box-shadow:0 0 18px rgba(200,245,96,.55);
+}
+.journey-card{
+  background:var(--surface);
+  border:1px solid var(--border2);
+  padding:2rem 2.5rem;
+  position:relative;overflow:hidden;
+  border-radius:3px;
+  transform-style:preserve-3d;
+  transition:transform .35s cubic-bezier(.22,1,.36,1),
+             border-color .3s,box-shadow .3s;
+  cursor:default;
+  will-change:transform;
+}
+.journey-card::before{
+  content:'';position:absolute;inset:-1px;
+  background:linear-gradient(135deg,rgba(200,245,96,.14),transparent 55%);
+  opacity:0;transition:opacity .3s;pointer-events:none;border-radius:3px;
+}
+.journey-card:hover{
+  border-color:rgba(200,245,96,.28);
+  box-shadow:0 0 40px rgba(200,245,96,.07),0 12px 40px rgba(0,0,0,.55);
+}
+.journey-card:hover::before{opacity:1}
+.journey-period{
+  font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:.5rem;
+}
+.journey-org{
+  font-size:.75rem;color:var(--text3);letter-spacing:.06em;
+  text-transform:uppercase;margin-bottom:.9rem;
+}
+.journey-role{
+  font-family:'Unbounded',sans-serif;
+  font-size:clamp(1rem,1.8vw,1.35rem);
+  font-weight:600;letter-spacing:-.03em;margin-bottom:.8rem;
+}
+.journey-desc{font-size:.88rem;color:var(--text2);line-height:1.78}
+.journey-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1.1rem}
+.journey-tag{
+  font-size:.68rem;letter-spacing:.06em;color:var(--text3);
+  border:1px solid var(--border2);padding:.22rem .7rem;border-radius:999px;
+  transition:border-color .2s,color .2s;
+}
+.journey-card:hover .journey-tag{border-color:rgba(200,245,96,.22);color:var(--text2)}
+
+/* ── SKILLS GRID ─────────────────────────── */
+#skills{background:var(--bg)}
+.skills-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--border);border:1px solid var(--border);
+  margin-top:4rem;
+}
+.skill-card{
+  background:var(--bg);padding:2rem 1.8rem;
+  position:relative;overflow:hidden;cursor:default;
+  transition:background .25s,transform .3s cubic-bezier(.22,1,.36,1);
+}
+.skill-card::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(200,245,96,.09) 0%,transparent 58%);
+  opacity:0;transition:opacity .3s;
+}
+.skill-card:hover{background:var(--bg3)}
+.skill-card:hover::after{opacity:1}
+.skill-card:hover .skill-card-inner{transform:translateY(-4px)}
+.skill-card-inner{transition:transform .3s cubic-bezier(.22,1,.36,1)}
+.skill-icon{width:32px;height:32px;color:var(--accent);margin-bottom:1.1rem}
+.skill-card-name{
+  font-family:'Unbounded',sans-serif;font-size:.88rem;
+  font-weight:500;letter-spacing:-.01em;margin-bottom:.4rem;
+}
+.skill-card-desc{font-size:.78rem;color:var(--text3);line-height:1.65}
+
+/* ── CURRENT WORK ─────────────────────────── */
+#current-work{background:var(--bg1)}
+.work-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;margin-top:4rem}
+.work-card{
+  position:relative;overflow:hidden;border-radius:4px;
+  background:rgba(255,255,255,.025);
+  border:1px solid var(--border2);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  transition:transform .4s cubic-bezier(.22,1,.36,1),border-color .3s,box-shadow .4s;
+  cursor:pointer;
+}
+.work-card:hover{
+  transform:translateY(-7px);
+  border-color:rgba(200,245,96,.22);
+  box-shadow:0 0 50px rgba(200,245,96,.06),0 24px 64px rgba(0,0,0,.6);
+}
+.work-card-img{aspect-ratio:16/9;overflow:hidden;position:relative}
+.work-card-img img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform .65s cubic-bezier(.25,1,.5,1),filter .4s;
+  filter:brightness(.65) saturate(.85);
+}
+.work-card:hover .work-card-img img{transform:scale(1.07);filter:brightness(.82) saturate(1)}
+.work-card-img-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(5,6,8,.8) 0%,transparent 60%);
+}
+.work-card-body{padding:1.5rem 1.8rem 1.8rem}
+.work-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.55rem}
+.work-card-name{
+  font-family:'Unbounded',sans-serif;font-size:.95rem;
+  font-weight:600;letter-spacing:-.02em;
+}
+.work-status{display:flex;align-items:center;gap:.4rem;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text3)}
+.status-dot{width:6px;height:6px;border-radius:50%}
+.status-dot.active{background:#4ade80;animation:pulse-dot 1.8s ease-in-out infinite}
+.status-dot.dev{background:#fbbf24;animation:pulse-dot 2.2s ease-in-out infinite}
+@keyframes pulse-dot{
+  0%,100%{box-shadow:0 0 0 0 rgba(74,222,128,.45)}
+  50%{box-shadow:0 0 0 7px rgba(74,222,128,0)}
+}
+.work-card-desc{font-size:.83rem;color:var(--text2);line-height:1.75;margin-bottom:1.2rem}
+.work-card-actions{display:flex;gap:.6rem;flex-wrap:wrap}
+.btn-work-primary{
+  font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--bg);background:var(--accent);padding:.42rem 1.1rem;
+  text-decoration:none;border-radius:2px;
+  transition:opacity .2s,box-shadow .2s;
+}
+.btn-work-primary:hover{opacity:.88;box-shadow:0 0 20px rgba(200,245,96,.25)}
+.btn-work-ghost{
+  font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text3);border:1px solid var(--border2);padding:.42rem 1.1rem;
+  text-decoration:none;border-radius:2px;
+  transition:color .2s,border-color .2s;
+}
+.btn-work-ghost:hover{color:var(--text);border-color:var(--border3)}
+
+/* ── MINDSET ─────────────────────────────── */
+#mindset{background:var(--bg);text-align:center}
+.mindset-inner{max-width:760px;margin:0 auto}
+.mindset-manifesto{margin-top:4rem;display:flex;flex-direction:column;gap:1.8rem}
+.manifesto-line{
+  font-size:clamp(1.1rem,2.4vw,1.55rem);
+  color:var(--text2);line-height:1.6;
+  opacity:0;transform:translateY(18px);filter:blur(8px);
+  transition:opacity .75s ease,transform .75s ease,filter .75s ease;
+}
+.manifesto-line.in{opacity:1;transform:translateY(0);filter:blur(0)}
+.manifesto-line strong{color:var(--text);font-weight:400}
+.manifesto-line em{color:var(--accent);font-style:normal}
+
 /* ── RESPONSIVE ─────────────────────────── */
 @media(max-width:900px){
   header{padding:1.2rem 1.8rem}
@@ -519,6 +677,20 @@ footer{
   footer{flex-direction:column;gap:1rem;text-align:center}
   .footer-links{justify-content:center}
   .contact-headline{font-size:clamp(2rem,10vw,4rem)}
+  /* Journey */
+  .journey-timeline{padding-left:2rem}
+  .journey-item::before{left:-2.38rem}
+  .journey-card{padding:1.5rem 1.6rem}
+  /* Skills */
+  .skills-grid{grid-template-columns:repeat(2,1fr)}
+  /* Work */
+  .work-grid{grid-template-columns:1fr}
+  /* Mindset */
+  .mindset-inner{padding:0}
+}
+@media(max-width:480px){
+  .skills-grid{grid-template-columns:1fr}
+  .journey-card{padding:1.2rem 1.2rem}
 }
 </style>
 </head>
@@ -543,9 +715,10 @@ footer{
 <header id="hdr">
   <a href="#" class="logo">jandervs<em>.</em></a>
   <nav>
-    <a href="#about">Sobre</a>
-    <a href="#portfolio">Portfólio</a>
-    <a href="#services">Serviços</a>
+    <a href="#journey">Journey</a>
+    <a href="#skills">Skills</a>
+    <a href="#current-work">Work</a>
+    <a href="#mindset">Mindset</a>
     <a href="#contact">Contato</a>
   </nav>
   <a href="https://wa.me/5531986961461" class="nav-cta" target="_blank" rel="noopener">Entrar em contato</a>
@@ -674,6 +847,60 @@ footer{
   </div>
 </section>
 
+<!-- JOURNEY -->
+<section id="journey" class="sec">
+  <div class="sec-tag reveal">Trajetória</div>
+  <h2 class="sec-title reveal reveal-delay-1">Journey<br><span style="color:var(--text3);font-weight:300">uma história.</span></h2>
+  <div class="journey-timeline">
+
+    <div class="journey-item reveal">
+      <div class="journey-card">
+        <div class="journey-period">2022 — 2024</div>
+        <div class="journey-org">SENAI</div>
+        <div class="journey-role">Formação em Comunicação Visual</div>
+        <p class="journey-desc">Onde tudo começou. Fundamentos sólidos de design gráfico, composição visual e identidade. Primeiros projetos reais — primeiras histórias contadas através do design.</p>
+        <div class="journey-tags">
+          <span class="journey-tag">Design Gráfico</span>
+          <span class="journey-tag">Fundamentos Visuais</span>
+          <span class="journey-tag">Identidade</span>
+          <span class="journey-tag">Projetos Iniciais</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="journey-item reveal reveal-delay-1">
+      <div class="journey-card">
+        <div class="journey-period">2024 — 2026</div>
+        <div class="journey-org">UNA</div>
+        <div class="journey-role">Graduação em Design Gráfico</div>
+        <p class="journey-desc">O salto do impresso para o digital. Design de interfaces modernas, pensamento centrado no usuário e construção de sistemas visuais escaláveis. Aprendendo a projetar para pessoas reais.</p>
+        <div class="journey-tags">
+          <span class="journey-tag">UX Design</span>
+          <span class="journey-tag">Design Digital</span>
+          <span class="journey-tag">Interfaces Modernas</span>
+          <span class="journey-tag">Sistemas Visuais</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="journey-item reveal reveal-delay-2">
+      <div class="journey-card" style="border-color:rgba(200,245,96,.2);background:rgba(200,245,96,.018)">
+        <div class="journey-period">2026 — Presente</div>
+        <div class="journey-org">Companhia de Tecnologia da Informação de Minas Gerais</div>
+        <div class="journey-role">UX Designer</div>
+        <p class="journey-desc">Design thinking aplicado a soluções de impacto real. Landing pages, produtos governamentais e interfaces que servem milhares de usuários. Design como ferramenta de transformação.</p>
+        <div class="journey-tags">
+          <span class="journey-tag">Landing Pages</span>
+          <span class="journey-tag">Design Thinking</span>
+          <span class="journey-tag">Projetos Reais</span>
+          <span class="journey-tag">Governo Digital</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <!-- PORTFOLIO -->
 <section id="portfolio" class="sec">
   <div class="port-head">
@@ -772,42 +999,127 @@ footer{
   </div>
 </section>
 
-<!-- SERVICES -->
-<section id="services" class="sec">
-  <div class="sec-tag reveal">O que faço</div>
-  <h2 class="sec-title reveal reveal-delay-1">Serviços<br><span style="color:var(--text3);font-weight:300">especializados.</span></h2>
-  <div class="services-list">
-    <div class="service-row reveal">
-      <span class="srv-num">01</span>
-      <div class="srv-content">
-        <div class="srv-title">UX Research &amp; Design</div>
-        <div class="srv-desc">Pesquisa com usuários, mapeamento de jornada, wireframes e prototipagem.</div>
+<!-- SKILLS -->
+<section id="skills" class="sec">
+  <div class="sec-tag reveal">Ferramentas &amp; Mentalidade</div>
+  <h2 class="sec-title reveal reveal-delay-1">Skills<br><span style="color:var(--text3);font-weight:300">&amp; capacidades.</span></h2>
+  <div class="skills-grid reveal reveal-delay-2">
+
+    <div class="skill-card" data-spotlight>
+      <div class="skill-card-inner">
+        <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        <div class="skill-card-name">UI Design</div>
+        <div class="skill-card-desc">Interfaces pixel-perfect de alta fidelidade. Atenção obsessiva ao detalhe que transforma wireframes em produtos finais.</div>
       </div>
-      <span class="srv-arrow">↗</span>
     </div>
-    <div class="service-row reveal reveal-delay-1">
-      <span class="srv-num">02</span>
-      <div class="srv-content">
-        <div class="srv-title">UI Design</div>
-        <div class="srv-desc">Interfaces visuais de alta fidelidade e design systems escaláveis.</div>
+
+    <div class="skill-card" data-spotlight>
+      <div class="skill-card-inner">
+        <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35M11 8v6M8 11h6"/></svg>
+        <div class="skill-card-name">UX Thinking</div>
+        <div class="skill-card-desc">Pesquisa, mapeamento de jornada, decisões baseadas em dados. Design que resolve problemas reais, não decora telas.</div>
       </div>
-      <span class="srv-arrow">↗</span>
     </div>
-    <div class="service-row reveal reveal-delay-2">
-      <span class="srv-num">03</span>
-      <div class="srv-content">
-        <div class="srv-title">Branding Digital</div>
-        <div class="srv-desc">Identidade visual e sistemas de marca com posicionamento único.</div>
+
+    <div class="skill-card" data-spotlight>
+      <div class="skill-card-inner">
+        <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        <div class="skill-card-name">Figma</div>
+        <div class="skill-card-desc">Design systems, auto-layout, componentes e variáveis. Fluxo profissional completo, do conceito ao handoff.</div>
       </div>
-      <span class="srv-arrow">↗</span>
     </div>
-    <div class="service-row reveal reveal-delay-3">
-      <span class="srv-num">04</span>
-      <div class="srv-content">
-        <div class="srv-title">Motion &amp; Interação</div>
-        <div class="srv-desc">Animações de interface e micro-interações que elevam a experiência.</div>
+
+    <div class="skill-card" data-spotlight>
+      <div class="skill-card-inner">
+        <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        <div class="skill-card-name">HTML &amp; CSS</div>
+        <div class="skill-card-desc">Código que vira produto. Um designer que entende o browser é um designer que cria sem limites.</div>
       </div>
-      <span class="srv-arrow">↗</span>
+    </div>
+
+    <div class="skill-card" data-spotlight>
+      <div class="skill-card-inner">
+        <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="m7 7 3 3-3 3M13 13h4"/></svg>
+        <div class="skill-card-name">Pixel Art</div>
+        <div class="skill-card-desc">Arte criativa, game assets e storytelling visual. Design além das interfaces — expressão pura através de pixels.</div>
+      </div>
+    </div>
+
+    <div class="skill-card" data-spotlight>
+      <div class="skill-card-inner">
+        <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12s2.545-5 7-5c4.454 0 7 5 7 5s-2.546 5-7 5c-4.455 0-7-5-7-5z"/><circle cx="12" cy="12" r="3"/></svg>
+        <div class="skill-card-name">Motion Design</div>
+        <div class="skill-card-desc">Anime.js, GSAP, transições com propósito. Movimento que orienta o usuário — não distrai, não performa.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CURRENT WORK -->
+<section id="current-work" class="sec">
+  <div class="sec-tag reveal">Projetos ativos</div>
+  <h2 class="sec-title reveal reveal-delay-1">Work<br><span style="color:var(--text3);font-weight:300">em andamento.</span></h2>
+  <div class="work-grid reveal reveal-delay-2">
+
+    <div class="work-card" onclick="window.open('https://moloch66.github.io/filabar/','_blank')" style="cursor:pointer">
+      <div class="work-card-img">
+        <img src="assets/filabar-cover.svg" alt="Filabar — App UX Design" loading="lazy" width="800" height="450">
+        <div class="work-card-img-overlay"></div>
+      </div>
+      <div class="work-card-body">
+        <div class="work-card-header">
+          <div class="work-card-name">Filabar</div>
+          <div class="work-status">
+            <div class="status-dot active"></div>
+            Ativo
+          </div>
+        </div>
+        <p class="work-card-desc">Aplicativo de gerenciamento de filas para bares e restaurantes. UX focado em reduzir o atrito e aumentar a satisfação do cliente em estabelecimentos físicos.</p>
+        <div class="work-card-actions">
+          <a href="https://moloch66.github.io/filabar/" target="_blank" rel="noopener" class="btn-work-primary" onclick="event.stopPropagation()">Ver projeto →</a>
+          <span class="btn-work-ghost">UX Design · App</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="work-card" onclick="window.open('https://moloch66.github.io/stellar-fix/','_blank')" style="cursor:pointer">
+      <div class="work-card-img">
+        <img src="assets/stellar-fix-cover.svg" alt="Stellar Fix — Pixel Art Game" loading="lazy" width="800" height="450">
+        <div class="work-card-img-overlay"></div>
+      </div>
+      <div class="work-card-body">
+        <div class="work-card-header">
+          <div class="work-card-name">Stellar Fix</div>
+          <div class="work-status">
+            <div class="status-dot dev"></div>
+            Em desenvolvimento
+          </div>
+        </div>
+        <p class="work-card-desc">Game browser em Pixel Art com mecânicas de IA. Design completo — personagens, cenários, UI in-game e experiência narrativa construída em Unity 2D.</p>
+        <div class="work-card-actions">
+          <a href="https://moloch66.github.io/stellar-fix/" target="_blank" rel="noopener" class="btn-work-primary" onclick="event.stopPropagation()">Ver projeto →</a>
+          <span class="btn-work-ghost">Game Design · Unity</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- MINDSET -->
+<section id="mindset" class="sec">
+  <div class="mindset-inner">
+    <div class="sec-tag reveal" style="justify-content:center">Como eu penso</div>
+    <h2 class="sec-title reveal reveal-delay-1" style="text-align:center">Mindset<br><span style="color:var(--text3);font-weight:300">de produto.</span></h2>
+    <div class="mindset-manifesto" id="mindset-manifesto">
+      <p class="manifesto-line">Design não é sobre <em>estética.</em></p>
+      <p class="manifesto-line">É sobre <strong>resolver problemas com clareza e intenção.</strong></p>
+      <p class="manifesto-line">Um botão mal posicionado <em>custa conversões.</em></p>
+      <p class="manifesto-line">Uma jornada confusa <strong>afasta usuários</strong> — silenciosamente.</p>
+      <p class="manifesto-line">Meu processo começa com <em>perguntas,</em> não com pixels.</p>
+      <p class="manifesto-line">E termina com <strong>impacto mensurável.</strong></p>
     </div>
   </div>
 </section>
@@ -833,9 +1145,10 @@ footer{
   <a href="#" class="footer-logo">jandervs<em>.</em></a>
   <p class="footer-text">Feito com ♥ e muito café — Janderson VS © <span id="yr"></span></p>
   <div class="footer-links">
-    <a href="#about">Sobre</a>
-    <a href="#portfolio">Portfólio</a>
-    <a href="#services">Serviços</a>
+    <a href="#journey">Journey</a>
+    <a href="#skills">Skills</a>
+    <a href="#current-work">Work</a>
+    <a href="#mindset">Mindset</a>
     <a href="https://wa.me/5531986961461" target="_blank" rel="noopener">WhatsApp</a>
   </div>
 </footer>
@@ -975,6 +1288,86 @@ if(window.gsap && window.ScrollTrigger){
     });
   });
 }
+
+// ── JOURNEY: 3D magnetic tilt on cards
+document.querySelectorAll('.journey-card').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    const dx=(e.clientX-r.left-r.width/2)/(r.width/2);
+    const dy=(e.clientY-r.top-r.height/2)/(r.height/2);
+    card.style.transform=`translateY(-4px) scale(1.01) rotateX(${(-dy*3).toFixed(2)}deg) rotateY(${(dx*4).toFixed(2)}deg)`;
+    card.style.transition='transform .1s ease';
+  });
+  card.addEventListener('mouseleave',()=>{
+    card.style.transform='';
+    card.style.transition='transform .4s cubic-bezier(.22,1,.36,1)';
+  });
+});
+
+// ── JOURNEY: staggered GSAP entrance
+(function(){
+  const timeline=document.querySelector('.journey-timeline');
+  if(!timeline||!window.gsap) return;
+  const jo=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        gsap.fromTo(e.target.querySelectorAll('.journey-item'),
+          {opacity:0,x:-28},
+          {opacity:1,x:0,duration:.72,stagger:.18,ease:'power3.out'});
+        jo.unobserve(e.target);
+      }
+    });
+  },{threshold:.1});
+  jo.observe(timeline);
+})();
+
+// ── SKILLS: cursor spotlight
+document.querySelectorAll('.skill-card[data-spotlight]').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    card.style.setProperty('--mx',((e.clientX-r.left)/r.width*100).toFixed(1)+'%');
+    card.style.setProperty('--my',((e.clientY-r.top)/r.height*100).toFixed(1)+'%');
+  });
+});
+
+// ── MINDSET: blur-to-sharp scroll reveal (staggered)
+(function(){
+  const manifesto=document.getElementById('mindset-manifesto');
+  if(!manifesto) return;
+  const mo=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.querySelectorAll('.manifesto-line').forEach((line,i)=>{
+          setTimeout(()=>line.classList.add('in'), i*160);
+        });
+        mo.unobserve(e.target);
+      }
+    });
+  },{threshold:.15});
+  mo.observe(manifesto);
+})();
+
+// ── CURRENT WORK: parallax subtle on scroll
+(function(){
+  const workCards=document.querySelectorAll('.work-card');
+  if(!workCards.length) return;
+  window.addEventListener('scroll',()=>{
+    workCards.forEach((card,i)=>{
+      const r=card.getBoundingClientRect();
+      const mid=r.top+r.height/2;
+      const vMid=window.innerHeight/2;
+      const pct=(mid-vMid)/window.innerHeight;
+      const img=card.querySelector('.work-card-img img');
+      if(img) img.style.transform=`scale(1.07) translateY(${(pct*14).toFixed(2)}px)`;
+    });
+  },{passive:true});
+})();
+
+// ── extend hover cursor to new elements
+document.querySelectorAll('.journey-card,.skill-card,.work-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('hover'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('hover'));
+});
 </script>
 </body>
 </html>
