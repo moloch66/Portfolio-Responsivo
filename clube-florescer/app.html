@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Clube Florescer Executivos — Dashboard de benefícios e área executiva." />
+  <title>Meu Plano — Clube Florescer Executivos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/main.css" />
+
+  <style>
+    /* App-specific overrides */
+    body { background: #0A1A11; }
+
+    /* Sidebar (desktop) */
+    .sidebar {
+      display: none;
+      width: 240px;
+      flex-shrink: 0;
+      background: rgba(12,45,30,0.7);
+      backdrop-filter: blur(16px);
+      border-right: 1px solid var(--brand-gold-dim);
+      padding: var(--space-6) var(--space-4);
+      position: sticky;
+      top: 0;
+      height: 100svh;
+      overflow-y: auto;
+      flex-direction: column;
+    }
+
+    @media (min-width: 1024px) { .sidebar { display: flex; } }
+
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-2) var(--space-2) var(--space-8);
+      text-decoration: none;
+    }
+
+    .sidebar-logo span {
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      color: var(--brand-cream);
+    }
+
+    .sidebar-nav {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+      flex: 1;
+    }
+
+    .sidebar-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-md);
+      color: var(--brand-cream-50);
+      font-size: var(--text-sm);
+      font-weight: 500;
+      cursor: pointer;
+      transition: background var(--dur-default), color var(--dur-default);
+      border: none;
+      background: none;
+      text-align: left;
+      width: 100%;
+      font-family: var(--font-body);
+      text-decoration: none;
+    }
+
+    .sidebar-item:hover { background: rgba(212,168,67,0.06); color: var(--brand-cream); }
+    .sidebar-item.active { background: rgba(212,168,67,0.12); color: var(--brand-gold); }
+    .sidebar-item svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+    .sidebar-section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--brand-cream-30);
+      padding: var(--space-5) var(--space-4) var(--space-2);
+    }
+
+    .sidebar-footer {
+      padding-top: var(--space-6);
+      border-top: 1px solid var(--brand-gold-dim);
+    }
+
+    /* Tab panels */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; animation: fadeUp 0.35s var(--ease-out); }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Digital card */
+    .digital-card {
+      background: linear-gradient(140deg, var(--brand-surface-2) 0%, var(--brand-surface) 60%, #0C2D1E 100%);
+      border: 1px solid rgba(212,168,67,0.35);
+      border-radius: 20px;
+      padding: var(--space-6);
+      aspect-ratio: 1.586 / 1;
+      max-width: 340px;
+      margin: 0 auto var(--space-6);
+      position: relative;
+      overflow: hidden;
+      box-shadow:
+        0 20px 60px rgba(0,0,0,0.5),
+        inset 0 1px 0 rgba(255,255,255,0.07);
+    }
+
+    .digital-card::before {
+      content: '';
+      position: absolute;
+      top: -40%; right: -20%;
+      width: 200px; height: 200px;
+      background: radial-gradient(ellipse, rgba(212,168,67,0.08), transparent 65%);
+    }
+
+    .card-logo-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: var(--space-8);
+    }
+
+    .card-tier {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--brand-gold);
+    }
+
+    .card-member-name {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      color: var(--brand-cream);
+      letter-spacing: 0.03em;
+      margin-bottom: 2px;
+    }
+
+    .card-id {
+      font-size: 11px;
+      color: var(--brand-cream-50);
+      letter-spacing: 0.06em;
+    }
+
+    .card-validity {
+      font-size: 10px;
+      color: var(--brand-cream-50);
+      margin-top: var(--space-2);
+    }
+
+    .card-qr {
+      position: absolute;
+      bottom: var(--space-5);
+      right: var(--space-5);
+      width: 52px; height: 52px;
+      background: var(--brand-cream);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* QR code placeholder SVG */
+    .card-qr svg { width: 44px; height: 44px; }
+
+    /* Appointment booking mini flow */
+    .specialty-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-3);
+      margin-bottom: var(--space-6);
+    }
+
+    @media (min-width: 480px) {
+      .specialty-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    .specialty-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-4);
+      background: var(--brand-surface);
+      border: 1px solid var(--brand-gold-dim);
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      transition:
+        border-color var(--dur-default),
+        background var(--dur-default),
+        transform var(--dur-fast);
+      font-family: var(--font-body);
+    }
+
+    .specialty-btn:hover {
+      border-color: rgba(212,168,67,0.4);
+      background: var(--brand-surface-2);
+      transform: translateY(-2px);
+    }
+
+    .specialty-btn.selected {
+      border-color: var(--brand-gold);
+      background: rgba(212,168,67,0.08);
+    }
+
+    .specialty-btn svg { width: 24px; height: 24px; color: var(--brand-gold); }
+    .specialty-btn span { font-size: 11px; color: var(--brand-cream-70); font-weight: 500; text-align: center; }
+
+    /* Time slots */
+    .time-slots {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin-bottom: var(--space-6);
+    }
+
+    .time-slot {
+      padding: var(--space-2) var(--space-4);
+      border: 1px solid var(--brand-gold-dim);
+      border-radius: var(--radius-full);
+      font-size: var(--text-sm);
+      color: var(--brand-cream-70);
+      cursor: pointer;
+      transition: all var(--dur-default);
+      background: transparent;
+      font-family: var(--font-body);
+      min-height: 44px;
+    }
+
+    .time-slot:hover { border-color: var(--brand-gold); color: var(--brand-cream); }
+    .time-slot.selected {
+      background: rgba(212,168,67,0.15);
+      border-color: var(--brand-gold);
+      color: var(--brand-gold);
+      font-weight: 600;
+    }
+
+    .time-slot.unavailable {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    /* Chat (concierge) */
+    .chat-container {
+      display: flex;
+      flex-direction: column;
+      height: calc(100svh - 200px);
+      min-height: 400px;
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: var(--space-4) 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .msg {
+      max-width: 78%;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .msg-advisor { align-self: flex-start; }
+    .msg-user    { align-self: flex-end; }
+
+    .msg-bubble {
+      padding: var(--space-3) var(--space-4);
+      border-radius: 16px;
+      font-size: var(--text-sm);
+      line-height: 1.55;
+    }
+
+    .msg-advisor .msg-bubble {
+      background: var(--brand-surface);
+      border: 1px solid var(--brand-gold-dim);
+      color: var(--brand-cream);
+      border-bottom-left-radius: 4px;
+    }
+
+    .msg-user .msg-bubble {
+      background: rgba(212,168,67,0.18);
+      border: 1px solid rgba(212,168,67,0.25);
+      color: var(--brand-cream);
+      border-bottom-right-radius: 4px;
+    }
+
+    .msg-time {
+      font-size: 10px;
+      color: var(--brand-cream-30);
+    }
+
+    .msg-user .msg-time { text-align: right; }
+
+    .chat-input-row {
+      display: flex;
+      gap: var(--space-3);
+      align-items: flex-end;
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--brand-gold-dim);
+    }
+
+    .chat-input {
+      flex: 1;
+      background: var(--brand-surface);
+      border: 1px solid var(--brand-gold-dim);
+      border-radius: var(--radius-lg);
+      padding: var(--space-3) var(--space-4);
+      color: var(--brand-cream);
+      font-family: var(--font-body);
+      font-size: var(--text-sm);
+      resize: none;
+      outline: none;
+      min-height: 48px;
+      max-height: 120px;
+      transition: border-color var(--dur-default);
+    }
+
+    .chat-input:focus { border-color: var(--brand-gold); }
+    .chat-input::placeholder { color: var(--brand-cream-30); }
+
+    .chat-send {
+      width: 48px; height: 48px;
+      background: linear-gradient(135deg, var(--brand-gold), var(--brand-gold-light));
+      border: none;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      color: var(--brand-deep);
+      transition: transform var(--dur-fast), box-shadow var(--dur-default);
+    }
+
+    .chat-send:hover { transform: scale(1.05); box-shadow: var(--shadow-gold); }
+    .chat-send svg { width: 20px; height: 20px; }
+
+    /* Section heading within app */
+    .app-section-title {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: 600;
+      color: var(--brand-cream);
+      margin-bottom: var(--space-5);
+    }
+
+    .app-section-sub {
+      font-size: var(--text-sm);
+      color: var(--brand-cream-50);
+      margin-bottom: var(--space-5);
+    }
+
+    /* Confirmation card */
+    .confirm-card {
+      background: rgba(34,197,94,0.08);
+      border: 1px solid rgba(34,197,94,0.3);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      display: none;
+    }
+
+    .confirm-card.show { display: block; animation: fadeUp 0.4s var(--ease-out); }
+  </style>
+</head>
+<body>
+
+<div class="app-layout" style="display:flex;min-height:100svh">
+
+  <!-- ════════════════════════════════
+       SIDEBAR (Desktop)
+  ════════════════════════════════ -->
+  <aside class="sidebar" aria-label="Navegação lateral">
+    <a href="index.html" class="sidebar-logo">
+      <svg width="28" height="28" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+        <polygon points="20,3 37,20 20,37 3,20" fill="none" stroke="#D4A843" stroke-width="1.5"/>
+        <polygon points="20,10 30,20 20,30 10,20" fill="#D4A843" fill-opacity="0.25"/>
+        <polygon points="20,14 26,20 20,26 14,20" fill="#D4A843" fill-opacity="0.6"/>
+        <circle cx="20" cy="20" r="2" fill="#D4A843"/>
+      </svg>
+      <span>Florescer</span>
+    </a>
+
+    <nav class="sidebar-nav" aria-label="Navegação principal">
+      <button class="sidebar-item active" onclick="showTab('dashboard')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+          <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+        </svg>
+        Dashboard
+      </button>
+      <button class="sidebar-item" onclick="showTab('card')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <rect x="2" y="5" width="20" height="14" rx="2"/>
+          <line x1="2" y1="10" x2="22" y2="10"/>
+        </svg>
+        Cartão Digital
+      </button>
+      <button class="sidebar-item" onclick="showTab('schedule')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <rect x="3" y="4" width="18" height="18" rx="2"/>
+          <line x1="16" y1="2" x2="16" y2="6"/>
+          <line x1="8" y1="2" x2="8" y2="6"/>
+          <line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+        Agendar Consulta
+      </button>
+
+      <div class="sidebar-section-label">Área Executiva</div>
+
+      <button class="sidebar-item" onclick="showTab('concierge')" style="color:var(--brand-gold)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+        Área Executiva
+      </button>
+      <button class="sidebar-item" onclick="showTab('concierge')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+        Concierge
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div style="display:flex;align-items:center;gap:var(--space-3)">
+        <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--brand-sage),var(--brand-deep));border:1px solid rgba(212,168,67,0.3);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:1rem;color:var(--brand-gold);flex-shrink:0">R</div>
+        <div>
+          <div style="font-weight:600;font-size:var(--text-sm);color:var(--brand-cream)">Rafael M.</div>
+          <div style="font-size:11px;color:var(--brand-gold)">Executive Gold</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ════════════════════════════════
+       MAIN CONTENT
+  ════════════════════════════════ -->
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0">
+
+    <!-- App Header -->
+    <header class="app-header">
+      <div>
+        <div class="app-greeting">Bom dia,</div>
+        <div class="app-name">Rafael Monteiro</div>
+      </div>
+      <div class="app-header-actions">
+        <button class="icon-btn notification-dot" aria-label="Notificações">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+          </svg>
+        </button>
+        <button class="icon-btn" aria-label="Configurações">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+        </button>
+        <!-- Mobile logo -->
+        <a href="index.html" class="nav-logo" style="display:flex" aria-label="Voltar ao início">
+          <svg width="28" height="28" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+            <polygon points="20,3 37,20 20,37 3,20" fill="none" stroke="#D4A843" stroke-width="1.5"/>
+            <polygon points="20,10 30,20 20,30 10,20" fill="#D4A843" fill-opacity="0.4"/>
+            <circle cx="20" cy="20" r="2" fill="#D4A843"/>
+          </svg>
+        </a>
+      </div>
+    </header>
+
+    <!-- Scrollable content -->
+    <main class="app-main" id="appMain" aria-live="polite">
+
+      <!-- ══════════════════════════════
+           TAB: DASHBOARD
+      ══════════════════════════════ -->
+      <div class="tab-panel active" id="tab-dashboard" role="tabpanel" aria-label="Dashboard">
+
+        <!-- Plan Card -->
+        <div class="dashboard-plan-card">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-4)">
+            <div>
+              <div style="font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--brand-gold);margin-bottom:4px">
+                ✦ Executive Gold
+              </div>
+              <div style="font-family:var(--font-display);font-size:1.3rem;color:var(--brand-cream)">Plano Executivo</div>
+            </div>
+            <svg width="32" height="32" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+              <polygon points="20,3 37,20 20,37 3,20" fill="none" stroke="#D4A843" stroke-width="1.5"/>
+              <polygon points="20,14 26,20 20,26 14,20" fill="#D4A843" fill-opacity="0.7"/>
+            </svg>
+          </div>
+          <div style="display:flex;gap:var(--space-4);flex-wrap:wrap">
+            <div>
+              <div style="font-size:10px;color:var(--brand-cream-50)">Status</div>
+              <div style="font-size:var(--text-sm);font-weight:600;color:var(--status-success);display:flex;align-items:center;gap:4px">
+                <span style="width:6px;height:6px;border-radius:50%;background:var(--status-success);display:inline-block"></span>
+                Ativo
+              </div>
+            </div>
+            <div>
+              <div style="font-size:10px;color:var(--brand-cream-50)">Renova em</div>
+              <div style="font-size:var(--text-sm);font-weight:600;color:var(--brand-cream)">Dez 2026</div>
+            </div>
+            <div>
+              <div style="font-size:10px;color:var(--brand-cream-50)">Número</div>
+              <div style="font-size:var(--text-sm);font-weight:600;color:var(--brand-cream)">FLR-2024-00847</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions" role="list" aria-label="Ações rápidas">
+          <button class="quick-action" onclick="showTab('schedule')" role="listitem">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <rect x="3" y="4" width="18" height="18" rx="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+            <span>Agendar</span>
+          </button>
+          <button class="quick-action" onclick="showTab('card')" role="listitem">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <rect x="2" y="5" width="20" height="14" rx="2"/>
+              <line x1="2" y1="10" x2="22" y2="10"/>
+            </svg>
+            <span>Cartão</span>
+          </button>
+          <button class="quick-action" role="listitem">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            <span>Reemb.</span>
+          </button>
+          <button class="quick-action" onclick="showTab('concierge')" role="listitem">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+            <span>Chat</span>
+          </button>
+        </div>
+
+        <!-- Benefits Usage -->
+        <div class="usage-section" aria-label="Benefícios utilizados">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-5)">
+            <h2 class="app-section-title" style="margin-bottom:0">Benefícios 2026</h2>
+            <span style="font-size:var(--text-xs);color:var(--brand-gold);font-weight:600">Jan – Abr</span>
+          </div>
+
+          <div class="usage-row">
+            <div class="usage-header">
+              <span class="usage-name">Médico</span>
+              <span class="usage-pct">80%</span>
+            </div>
+            <div class="usage-bar-track">
+              <div class="usage-bar-fill bar-gold" style="width:0%" data-target="80"></div>
+            </div>
+            <div class="usage-detail">R$ 12.400 de R$ 15.500 utilizados</div>
+          </div>
+
+          <div class="usage-row">
+            <div class="usage-header">
+              <span class="usage-name">Odontológico</span>
+              <span class="usage-pct">45%</span>
+            </div>
+            <div class="usage-bar-track">
+              <div class="usage-bar-fill bar-green" style="width:0%" data-target="45"></div>
+            </div>
+            <div class="usage-detail">R$ 2.250 de R$ 5.000 utilizados</div>
+          </div>
+
+          <div class="usage-row">
+            <div class="usage-header">
+              <span class="usage-name">Visão</span>
+              <span class="usage-pct">20%</span>
+            </div>
+            <div class="usage-bar-track">
+              <div class="usage-bar-fill bar-info" style="width:0%" data-target="20"></div>
+            </div>
+            <div class="usage-detail">R$ 400 de R$ 2.000 utilizados</div>
+          </div>
+
+          <div class="usage-row">
+            <div class="usage-header">
+              <span class="usage-name">Saúde Mental</span>
+              <span class="usage-pct" style="color:var(--status-warning)">0%</span>
+            </div>
+            <div class="usage-bar-track">
+              <div class="usage-bar-fill bar-amber" style="width:0%" data-target="0"></div>
+            </div>
+            <div style="font-size:11px;color:var(--brand-cream-50);margin-top:4px;display:flex;align-items:center;gap:4px">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Você tem 12 sessões disponíveis este ano.
+              <button onclick="showTab('schedule')" style="color:var(--brand-gold);font-size:11px;background:none;border:none;cursor:pointer;padding:0;font-family:var(--font-body)">Agendar agora</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Upcoming Appointments -->
+        <h2 class="app-section-title">Próximas Consultas</h2>
+
+        <div class="appt-card" role="article" aria-label="Consulta de Cardiologia">
+          <div class="appt-date">
+            <div class="appt-day">17</div>
+            <div class="appt-month">Abr</div>
+          </div>
+          <div class="appt-info">
+            <div class="appt-doctor">Dra. Carla Mendes</div>
+            <div class="appt-specialty">Cardiologia · Hospital Albert Einstein</div>
+            <div class="appt-time">10:00 – 10:45</div>
+          </div>
+          <span class="appt-status status-confirmed" aria-label="Confirmada">Confirmada</span>
+        </div>
+
+        <div class="appt-card" role="article" aria-label="Consulta de Psicologia">
+          <div class="appt-date">
+            <div class="appt-day">23</div>
+            <div class="appt-month">Abr</div>
+          </div>
+          <div class="appt-info">
+            <div class="appt-doctor">Dr. André Lima</div>
+            <div class="appt-specialty">Psicologia · Videoconsulta</div>
+            <div class="appt-time">17:30 – 18:15</div>
+          </div>
+          <span class="appt-status status-pending" aria-label="Aguardando confirmação">Pendente</span>
+        </div>
+
+        <button onclick="showTab('schedule')" class="btn btn-secondary w-full" style="margin-top:var(--space-4)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+          Nova Consulta
+        </button>
+
+      </div><!-- /tab-dashboard -->
+
+      <!-- ══════════════════════════════
+           TAB: DIGITAL CARD
+      ══════════════════════════════ -->
+      <div class="tab-panel" id="tab-card" role="tabpanel" aria-label="Cartão Digital">
+        <h2 class="app-section-title">Cartão Digital</h2>
+        <p class="app-section-sub">Apresente em qualquer clínica da rede. Toque no cartão para revelar o QR code.</p>
+
+        <div class="digital-card" role="img" aria-label="Cartão Executive Gold de Rafael Monteiro">
+          <div class="card-logo-row">
+            <div>
+              <div class="card-tier">✦ Executive Gold</div>
+            </div>
+            <svg width="28" height="28" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+              <polygon points="20,3 37,20 20,37 3,20" fill="none" stroke="#D4A843" stroke-width="1.5"/>
+              <polygon points="20,14 26,20 20,26 14,20" fill="#D4A843" fill-opacity="0.7"/>
+            </svg>
+          </div>
+          <div class="card-member-name">Rafael Monteiro</div>
+          <div class="card-id">FLR-2024-00847</div>
+          <div class="card-validity">Válido até 12/2026 · Plano Executivo Nacional + Internacional</div>
+
+          <!-- QR code placeholder -->
+          <div class="card-qr" aria-label="QR Code do cartão">
+            <svg viewBox="0 0 44 44" fill="#0C2D1E" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2" y="2" width="16" height="16" rx="2" fill="none" stroke="#0C2D1E" stroke-width="2"/>
+              <rect x="5" y="5" width="10" height="10"/>
+              <rect x="26" y="2" width="16" height="16" rx="2" fill="none" stroke="#0C2D1E" stroke-width="2"/>
+              <rect x="29" y="5" width="10" height="10"/>
+              <rect x="2" y="26" width="16" height="16" rx="2" fill="none" stroke="#0C2D1E" stroke-width="2"/>
+              <rect x="5" y="29" width="10" height="10"/>
+              <rect x="26" y="26" width="4" height="4"/>
+              <rect x="32" y="26" width="4" height="4"/>
+              <rect x="38" y="26" width="4" height="4"/>
+              <rect x="26" y="32" width="4" height="4"/>
+              <rect x="32" y="38" width="4" height="4"/>
+              <rect x="38" y="32" width="4" height="4"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Card actions -->
+        <div style="display:flex;gap:var(--space-3);margin-bottom:var(--space-6)">
+          <button class="btn btn-secondary" style="flex:1">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>
+            </svg>
+            Apple Wallet
+          </button>
+          <button class="btn btn-secondary" style="flex:1">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18.01"/>
+            </svg>
+            Google Pay
+          </button>
+        </div>
+
+        <!-- Dependents / Other plans -->
+        <h3 style="font-size:var(--text-sm);font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--brand-cream-50);margin-bottom:var(--space-4)">Coberturas incluídas</h3>
+        <div style="display:flex;flex-direction:column;gap:var(--space-3)">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:var(--space-3) var(--space-4);background:var(--brand-surface);border:1px solid var(--brand-gold-dim);border-radius:var(--radius-md)">
+            <span style="font-size:var(--text-sm);color:var(--brand-cream)">Médico Nacional</span>
+            <span style="font-size:var(--text-xs);color:var(--status-success);font-weight:600">Ativo</span>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:var(--space-3) var(--space-4);background:var(--brand-surface);border:1px solid var(--brand-gold-dim);border-radius:var(--radius-md)">
+            <span style="font-size:var(--text-sm);color:var(--brand-cream)">Odontológico</span>
+            <span style="font-size:var(--text-xs);color:var(--status-success);font-weight:600">Ativo</span>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:var(--space-3) var(--space-4);background:var(--brand-surface);border:1px solid var(--brand-gold-dim);border-radius:var(--radius-md)">
+            <span style="font-size:var(--text-sm);color:var(--brand-cream)">Internacional + SOS</span>
+            <span style="font-size:var(--text-xs);color:var(--status-success);font-weight:600">Ativo</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════
+           TAB: SCHEDULE
+      ══════════════════════════════ -->
+      <div class="tab-panel" id="tab-schedule" role="tabpanel" aria-label="Agendar consulta">
+        <h2 class="app-section-title">Nova Consulta</h2>
+        <p class="app-section-sub">Escolha a especialidade e o horário. Confirmação instantânea.</p>
+
+        <h3 style="font-size:var(--text-sm);font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--brand-cream-50);margin-bottom:var(--space-3)">Especialidade</h3>
+        <div class="specialty-grid" role="group" aria-label="Escolha a especialidade">
+          <button class="specialty-btn" onclick="selectSpecialty(this)" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            <span>Cardiologia</span>
+          </button>
+          <button class="specialty-btn" onclick="selectSpecialty(this)" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48 2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48 2.83-2.83"/></svg>
+            <span>Clínico Geral</span>
+          </button>
+          <button class="specialty-btn" onclick="selectSpecialty(this)" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            <span>Psicologia</span>
+          </button>
+          <button class="specialty-btn" onclick="selectSpecialty(this)" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+            <span>Dermatologia</span>
+          </button>
+          <button class="specialty-btn" onclick="selectSpecialty(this)" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+            <span>Ortopedia</span>
+          </button>
+          <button class="specialty-btn" onclick="selectSpecialty(this)" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+            <span>Neurologia</span>
+          </button>
+          <button class="specialty-btn" onclick="selectSpecialty(this)" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            <span>Oftalmologia</span>
+          </button>
+          <button class="specialty-btn" onclick="selectSpecialty(this)" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span>Ver Todas</span>
+          </button>
+        </div>
+
+        <h3 style="font-size:var(--text-sm);font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--brand-cream-50);margin-bottom:var(--space-3)">Horário disponível</h3>
+        <div class="time-slots" role="group" aria-label="Selecione o horário">
+          <button class="time-slot" onclick="selectSlot(this)">08:00</button>
+          <button class="time-slot" onclick="selectSlot(this)">09:00</button>
+          <button class="time-slot unavailable" disabled aria-disabled="true">10:00</button>
+          <button class="time-slot" onclick="selectSlot(this)">10:30</button>
+          <button class="time-slot unavailable" disabled aria-disabled="true">11:00</button>
+          <button class="time-slot" onclick="selectSlot(this)">14:00</button>
+          <button class="time-slot" onclick="selectSlot(this)">15:00</button>
+          <button class="time-slot" onclick="selectSlot(this)">16:30</button>
+          <button class="time-slot" onclick="selectSlot(this)">17:00</button>
+          <button class="time-slot" onclick="selectSlot(this)">18:00</button>
+        </div>
+
+        <button class="btn btn-primary w-full" onclick="confirmAppointment()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          Confirmar Consulta
+        </button>
+
+        <div class="confirm-card mt-6" id="confirmCard" role="status">
+          <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-3)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2" aria-hidden="true">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+            <span style="font-weight:600;color:var(--status-success)">Consulta confirmada!</span>
+          </div>
+          <p style="font-size:var(--text-sm);color:var(--brand-cream-70)">
+            Um lembrete foi adicionado ao seu calendário. Sua confirmação chegou por WhatsApp.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- ══════════════════════════════
+           TAB: CONCIERGE / EXECUTIVA
+      ══════════════════════════════ -->
+      <div class="tab-panel" id="tab-concierge" role="tabpanel" aria-label="Área Executiva — Concierge">
+        <div style="display:flex;align-items:center;gap:var(--space-4);margin-bottom:var(--space-6);padding:var(--space-4);background:var(--brand-surface);border:1px solid rgba(212,168,67,0.2);border-radius:var(--radius-lg)">
+          <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--brand-sage),#2D5A3D);border:2px solid rgba(212,168,67,0.3);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:1.3rem;color:var(--brand-gold);flex-shrink:0" aria-hidden="true">C</div>
+          <div style="flex:1">
+            <div style="font-weight:700;color:var(--brand-cream)">Camila Rodrigues</div>
+            <div style="font-size:var(--text-xs);color:var(--brand-cream-50)">Concierge de Saúde</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:4px;font-size:var(--text-xs);color:var(--status-success)">
+            <span style="width:7px;height:7px;border-radius:50%;background:var(--status-success);display:inline-block"></span>
+            Online
+          </div>
+        </div>
+
+        <div class="chat-container">
+          <div class="chat-messages" id="chatMessages" aria-live="polite" aria-label="Mensagens do concierge">
+            <div class="msg msg-advisor">
+              <div class="msg-bubble">
+                Bom dia, Rafael! Sou a Camila, sua concierge dedicada. Estou aqui para qualquer necessidade de saúde — agendamentos, autorizações, dúvidas sobre cobertura ou emergências. Como posso ajudar?
+              </div>
+              <div class="msg-time">hoje às 08:15</div>
+            </div>
+            <div class="msg msg-advisor">
+              <div class="msg-bubble">
+                Vi que sua consulta com a Dra. Carla está agendada para quinta-feira (17/04) às 10h. Precisa de alguma preparação especial ou deseja que eu envie o endereço da clínica?
+              </div>
+              <div class="msg-time">hoje às 08:16</div>
+            </div>
+          </div>
+
+          <div class="chat-input-row">
+            <textarea
+              class="chat-input"
+              id="chatInput"
+              placeholder="Escreva para Camila..."
+              rows="1"
+              aria-label="Digite sua mensagem para o concierge"
+            ></textarea>
+            <button class="chat-send" onclick="sendMessage()" aria-label="Enviar mensagem">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <line x1="22" y1="2" x2="11" y2="13"/>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </main><!-- /app-main -->
+
+    <!-- Bottom Nav (mobile) -->
+    <nav class="bottom-nav" aria-label="Navegação inferior" role="navigation">
+      <button class="nav-tab active" id="nav-dashboard" onclick="showTab('dashboard')" aria-label="Dashboard" aria-pressed="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+          <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+        </svg>
+        <span>Home</span>
+      </button>
+      <button class="nav-tab" id="nav-card" onclick="showTab('card')" aria-label="Cartão digital" aria-pressed="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <rect x="2" y="5" width="20" height="14" rx="2"/>
+          <line x1="2" y1="10" x2="22" y2="10"/>
+        </svg>
+        <span>Cartão</span>
+      </button>
+      <button class="nav-tab-special" onclick="showTab('schedule')" aria-label="Agendar consulta">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+          <line x1="12" y1="5" x2="12" y2="19"/>
+          <line x1="5" y1="12" x2="19" y2="12"/>
+        </svg>
+      </button>
+      <button class="nav-tab" id="nav-concierge" onclick="showTab('concierge')" aria-label="Concierge" aria-pressed="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+        <span>Chat</span>
+      </button>
+      <button class="nav-tab" aria-label="Área executiva" aria-pressed="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+        <span>Premium</span>
+      </button>
+    </nav>
+
+  </div><!-- /flex-1 -->
+</div><!-- /app-layout -->
+
+<script>
+  // ── Tab navigation ────────────────────────────
+  const tabs = ['dashboard', 'card', 'schedule', 'concierge'];
+
+  function showTab(id) {
+    tabs.forEach(t => {
+      const panel = document.getElementById(`tab-${t}`);
+      const navBtn = document.getElementById(`nav-${t}`);
+      const sidebarBtn = document.querySelector(`.sidebar-item[onclick*="${t}"]`);
+
+      if (panel)    panel.classList.toggle('active', t === id);
+      if (navBtn)   {
+        navBtn.classList.toggle('active', t === id);
+        navBtn.setAttribute('aria-pressed', t === id ? 'true' : 'false');
+      }
+      if (sidebarBtn) sidebarBtn.classList.toggle('active', t === id);
+    });
+
+    // Animate usage bars when dashboard shown
+    if (id === 'dashboard') animateBars();
+
+    // Scroll to top
+    document.getElementById('appMain').scrollTo(0, 0);
+  }
+
+  // ── Usage bar animations ──────────────────────
+  function animateBars() {
+    document.querySelectorAll('.usage-bar-fill').forEach(bar => {
+      const target = bar.dataset.target || 0;
+      bar.style.width = '0%';
+      setTimeout(() => { bar.style.width = target + '%'; }, 100);
+    });
+  }
+
+  // Run on load
+  window.addEventListener('load', animateBars);
+
+  // ── Specialty selection ───────────────────────
+  function selectSpecialty(btn) {
+    document.querySelectorAll('.specialty-btn').forEach(b => {
+      b.classList.remove('selected');
+      b.setAttribute('aria-pressed', 'false');
+    });
+    btn.classList.add('selected');
+    btn.setAttribute('aria-pressed', 'true');
+  }
+
+  // ── Time slot selection ───────────────────────
+  function selectSlot(btn) {
+    document.querySelectorAll('.time-slot').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+  }
+
+  // ── Confirm appointment ───────────────────────
+  function confirmAppointment() {
+    const card = document.getElementById('confirmCard');
+    card.classList.add('show');
+    card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    // Return to dashboard after 2.5s
+    setTimeout(() => showTab('dashboard'), 2500);
+  }
+
+  // ── Chat ──────────────────────────────────────
+  const advisorReplies = [
+    "Claro! Vou verificar agora mesmo e te confirmo em instantes.",
+    "Feito! Você receberá uma confirmação no WhatsApp em breve.",
+    "Certo, Rafael. Deixa comigo — cuido de tudo para você.",
+    "Ótimo! Qualquer outra necessidade, estou aqui.",
+    "Registrei aqui. A equipe clínica vai entrar em contato para confirmar os detalhes.",
+  ];
+  let replyIndex = 0;
+
+  function sendMessage() {
+    const input = document.getElementById('chatInput');
+    const messages = document.getElementById('chatMessages');
+    const text = input.value.trim();
+    if (!text) return;
+
+    // User message
+    const now = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    const userMsg = document.createElement('div');
+    userMsg.className = 'msg msg-user';
+    userMsg.innerHTML = `
+      <div class="msg-bubble">${escapeHtml(text)}</div>
+      <div class="msg-time">agora</div>
+    `;
+    messages.appendChild(userMsg);
+
+    input.value = '';
+    messages.scrollTop = messages.scrollHeight;
+
+    // Advisor typing indicator
+    const typing = document.createElement('div');
+    typing.className = 'msg msg-advisor';
+    typing.id = 'typingIndicator';
+    typing.innerHTML = `<div class="msg-bubble" style="color:var(--brand-cream-50);font-style:italic">Camila está digitando...</div>`;
+    messages.appendChild(typing);
+    messages.scrollTop = messages.scrollHeight;
+
+    // Advisor reply after delay
+    setTimeout(() => {
+      typing.remove();
+      const reply = document.createElement('div');
+      reply.className = 'msg msg-advisor';
+      reply.innerHTML = `
+        <div class="msg-bubble">${advisorReplies[replyIndex % advisorReplies.length]}</div>
+        <div class="msg-time">agora</div>
+      `;
+      messages.appendChild(reply);
+      messages.scrollTop = messages.scrollHeight;
+      replyIndex++;
+    }, 1200 + Math.random() * 800);
+  }
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  // Allow Enter to send (Shift+Enter for newline)
+  document.getElementById('chatInput')?.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+</script>
+
+</body>
+</html>

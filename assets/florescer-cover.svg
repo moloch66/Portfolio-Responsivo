@@ -1,0 +1,215 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <!-- Background gradient -->
+    <radialGradient id="florBg" cx="55%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#163D28"/>
+      <stop offset="100%" stop-color="#060F0A"/>
+    </radialGradient>
+
+    <!-- Gold glow filter -->
+    <filter id="florGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Soft glow for background elements -->
+    <filter id="softGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="28" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Sharp drop shadow -->
+    <filter id="cardShadow" x="-10%" y="-10%" width="130%" height="140%">
+      <feDropShadow dx="0" dy="16" stdDeviation="28" flood-color="#000" flood-opacity="0.55"/>
+    </filter>
+
+    <!-- Gold gradient for diamond fill -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E8C870"/>
+      <stop offset="100%" stop-color="#B8892A"/>
+    </linearGradient>
+
+    <!-- Card gradient -->
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1C4A31"/>
+      <stop offset="100%" stop-color="#0C2D1E"/>
+    </linearGradient>
+
+    <!-- Usage bar gradients -->
+    <linearGradient id="barGold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4A7C59"/>
+      <stop offset="100%" stop-color="#D4A843"/>
+    </linearGradient>
+    <linearGradient id="barGreen" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4A7C59"/>
+      <stop offset="100%" stop-color="#22C55E"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ── Background ── -->
+  <rect width="800" height="500" fill="url(#florBg)"/>
+
+  <!-- Ambient radial glow -->
+  <ellipse cx="260" cy="250" rx="280" ry="220" fill="#D4A843" fill-opacity="0.04" filter="url(#softGlow)"/>
+
+  <!-- Subtle grid -->
+  <g stroke="#D4A843" stroke-opacity="0.04" stroke-width="1">
+    <line x1="0" y1="100" x2="800" y2="100"/>
+    <line x1="0" y1="200" x2="800" y2="200"/>
+    <line x1="0" y1="300" x2="800" y2="300"/>
+    <line x1="0" y1="400" x2="800" y2="400"/>
+    <line x1="160" y1="0" x2="160" y2="500"/>
+    <line x1="320" y1="0" x2="320" y2="500"/>
+    <line x1="480" y1="0" x2="480" y2="500"/>
+    <line x1="640" y1="0" x2="640" y2="500"/>
+  </g>
+
+  <!-- ── Diamond Mark (centered-left) ── -->
+  <g transform="translate(200, 250)" filter="url(#florGlow)">
+    <!-- Outer diamond -->
+    <polygon points="0,-90 90,0 0,90 -90,0"
+      fill="none" stroke="#D4A843" stroke-width="1.5" stroke-opacity="0.8"/>
+    <!-- Middle diamond -->
+    <polygon points="0,-54 54,0 0,54 -54,0"
+      fill="#D4A843" fill-opacity="0.18"/>
+    <!-- Inner diamond -->
+    <polygon points="0,-30 30,0 0,30 -30,0"
+      fill="url(#goldGrad)" fill-opacity="0.85"/>
+    <!-- Center dot -->
+    <circle cx="0" cy="0" r="6" fill="#D4A843"/>
+    <!-- Cross lines -->
+    <line x1="0" y1="-90" x2="0" y2="90" stroke="#D4A843" stroke-width="0.7" stroke-opacity="0.3"/>
+    <line x1="-90" y1="0" x2="90" y2="0" stroke="#D4A843" stroke-width="0.7" stroke-opacity="0.3"/>
+  </g>
+
+  <!-- ── Wordmark ── -->
+  <text x="200" y="370" text-anchor="middle"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="13" font-weight="400" letter-spacing="5"
+    fill="#D4A843" fill-opacity="0.75">FLORESCER</text>
+  <text x="200" y="388" text-anchor="middle"
+    font-family="Georgia, serif"
+    font-size="9" font-weight="400" letter-spacing="4"
+    fill="#D4A843" fill-opacity="0.4">EXECUTIVOS</text>
+
+  <!-- ── Phone Mockup (right side) ── -->
+  <g transform="translate(490, 52)" filter="url(#cardShadow)">
+    <!-- Phone body -->
+    <rect x="0" y="0" width="230" height="400" rx="32"
+      fill="url(#cardGrad)"
+      stroke="#D4A843" stroke-width="1.2" stroke-opacity="0.4"/>
+
+    <!-- Screen inset -->
+    <rect x="6" y="6" width="218" height="388" rx="27"
+      fill="#0A1F13" fill-opacity="0.6"/>
+
+    <!-- Notch -->
+    <rect x="80" y="6" width="70" height="20" rx="0 0 12 12"
+      fill="#060F0A"/>
+
+    <!-- Status bar -->
+    <text x="20" y="42" font-family="system-ui,sans-serif" font-size="9" fill="#F5F0E8" fill-opacity="0.5">9:41</text>
+
+    <!-- Greeting -->
+    <text x="20" y="70" font-family="system-ui,sans-serif" font-size="9" fill="#F5F0E8" fill-opacity="0.45">Bom dia,</text>
+    <text x="20" y="88" font-family="Georgia,serif" font-size="18" font-weight="600" fill="#F5F0E8">Rafael.</text>
+
+    <!-- Plan card -->
+    <rect x="14" y="102" width="202" height="76" rx="12"
+      fill="#1C4A31" stroke="#D4A843" stroke-width="0.8" stroke-opacity="0.3"/>
+    <text x="26" y="120" font-family="system-ui,sans-serif" font-size="8" font-weight="700" letter-spacing="2" fill="#D4A843">✦ EXECUTIVE GOLD</text>
+    <text x="26" y="138" font-family="Georgia,serif" font-size="14" fill="#F5F0E8">Plano Executivo</text>
+    <!-- Status dot -->
+    <circle cx="26" cy="160" r="3.5" fill="#22C55E"/>
+    <text x="35" y="164" font-family="system-ui,sans-serif" font-size="9" fill="#22C55E">Ativo · Renova Dez 2026</text>
+
+    <!-- Quick action strip -->
+    <rect x="14" y="188" width="44" height="44" rx="10" fill="#163D28" stroke="#D4A843" stroke-width="0.6" stroke-opacity="0.25"/>
+    <rect x="63" y="188" width="44" height="44" rx="10" fill="#163D28" stroke="#D4A843" stroke-width="0.6" stroke-opacity="0.25"/>
+    <rect x="112" y="188" width="44" height="44" rx="10" fill="#163D28" stroke="#D4A843" stroke-width="0.6" stroke-opacity="0.25"/>
+    <rect x="161" y="188" width="44" height="44" rx="10" fill="#163D28" stroke="#D4A843" stroke-width="0.6" stroke-opacity="0.25"/>
+    <text x="36" y="215" text-anchor="middle" font-size="9" fill="#D4A843">📅</text>
+    <text x="85" y="215" text-anchor="middle" font-size="9" fill="#D4A843">💳</text>
+    <text x="134" y="215" text-anchor="middle" font-size="9" fill="#D4A843">🔒</text>
+    <text x="183" y="215" text-anchor="middle" font-size="9" fill="#D4A843">💬</text>
+    <text x="36" y="226" text-anchor="middle" font-family="system-ui" font-size="7" fill="#F5F0E8" fill-opacity="0.5">Agendar</text>
+    <text x="85" y="226" text-anchor="middle" font-family="system-ui" font-size="7" fill="#F5F0E8" fill-opacity="0.5">Cartão</text>
+    <text x="134" y="226" text-anchor="middle" font-family="system-ui" font-size="7" fill="#F5F0E8" fill-opacity="0.5">Reemb.</text>
+    <text x="183" y="226" text-anchor="middle" font-family="system-ui" font-size="7" fill="#F5F0E8" fill-opacity="0.5">Chat</text>
+
+    <!-- Usage section label -->
+    <text x="20" y="254" font-family="system-ui,sans-serif" font-size="7" font-weight="700" letter-spacing="2" fill="#F5F0E8" fill-opacity="0.35">BENEFÍCIOS 2026</text>
+
+    <!-- Usage bars -->
+    <!-- Médico 80% -->
+    <text x="20" y="273" font-family="system-ui,sans-serif" font-size="9" fill="#F5F0E8" fill-opacity="0.65">Médico</text>
+    <text x="208" y="273" text-anchor="end" font-family="system-ui" font-size="9" font-weight="700" fill="#D4A843">80%</text>
+    <rect x="20" y="277" width="188" height="4" rx="2" fill="#FFFFFF" fill-opacity="0.06"/>
+    <rect x="20" y="277" width="150" height="4" rx="2" fill="url(#barGold)"/>
+
+    <!-- Odonto 45% -->
+    <text x="20" y="295" font-family="system-ui,sans-serif" font-size="9" fill="#F5F0E8" fill-opacity="0.65">Odontológico</text>
+    <text x="208" y="295" text-anchor="end" font-family="system-ui" font-size="9" font-weight="700" fill="#D4A843">45%</text>
+    <rect x="20" y="299" width="188" height="4" rx="2" fill="#FFFFFF" fill-opacity="0.06"/>
+    <rect x="20" y="299" width="85" height="4" rx="2" fill="url(#barGreen)"/>
+
+    <!-- Mental Health 0% -->
+    <text x="20" y="317" font-family="system-ui,sans-serif" font-size="9" fill="#F5F0E8" fill-opacity="0.65">Saúde Mental</text>
+    <text x="208" y="317" text-anchor="end" font-family="system-ui" font-size="9" font-weight="700" fill="#F59E0B">0%</text>
+    <rect x="20" y="321" width="188" height="4" rx="2" fill="#FFFFFF" fill-opacity="0.06"/>
+
+    <!-- Next appointment -->
+    <rect x="14" y="334" width="202" height="44" rx="10"
+      fill="#0C2D1E" stroke="#D4A843" stroke-width="0.6" stroke-opacity="0.2"/>
+    <text x="26" y="350" font-family="system-ui,sans-serif" font-size="8" font-weight="700" fill="#D4A843">Dra. Carla Mendes</text>
+    <text x="26" y="365" font-family="system-ui,sans-serif" font-size="8" fill="#F5F0E8" fill-opacity="0.45">Cardiologia · Qui 17 Abr · 10h</text>
+
+    <!-- Bottom nav bar -->
+    <rect x="0" y="380" width="230" height="26" rx="0 0 27 27"
+      fill="#060F0A" fill-opacity="0.9"/>
+    <!-- Nav indicator -->
+    <rect x="98" y="388" width="34" height="3" rx="2" fill="#D4A843" fill-opacity="0.5"/>
+  </g>
+
+  <!-- ── Left copy block ── -->
+  <text x="66" y="108" font-family="system-ui,sans-serif"
+    font-size="8" font-weight="700" letter-spacing="4"
+    fill="#D4A843" fill-opacity="0.7">PRODUTO · HEALTHTECH</text>
+
+  <text x="64" y="138" font-family="Georgia, serif"
+    font-size="36" font-weight="600"
+    fill="#F5F0E8" fill-opacity="0.9">Plataforma</text>
+  <text x="64" y="172" font-family="Georgia, serif"
+    font-size="36" font-weight="600"
+    fill="#F5F0E8" fill-opacity="0.9">de Saúde</text>
+  <text x="64" y="206" font-family="Georgia, serif"
+    font-size="36" font-weight="300" letter-spacing="1"
+    fill="#D4A843" fill-opacity="0.9">Premium</text>
+
+  <!-- Divider line -->
+  <line x1="64" y1="228" x2="230" y2="228" stroke="#D4A843" stroke-opacity="0.25" stroke-width="1"/>
+
+  <text x="64" y="254" font-family="system-ui,sans-serif"
+    font-size="11" fill="#F5F0E8" fill-opacity="0.5" letter-spacing="0.3">PRD · Landing Page · Onboarding</text>
+  <text x="64" y="272" font-family="system-ui,sans-serif"
+    font-size="11" fill="#F5F0E8" fill-opacity="0.5" letter-spacing="0.3">Dashboard · Área Executiva</text>
+
+  <!-- Tag chips at bottom-left -->
+  <rect x="64" y="296" width="82" height="22" rx="11" fill="#D4A843" fill-opacity="0.12" stroke="#D4A843" stroke-opacity="0.3" stroke-width="0.8"/>
+  <text x="105" y="311" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="600" fill="#D4A843">Product Design</text>
+
+  <rect x="156" y="296" width="70" height="22" rx="11" fill="#D4A843" fill-opacity="0.08" stroke="#D4A843" stroke-opacity="0.2" stroke-width="0.8"/>
+  <text x="191" y="311" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="500" fill="#F5F0E8" fill-opacity="0.6">Healthtech</text>
+
+  <rect x="64" y="326" width="52" height="22" rx="11" fill="#D4A843" fill-opacity="0.08" stroke="#D4A843" stroke-opacity="0.2" stroke-width="0.8"/>
+  <text x="90" y="341" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#F5F0E8" fill-opacity="0.6">UX · UI</text>
+
+  <rect x="126" y="326" width="44" height="22" rx="11" fill="#D4A843" fill-opacity="0.08" stroke="#D4A843" stroke-opacity="0.2" stroke-width="0.8"/>
+  <text x="148" y="341" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#F5F0E8" fill-opacity="0.6">2026</text>
+</svg>
