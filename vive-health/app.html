@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VIVE — Painel Executive</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/variables.css"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body { height: 100%; overflow: hidden; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+    }
+
+    /* ── Sidebar ─────────────────────────────────── */
+    .sidebar {
+      width: 240px; flex-shrink: 0;
+      background: var(--bg-1);
+      border-right: 1px solid var(--text-15);
+      display: flex; flex-direction: column;
+      padding: 24px 16px;
+      height: 100vh;
+    }
+
+    .sidebar-logo {
+      display: flex; align-items: center; gap: 10px;
+      padding: 4px 8px; margin-bottom: 32px;
+      text-decoration: none;
+    }
+    .sidebar-logo-icon {
+      width: 32px; height: 32px;
+      background: var(--mint); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .sidebar-logo-icon svg { width: 18px; height: 18px; }
+    .sidebar-logo-text {
+      font-family: var(--font-head); font-size: 17px; font-weight: 700;
+      letter-spacing: 2px; color: var(--text);
+    }
+
+    .nav-section { margin-bottom: 24px; }
+    .nav-section-label {
+      font-size: 10px; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--text-30);
+      padding: 0 8px; margin-bottom: 6px;
+    }
+    .nav-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 12px; border-radius: var(--r-md);
+      font-size: 14px; color: var(--text-70);
+      cursor: pointer; transition: all 0.2s var(--ease);
+      text-decoration: none;
+    }
+    .nav-item svg { width: 18px; height: 18px; flex-shrink: 0; opacity: 0.6; }
+    .nav-item:hover { background: var(--bg-3); color: var(--text); }
+    .nav-item:hover svg { opacity: 1; }
+    .nav-item.active { background: var(--mint-dim); color: var(--mint); }
+    .nav-item.active svg { opacity: 1; color: var(--mint); }
+
+    .nav-badge {
+      margin-left: auto; font-size: 10px; font-weight: 700;
+      padding: 2px 7px; background: var(--mint-dim);
+      border: 1px solid var(--mint-border);
+      border-radius: var(--r-full); color: var(--mint);
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      border-top: 1px solid var(--text-15);
+      padding-top: 16px;
+    }
+    .user-row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 8px; border-radius: var(--r-md); cursor: pointer;
+      transition: background 0.2s var(--ease);
+    }
+    .user-row:hover { background: var(--bg-3); }
+    .user-avatar {
+      width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--indigo), var(--mint));
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-head); font-size: 13px; font-weight: 700;
+      color: var(--bg);
+    }
+    .user-name { font-size: 13px; font-weight: 600; color: var(--text); }
+    .user-plan { font-size: 11px; color: var(--mint); }
+
+    /* ── Main ────────────────────────────────────── */
+    .main {
+      flex: 1; overflow-y: auto; overflow-x: hidden;
+      display: flex; flex-direction: column;
+      height: 100vh;
+    }
+
+    /* Topbar */
+    .topbar {
+      position: sticky; top: 0; z-index: 10;
+      background: var(--bg-1);
+      border-bottom: 1px solid var(--text-15);
+      padding: 0 28px;
+      height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px;
+    }
+    .topbar-greeting {
+      font-family: var(--font-head); font-size: 15px; font-weight: 600;
+    }
+    .topbar-greeting span { color: var(--mint); }
+
+    .topbar-right { display: flex; align-items: center; gap: 12px; }
+
+    .topbar-search {
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 14px;
+      background: var(--bg-3); border: 1px solid var(--text-15);
+      border-radius: var(--r-full);
+      font-size: 13px; color: var(--text-50);
+      cursor: pointer; transition: border-color 0.2s var(--ease);
+    }
+    .topbar-search svg { width: 14px; height: 14px; }
+    .topbar-search:hover { border-color: var(--mint-border); }
+
+    .topbar-btn {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--bg-3); border: 1px solid var(--text-15);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all 0.2s var(--ease); position: relative;
+    }
+    .topbar-btn svg { width: 16px; height: 16px; color: var(--text-50); }
+    .topbar-btn:hover { border-color: var(--mint-border); background: var(--mint-dim); }
+    .topbar-btn:hover svg { color: var(--mint); }
+    .notif-dot {
+      position: absolute; top: 6px; right: 6px;
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--mint); border: 2px solid var(--bg-1);
+    }
+
+    /* Content area */
+    .content { padding: 28px; flex: 1; }
+
+    /* Tab row */
+    .tab-row {
+      display: flex; gap: 4px; margin-bottom: 24px;
+      background: var(--bg-2);
+      border: 1px solid var(--text-15);
+      border-radius: var(--r-lg); padding: 4px;
+      width: fit-content;
+    }
+    .tab {
+      padding: 8px 18px; border-radius: var(--r-md);
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      color: var(--text-50); transition: all 0.2s var(--ease);
+    }
+    .tab.active { background: var(--bg-3); color: var(--text); }
+
+    /* Dashboard tab */
+    .dashboard-panel { display: none; }
+    .dashboard-panel.active { display: block; }
+
+    /* Stats row */
+    .stats-row {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      background: var(--bg-2); border: 1px solid var(--text-15);
+      border-radius: var(--r-lg); padding: 20px 20px 16px;
+    }
+    .stat-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--text-50); margin-bottom: 8px;
+    }
+    .stat-val {
+      font-family: var(--font-head); font-size: 28px; font-weight: 700;
+      background: linear-gradient(135deg, var(--mint), var(--indigo));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; line-height: 1;
+    }
+    .stat-sub { font-size: 12px; color: var(--text-50); margin-top: 6px; }
+    .stat-trend {
+      display: inline-flex; align-items: center; gap: 3px;
+      font-size: 11px; font-weight: 600;
+      padding: 2px 6px; border-radius: var(--r-full);
+    }
+    .stat-trend.up { color: var(--ok); background: rgba(16,245,160,0.1); }
+    .stat-trend.warn { color: var(--warn); background: rgba(245,166,35,0.1); }
+
+    /* Bento grid */
+    .bento { display: grid; grid-template-columns: 2fr 1fr; grid-template-rows: auto; gap: 16px; }
+
+    /* Panel */
+    .panel {
+      background: var(--bg-2); border: 1px solid var(--text-15);
+      border-radius: var(--r-xl); padding: 24px;
+    }
+    .panel-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .panel-title {
+      font-family: var(--font-head); font-size: 14px; font-weight: 600;
+    }
+    .panel-action {
+      font-size: 12px; color: var(--mint); cursor: pointer; text-decoration: none;
+      transition: opacity 0.2s var(--ease);
+    }
+    .panel-action:hover { opacity: 0.7; }
+
+    /* Usage bars */
+    .usage-list { display: flex; flex-direction: column; gap: 16px; }
+    .usage-item { display: flex; flex-direction: column; gap: 6px; }
+    .usage-row {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .usage-label { font-size: 13px; color: var(--text-70); }
+    .usage-pct {
+      font-family: var(--font-head); font-size: 12px; font-weight: 700;
+      color: var(--mint);
+    }
+    .usage-pct.warn { color: var(--warn); }
+    .usage-pct.empty { color: var(--text-30); }
+    .bar-track {
+      height: 5px; background: var(--text-15); border-radius: 3px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%; border-radius: 3px;
+      background: linear-gradient(90deg, var(--indigo), var(--mint));
+      transition: width 1s var(--ease);
+    }
+    .bar-fill.warn { background: linear-gradient(90deg, var(--warn), #F5C523); }
+
+    /* Appointment list */
+    .appt-list { display: flex; flex-direction: column; gap: 12px; }
+    .appt-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px; background: var(--bg-3);
+      border: 1px solid var(--text-15); border-radius: var(--r-lg);
+      transition: border-color 0.2s var(--ease);
+    }
+    .appt-item:hover { border-color: var(--mint-border); }
+    .appt-date {
+      text-align: center; min-width: 44px;
+    }
+    .appt-date-day {
+      font-family: var(--font-head); font-size: 22px; font-weight: 700;
+      color: var(--mint); line-height: 1;
+    }
+    .appt-date-mon { font-size: 10px; text-transform: uppercase; color: var(--text-50); letter-spacing: 1px; }
+    .appt-info { flex: 1; }
+    .appt-doctor { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+    .appt-spec { font-size: 12px; color: var(--text-50); }
+    .appt-time {
+      font-family: var(--font-head); font-size: 13px; font-weight: 600;
+      color: var(--text-70); text-align: right;
+    }
+    .appt-status {
+      font-size: 10px; font-weight: 600;
+      padding: 3px 8px; border-radius: var(--r-full);
+    }
+    .appt-status.confirmed { background: rgba(16,245,160,0.12); color: var(--mint); }
+    .appt-status.pending   { background: rgba(245,166,35,0.12);  color: var(--warn); }
+
+    /* Quick actions */
+    .quick-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    .quick-btn {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      padding: 16px 8px;
+      background: var(--bg-3); border: 1px solid var(--text-15);
+      border-radius: var(--r-lg); cursor: pointer;
+      transition: all 0.2s var(--ease);
+    }
+    .quick-btn:hover { border-color: var(--mint-border); background: var(--mint-dim); }
+    .quick-btn svg { width: 22px; height: 22px; color: var(--mint); }
+    .quick-btn span { font-size: 11px; color: var(--text-50); text-align: center; }
+
+    /* Chat panel */
+    .chat-panel {
+      display: flex; flex-direction: column;
+      height: 320px;
+    }
+    .chat-messages {
+      flex: 1; overflow-y: auto; padding: 4px 0;
+      display: flex; flex-direction: column; gap: 10px;
+      scrollbar-width: none;
+    }
+    .chat-messages::-webkit-scrollbar { display: none; }
+
+    .chat-msg {
+      display: flex; gap: 8px; align-items: flex-end;
+    }
+    .chat-msg.mine { flex-direction: row-reverse; }
+    .chat-avatar {
+      width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--indigo), var(--mint));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; color: var(--bg);
+    }
+    .chat-bubble {
+      max-width: 72%; padding: 10px 14px;
+      border-radius: 16px; font-size: 13px; line-height: 1.5;
+    }
+    .chat-msg:not(.mine) .chat-bubble {
+      background: var(--bg-3); color: var(--text-70);
+      border-bottom-left-radius: 4px;
+    }
+    .chat-msg.mine .chat-bubble {
+      background: var(--mint-dim); color: var(--text);
+      border: 1px solid var(--mint-border);
+      border-bottom-right-radius: 4px;
+    }
+    .chat-input-row {
+      display: flex; gap: 8px; margin-top: 12px;
+    }
+    .chat-input {
+      flex: 1; padding: 10px 14px;
+      background: var(--bg-3); border: 1px solid var(--text-15);
+      border-radius: var(--r-full); font-family: var(--font-body);
+      font-size: 13px; color: var(--text); outline: none;
+      transition: border-color 0.2s var(--ease);
+    }
+    .chat-input::placeholder { color: var(--text-30); }
+    .chat-input:focus { border-color: var(--mint-border); }
+    .chat-send {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: var(--mint); border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity 0.2s var(--ease);
+    }
+    .chat-send:hover { opacity: 0.85; }
+    .chat-send svg { width: 16px; height: 16px; color: var(--bg); }
+
+    /* Digital Card tab */
+    .card-view {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 32px; padding: 24px 0;
+    }
+    .digital-card {
+      width: 100%; max-width: 380px;
+      aspect-ratio: 1.586;
+      border-radius: 20px;
+      background: linear-gradient(135deg, var(--bg-2) 0%, var(--bg-3) 100%);
+      border: 1px solid var(--text-15);
+      padding: 28px;
+      display: flex; flex-direction: column; justify-content: space-between;
+      position: relative; overflow: hidden;
+    }
+    .digital-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 200px 160px at 85% 20%, rgba(16,245,160,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 180px 140px at 15% 80%, rgba(91,107,255,0.10) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .dc-top { display: flex; justify-content: space-between; align-items: flex-start; }
+    .dc-logo-row { display: flex; align-items: center; gap: 8px; }
+    .dc-logo-icon {
+      width: 28px; height: 28px; background: var(--mint); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .dc-logo-icon svg { width: 15px; height: 15px; }
+    .dc-logo-text {
+      font-family: var(--font-head); font-size: 14px; font-weight: 700;
+      letter-spacing: 2px;
+    }
+    .dc-plan-badge {
+      font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--mint);
+      padding: 3px 10px; border: 1px solid var(--mint-border);
+      border-radius: var(--r-full); background: var(--mint-dim);
+    }
+    .dc-mid {}
+    .dc-name {
+      font-family: var(--font-head); font-size: 18px; font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .dc-id { font-size: 11px; color: var(--text-50); letter-spacing: 1px; }
+    .dc-bottom {
+      display: flex; justify-content: space-between; align-items: flex-end;
+    }
+    .dc-info { display: flex; flex-direction: column; gap: 2px; }
+    .dc-info-label { font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-30); }
+    .dc-info-val { font-family: var(--font-head); font-size: 13px; font-weight: 600; }
+    .dc-qr {
+      width: 52px; height: 52px;
+      background: var(--text-15); border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .dc-qr svg { width: 36px; height: 36px; color: var(--text-50); }
+
+    .card-actions { display: flex; gap: 12px; width: 100%; max-width: 380px; }
+    .card-action-btn {
+      flex: 1; padding: 12px; border-radius: var(--r-lg);
+      border: 1px solid var(--text-15); background: var(--bg-2);
+      font-family: var(--font-body); font-size: 13px; font-weight: 500;
+      color: var(--text-70); cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: all 0.2s var(--ease);
+    }
+    .card-action-btn svg { width: 16px; height: 16px; }
+    .card-action-btn:hover { border-color: var(--mint-border); color: var(--mint); }
+
+    /* Bottom nav (mobile) */
+    .bottom-nav {
+      display: none;
+    }
+
+    /* Scrollbar */
+    .main::-webkit-scrollbar { width: 4px; }
+    .main::-webkit-scrollbar-track { background: transparent; }
+    .main::-webkit-scrollbar-thumb { background: var(--text-15); border-radius: 2px; }
+
+    /* ── Responsive ──────────────────────────────── */
+    @media (max-width: 1024px) {
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .bento { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      html, body { overflow: auto; }
+      .main { height: auto; overflow: visible; }
+      .bottom-nav {
+        display: flex; position: fixed; bottom: 0; left: 0; right: 0;
+        background: var(--bg-1); border-top: 1px solid var(--text-15);
+        padding: 8px 0 max(8px, env(safe-area-inset-bottom)); z-index: 50;
+        justify-content: space-around;
+      }
+      .bottom-nav-item {
+        display: flex; flex-direction: column; align-items: center; gap: 4px;
+        padding: 6px 16px; border-radius: var(--r-md); cursor: pointer;
+        color: var(--text-50); font-size: 10px;
+        transition: color 0.2s var(--ease);
+      }
+      .bottom-nav-item svg { width: 22px; height: 22px; }
+      .bottom-nav-item.active { color: var(--mint); }
+      .content { padding: 16px 16px 80px; }
+      .topbar { padding: 0 16px; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .quick-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <a href="index.html" class="sidebar-logo">
+      <div class="sidebar-logo-icon">
+        <svg viewBox="0 0 30 30" fill="none">
+          <polyline points="4,15 8,15 10.5,8 13,22 16,10 18.5,18 21,15 26,15"
+            stroke="#07080E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="sidebar-logo-text">VIVE</span>
+    </a>
+
+    <div class="nav-section">
+      <p class="nav-section-label">Principal</p>
+      <a class="nav-item active" onclick="activateNav(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+          <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+        </svg>
+        Dashboard
+      </a>
+      <a class="nav-item" onclick="activateNav(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/>
+          <line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+        Agendamentos
+        <span class="nav-badge">3</span>
+      </a>
+      <a class="nav-item" onclick="activateNav(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+        Saúde Preventiva
+      </a>
+      <a class="nav-item" onclick="activateNav(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+        Concierge
+        <span class="nav-badge">1</span>
+      </a>
+    </div>
+
+    <div class="nav-section">
+      <p class="nav-section-label">Plano</p>
+      <a class="nav-item" onclick="activateNav(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>
+        </svg>
+        Cartão Virtual
+      </a>
+      <a class="nav-item" onclick="activateNav(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+        </svg>
+        Benefícios
+      </a>
+      <a class="nav-item" onclick="activateNav(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M16.95 16.95l1.41 1.41M4.93 4.93l1.41 1.41M7.05 16.95l-1.41 1.41M21 12h-2M5 12H3M12 3V1M12 23v-2"/>
+        </svg>
+        Configurações
+      </a>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="user-row">
+        <div class="user-avatar">RC</div>
+        <div>
+          <div class="user-name">Rafael Costa</div>
+          <div class="user-plan">Executive Plan</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div class="main">
+
+    <!-- Topbar -->
+    <header class="topbar">
+      <div class="topbar-greeting">Bom dia, <span>Rafael</span> 👋</div>
+      <div class="topbar-right">
+        <div class="topbar-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          Buscar…
+        </div>
+        <div class="topbar-btn" title="Notificações">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+          </svg>
+          <span class="notif-dot"></span>
+        </div>
+        <div class="user-avatar" style="width:32px;height:32px;font-size:11px;cursor:pointer">RC</div>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <div class="content">
+
+      <!-- Tabs -->
+      <div class="tab-row" role="tablist">
+        <div class="tab active" role="tab" onclick="switchTab('dashboard', this)">Dashboard</div>
+        <div class="tab" role="tab" onclick="switchTab('card', this)">Cartão Virtual</div>
+        <div class="tab" role="tab" onclick="switchTab('schedule', this)">Agenda</div>
+        <div class="tab" role="tab" onclick="switchTab('concierge', this)">Concierge</div>
+      </div>
+
+      <!-- Dashboard Panel -->
+      <div class="dashboard-panel active" id="panel-dashboard">
+
+        <!-- Stats -->
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-label">Plano Ativo</div>
+            <div class="stat-val">Executive</div>
+            <div class="stat-sub">Renova Dez 2026</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Consultas 2026</div>
+            <div class="stat-val">8</div>
+            <div class="stat-sub"><span class="stat-trend up">↑ 2 vs 2025</span></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Cobertura Médica</div>
+            <div class="stat-val">80%</div>
+            <div class="stat-sub"><span class="stat-trend warn">⚠ Próximo do limite</span></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Score de Saúde</div>
+            <div class="stat-val">92</div>
+            <div class="stat-sub"><span class="stat-trend up">↑ 4 pts</span></div>
+          </div>
+        </div>
+
+        <!-- Quick actions -->
+        <div class="panel" style="margin-bottom:16px">
+          <div class="panel-header">
+            <span class="panel-title">Ações Rápidas</span>
+          </div>
+          <div class="quick-grid">
+            <div class="quick-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/>
+                <line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+              </svg>
+              <span>Agendar</span>
+            </div>
+            <div class="quick-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+              <span>Chat</span>
+            </div>
+            <div class="quick-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              </svg>
+              <span>Reembolso</span>
+            </div>
+            <div class="quick-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+              </svg>
+              <span>Check-up</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bento -->
+        <div class="bento">
+
+          <!-- Appointments -->
+          <div class="panel">
+            <div class="panel-header">
+              <span class="panel-title">Próximas Consultas</span>
+              <a class="panel-action">Ver todas →</a>
+            </div>
+            <div class="appt-list">
+              <div class="appt-item">
+                <div class="appt-date">
+                  <div class="appt-date-day">17</div>
+                  <div class="appt-date-mon">Abr</div>
+                </div>
+                <div class="appt-info">
+                  <div class="appt-doctor">Dra. Carla Mendes</div>
+                  <div class="appt-spec">Cardiologia · Presencial</div>
+                </div>
+                <div style="text-align:right">
+                  <div class="appt-time">10:00</div>
+                  <div class="appt-status confirmed">Confirmado</div>
+                </div>
+              </div>
+              <div class="appt-item">
+                <div class="appt-date">
+                  <div class="appt-date-day">24</div>
+                  <div class="appt-date-mon">Abr</div>
+                </div>
+                <div class="appt-info">
+                  <div class="appt-doctor">Dr. Paulo Ferreira</div>
+                  <div class="appt-spec">Psiquiatria · Telemedicina</div>
+                </div>
+                <div style="text-align:right">
+                  <div class="appt-time">15:30</div>
+                  <div class="appt-status pending">Aguardando</div>
+                </div>
+              </div>
+              <div class="appt-item">
+                <div class="appt-date">
+                  <div class="appt-date-day">05</div>
+                  <div class="appt-date-mon">Mai</div>
+                </div>
+                <div class="appt-info">
+                  <div class="appt-doctor">Dra. Ana Rocha</div>
+                  <div class="appt-spec">Check-up Executivo</div>
+                </div>
+                <div style="text-align:right">
+                  <div class="appt-time">08:30</div>
+                  <div class="appt-status confirmed">Confirmado</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Usage + Concierge -->
+          <div style="display:flex;flex-direction:column;gap:16px">
+
+            <!-- Usage -->
+            <div class="panel">
+              <div class="panel-header">
+                <span class="panel-title">Benefícios 2026</span>
+                <a class="panel-action">Detalhes</a>
+              </div>
+              <div class="usage-list">
+                <div class="usage-item">
+                  <div class="usage-row">
+                    <span class="usage-label">Médico</span>
+                    <span class="usage-pct warn">80%</span>
+                  </div>
+                  <div class="bar-track">
+                    <div class="bar-fill warn" style="width:80%"></div>
+                  </div>
+                </div>
+                <div class="usage-item">
+                  <div class="usage-row">
+                    <span class="usage-label">Odontológico</span>
+                    <span class="usage-pct">45%</span>
+                  </div>
+                  <div class="bar-track">
+                    <div class="bar-fill" style="width:45%"></div>
+                  </div>
+                </div>
+                <div class="usage-item">
+                  <div class="usage-row">
+                    <span class="usage-label">Saúde Mental</span>
+                    <span class="usage-pct empty">0%</span>
+                  </div>
+                  <div class="bar-track">
+                    <div class="bar-fill" style="width:0%"></div>
+                  </div>
+                </div>
+                <div class="usage-item">
+                  <div class="usage-row">
+                    <span class="usage-label">Telemedicina</span>
+                    <span class="usage-pct">20%</span>
+                  </div>
+                  <div class="bar-track">
+                    <div class="bar-fill" style="width:20%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Concierge -->
+            <div class="panel">
+              <div class="panel-header">
+                <span class="panel-title">Concierge</span>
+                <span style="width:8px;height:8px;border-radius:50%;background:var(--mint);display:inline-block;box-shadow:0 0 8px var(--mint)"></span>
+              </div>
+              <div class="chat-panel">
+                <div class="chat-messages">
+                  <div class="chat-msg">
+                    <div class="chat-avatar">DM</div>
+                    <div class="chat-bubble">Bom dia, Rafael! Sua consulta com a Dra. Carla está confirmada para amanhã às 10h. 👍</div>
+                  </div>
+                  <div class="chat-msg mine">
+                    <div class="chat-bubble">Obrigado! Preciso também agendar um check-up completo.</div>
+                  </div>
+                  <div class="chat-msg">
+                    <div class="chat-avatar">DM</div>
+                    <div class="chat-bubble">Claro! Já encontrei disponibilidade em 05 de Maio às 8h30 com a Dra. Ana Rocha — posso confirmar?</div>
+                  </div>
+                </div>
+                <div class="chat-input-row">
+                  <input class="chat-input" type="text" placeholder="Mensagem para seu concierge…"/>
+                  <button class="chat-send" aria-label="Enviar">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Card Panel -->
+      <div class="dashboard-panel" id="panel-card">
+        <div class="card-view">
+          <div class="digital-card">
+            <div class="dc-top">
+              <div class="dc-logo-row">
+                <div class="dc-logo-icon">
+                  <svg viewBox="0 0 30 30" fill="none">
+                    <polyline points="4,15 8,15 10.5,8 13,22 16,10 18.5,18 21,15 26,15"
+                      stroke="#07080E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <span class="dc-logo-text">VIVE</span>
+              </div>
+              <span class="dc-plan-badge">Executive</span>
+            </div>
+            <div class="dc-mid">
+              <div class="dc-name">Rafael Costa</div>
+              <div class="dc-id">Nº 2026 · 0847 · 3312</div>
+            </div>
+            <div class="dc-bottom">
+              <div style="display:flex;gap:24px">
+                <div class="dc-info">
+                  <div class="dc-info-label">Válido até</div>
+                  <div class="dc-info-val">Dez / 2026</div>
+                </div>
+                <div class="dc-info">
+                  <div class="dc-info-label">Cobertura</div>
+                  <div class="dc-info-val" style="color:var(--mint)">Nacional</div>
+                </div>
+              </div>
+              <div class="dc-qr" title="QR Code">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                  <rect x="3" y="14" width="7" height="7"/>
+                  <line x1="14" y1="14" x2="14" y2="14"/><line x1="17" y1="14" x2="17" y2="14"/>
+                  <line x1="20" y1="14" x2="20" y2="14"/><line x1="14" y1="17" x2="14" y2="17"/>
+                  <line x1="17" y1="17" x2="20" y2="20"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-actions">
+            <button class="card-action-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              Baixar PDF
+            </button>
+            <button class="card-action-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+              </svg>
+              Compartilhar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Schedule Panel -->
+      <div class="dashboard-panel" id="panel-schedule">
+        <div class="panel">
+          <div class="panel-header">
+            <span class="panel-title">Agenda Completa</span>
+            <button class="btn-primary" style="width:auto;padding:10px 20px;font-size:13px">+ Agendar</button>
+          </div>
+          <div class="appt-list">
+            <div class="appt-item">
+              <div class="appt-date"><div class="appt-date-day">17</div><div class="appt-date-mon">Abr</div></div>
+              <div class="appt-info"><div class="appt-doctor">Dra. Carla Mendes</div><div class="appt-spec">Cardiologia · Presencial · Clínica Centro</div></div>
+              <div style="text-align:right"><div class="appt-time">10:00</div><div class="appt-status confirmed">Confirmado</div></div>
+            </div>
+            <div class="appt-item">
+              <div class="appt-date"><div class="appt-date-day">24</div><div class="appt-date-mon">Abr</div></div>
+              <div class="appt-info"><div class="appt-doctor">Dr. Paulo Ferreira</div><div class="appt-spec">Psiquiatria · Telemedicina</div></div>
+              <div style="text-align:right"><div class="appt-time">15:30</div><div class="appt-status pending">Aguardando</div></div>
+            </div>
+            <div class="appt-item">
+              <div class="appt-date"><div class="appt-date-day">05</div><div class="appt-date-mon">Mai</div></div>
+              <div class="appt-info"><div class="appt-doctor">Dra. Ana Rocha</div><div class="appt-spec">Check-up Executivo Completo</div></div>
+              <div style="text-align:right"><div class="appt-time">08:30</div><div class="appt-status confirmed">Confirmado</div></div>
+            </div>
+            <div class="appt-item" style="opacity:0.5">
+              <div class="appt-date"><div class="appt-date-day">12</div><div class="appt-date-mon">Mar</div></div>
+              <div class="appt-info"><div class="appt-doctor">Dr. Henrique Lima</div><div class="appt-spec">Clínico Geral · Presencial</div></div>
+              <div style="text-align:right"><div class="appt-time">09:00</div><div class="appt-status" style="background:var(--bg-3);color:var(--text-30)">Realizado</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Concierge Panel -->
+      <div class="dashboard-panel" id="panel-concierge">
+        <div class="panel" style="max-width:680px">
+          <div class="panel-header">
+            <div style="display:flex;align-items:center;gap:12px">
+              <div class="user-avatar">DM</div>
+              <div>
+                <div style="font-family:var(--font-head);font-size:14px;font-weight:600">Dra. Marina Souza</div>
+                <div style="font-size:11px;color:var(--mint)">● Online agora</div>
+              </div>
+            </div>
+          </div>
+          <div class="chat-messages" style="height:360px;max-height:360px">
+            <div class="chat-msg">
+              <div class="chat-avatar">DM</div>
+              <div class="chat-bubble">Olá Rafael! Como posso ajudá-lo hoje?</div>
+            </div>
+            <div class="chat-msg mine">
+              <div class="chat-bubble">Preciso remarcar minha consulta de amanhã.</div>
+            </div>
+            <div class="chat-msg">
+              <div class="chat-avatar">DM</div>
+              <div class="chat-bubble">Sem problema! Tenho horários disponíveis na quinta às 14h ou na sexta às 10h com a Dra. Carla. Qual prefere?</div>
+            </div>
+            <div class="chat-msg mine">
+              <div class="chat-bubble">Sexta às 10h está ótimo!</div>
+            </div>
+            <div class="chat-msg">
+              <div class="chat-avatar">DM</div>
+              <div class="chat-bubble">Perfeito! Remarcado para Sexta, 25/04 às 10h com a Dra. Carla Mendes. Você receberá uma confirmação por e-mail. 🎉</div>
+            </div>
+          </div>
+          <div class="chat-input-row" style="margin-top:16px">
+            <input class="chat-input" type="text" placeholder="Escreva uma mensagem…"/>
+            <button class="chat-send" aria-label="Enviar">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+
+  <!-- Bottom nav (mobile) -->
+  <nav class="bottom-nav" role="navigation">
+    <div class="bottom-nav-item active" onclick="switchTab('dashboard', null); setBottomActive(this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+        <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+      </svg>
+      Início
+    </div>
+    <div class="bottom-nav-item" onclick="switchTab('schedule', null); setBottomActive(this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/>
+        <line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+      </svg>
+      Agenda
+    </div>
+    <div class="bottom-nav-item" onclick="switchTab('card', null); setBottomActive(this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>
+      </svg>
+      Cartão
+    </div>
+    <div class="bottom-nav-item" onclick="switchTab('concierge', null); setBottomActive(this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+      Chat
+    </div>
+  </nav>
+
+  <script>
+    function switchTab(id, tabEl) {
+      document.querySelectorAll('.dashboard-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('panel-' + id).classList.add('active');
+
+      if (tabEl) {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        tabEl.classList.add('active');
+      }
+    }
+
+    function activateNav(el) {
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    function setBottomActive(el) {
+      document.querySelectorAll('.bottom-nav-item').forEach(n => n.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    // Chat send on Enter
+    document.querySelectorAll('.chat-input').forEach(input => {
+      input.addEventListener('keydown', e => {
+        if (e.key === 'Enter' && input.value.trim()) {
+          const messages = input.closest('.panel, .dashboard-panel').querySelector('.chat-messages');
+          if (!messages) return;
+          const msg = document.createElement('div');
+          msg.className = 'chat-msg mine';
+          msg.innerHTML = `<div class="chat-bubble">${input.value.trim()}</div>`;
+          messages.appendChild(msg);
+          input.value = '';
+          messages.scrollTop = messages.scrollHeight;
+        }
+      });
+    });
+
+    document.querySelectorAll('.chat-send').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const input = btn.previousElementSibling;
+        if (input && input.value.trim()) {
+          const messages = btn.closest('.panel, .dashboard-panel').querySelector('.chat-messages');
+          if (!messages) return;
+          const msg = document.createElement('div');
+          msg.className = 'chat-msg mine';
+          msg.innerHTML = `<div class="chat-bubble">${input.value.trim()}</div>`;
+          messages.appendChild(msg);
+          input.value = '';
+          messages.scrollTop = messages.scrollHeight;
+        }
+      });
+    });
+  </script>
+
+  <style>
+    .btn-primary {
+      background: var(--mint); border: none; border-radius: var(--r-lg);
+      font-family: var(--font-head); font-size: 15px; font-weight: 600;
+      color: var(--bg); cursor: pointer; letter-spacing: 0.5px;
+      transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(16,245,160,0.3); }
+  </style>
+</body>
+</html>

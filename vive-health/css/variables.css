@@ -1,0 +1,74 @@
+/* ================================================
+   VIVE — Executive Health Platform
+   Design Tokens v1.0
+   ================================================ */
+:root {
+  /* ── Core Brand ──────────────────────────────── */
+  --bg:           #07080E;
+  --bg-1:         #0D1018;
+  --bg-2:         #131923;
+  --bg-3:         #192030;
+
+  --mint:         #10F5A0;
+  --mint-dim:     rgba(16, 245, 160, 0.12);
+  --mint-glow:    rgba(16, 245, 160, 0.25);
+  --mint-border:  rgba(16, 245, 160, 0.18);
+
+  --indigo:       #5B6BFF;
+  --indigo-dim:   rgba(91, 107, 255, 0.12);
+  --indigo-glow:  rgba(91, 107, 255, 0.3);
+
+  --text:         #F2F5FF;
+  --text-70:      rgba(242,245,255,0.70);
+  --text-50:      rgba(242,245,255,0.50);
+  --text-30:      rgba(242,245,255,0.30);
+  --text-15:      rgba(242,245,255,0.15);
+
+  /* ── Semantic ───────────────────────────────── */
+  --ok:      #10F5A0;
+  --warn:    #F5A623;
+  --err:     #FF4D6A;
+  --info:    #5B6BFF;
+
+  /* ── Typography ─────────────────────────────── */
+  --font-head: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'DM Sans',       system-ui, sans-serif;
+
+  /* ── Radius ─────────────────────────────────── */
+  --r-sm:   6px;
+  --r-md:   12px;
+  --r-lg:   16px;
+  --r-xl:   20px;
+  --r-2xl:  28px;
+  --r-full: 9999px;
+
+  /* ── Shadow ─────────────────────────────────── */
+  --shadow-card:  0 4px 28px rgba(0,0,0,0.45);
+  --shadow-glow:  0 0 40px rgba(16,245,160,0.18);
+  --shadow-indig: 0 8px 32px rgba(91,107,255,0.35);
+
+  /* ── Transition ─────────────────────────────── */
+  --ease:        cubic-bezier(0.4,0,0.2,1);
+  --ease-spring: cubic-bezier(0.34,1.56,0.64,1);
+  --ease-out:    cubic-bezier(0,0,0.2,1);
+  --t-fast:  150ms;
+  --t-base:  250ms;
+  --t-slow:  400ms;
+  --t-xslow: 650ms;
+
+  /* ── Z-index ─────────────────────────────────── */
+  --z-base:    1;
+  --z-drop:    10;
+  --z-sticky:  20;
+  --z-overlay: 30;
+  --z-modal:   50;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after {
+    animation-duration:       0.01ms !important;
+    animation-iteration-count:1      !important;
+    transition-duration:      0.01ms !important;
+  }
+}
