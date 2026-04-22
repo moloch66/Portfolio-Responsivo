@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Motion — Design Reels</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:system-ui,sans-serif}
+
+/* ── Navigation dots ── */
+#nav-dots{
+  position:fixed;right:28px;top:50%;transform:translateY(-50%);
+  display:flex;flex-direction:column;gap:12px;z-index:100;
+}
+.dot{
+  width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.25);
+  border:1.5px solid rgba(255,255,255,0.4);cursor:pointer;
+  transition:all 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+.dot.active{background:#fff;transform:scale(1.5);border-color:#fff}
+.dot:hover:not(.active){background:rgba(255,255,255,0.6);transform:scale(1.25)}
+
+/* ── Back link ── */
+#back{
+  position:fixed;top:28px;left:28px;z-index:100;
+  width:40px;height:40px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.2);
+  background:rgba(255,255,255,0.05);backdrop-filter:blur(12px);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;text-decoration:none;color:#fff;
+  transition:all 0.25s ease;
+}
+#back:hover{background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.5);transform:scale(1.1)}
+#back svg{width:18px;height:18px}
+
+/* ── Scene counter ── */
+#scene-label{
+  position:fixed;bottom:28px;left:28px;z-index:100;
+  font-size:11px;letter-spacing:0.2em;color:rgba(255,255,255,0.3);
+  font-variant-numeric:tabular-nums;user-select:none;
+  transition:opacity 0.4s ease;
+}
+
+/* ── Scenes container ── */
+#scenes{width:100%;height:100%;position:relative}
+.scene{
+  position:absolute;top:0;left:0;width:100%;height:100%;
+  opacity:0;pointer-events:none;
+  transition:opacity 0.9s cubic-bezier(0.4,0,0.2,1);
+}
+.scene.active{opacity:1;pointer-events:all}
+.scene canvas{width:100%!important;height:100%!important;display:block}
+
+/* ── Progress bar ── */
+#progress{
+  position:fixed;bottom:0;left:0;height:2px;z-index:100;
+  background:linear-gradient(90deg,#00f5ff,#a855f7,#f97316);
+  width:20%;transition:width 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+</style>
+</head>
+<body>
+
+<!-- Back -->
+<a id="back" href="../index.html" aria-label="Back to portfolio">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="15 18 9 12 15 6"/>
+  </svg>
+</a>
+
+<!-- Scene label -->
+<div id="scene-label">01 / 05</div>
+
+<!-- Progress -->
+<div id="progress"></div>
+
+<!-- Nav dots -->
+<nav id="nav-dots">
+  <div class="dot active" data-index="0"></div>
+  <div class="dot" data-index="1"></div>
+  <div class="dot" data-index="2"></div>
+  <div class="dot" data-index="3"></div>
+  <div class="dot" data-index="4"></div>
+</nav>
+
+<!-- Scenes -->
+<div id="scenes">
+  <!-- 1: Particle Neural Network -->
+  <div class="scene active" id="s0"><canvas id="c0"></canvas></div>
+  <!-- 2: Morphing Blobs -->
+  <div class="scene" id="s1"><canvas id="c1"></canvas></div>
+  <!-- 3: 3D Wave Grid -->
+  <div class="scene" id="s2"><canvas id="c2"></canvas></div>
+  <!-- 4: Gravity Orbs -->
+  <div class="scene" id="s3"><canvas id="c3"></canvas></div>
+  <!-- 5: Flow Field -->
+  <div class="scene" id="s4"><canvas id="c4"></canvas></div>
+</div>
+
+<script>
+/* ════════════════════════════════════════════
+   CORE — scene manager
+════════════════════════════════════════════ */
+const TOTAL = 5;
+let current = 0;
+let locked = false;
+
+const scenes = [...document.querySelectorAll('.scene')];
+const dots   = [...document.querySelectorAll('.dot')];
+const label  = document.getElementById('scene-label');
+const prog   = document.getElementById('progress');
+
+function goTo(idx) {
+  if (idx < 0 || idx >= TOTAL || idx === current || locked) return;
+  locked = true;
+  scenes[current].classList.remove('active');
+  dots[current].classList.remove('active');
+  current = idx;
+  scenes[current].classList.add('active');
+  dots[current].classList.add('active');
+  label.textContent = String(current + 1).padStart(2,'0') + ' / 0' + TOTAL;
+  prog.style.width = ((current + 1) / TOTAL * 100) + '%';
+  setTimeout(() => { locked = false; }, 1000);
+}
+
+/* Wheel */
+let wheelAcc = 0, wheelTimer;
+window.addEventListener('wheel', e => {
+  e.preventDefault();
+  wheelAcc += e.deltaY;
+  clearTimeout(wheelTimer);
+  wheelTimer = setTimeout(() => {
+    if (Math.abs(wheelAcc) > 30) goTo(current + (wheelAcc > 0 ? 1 : -1));
+    wheelAcc = 0;
+  }, 60);
+}, {passive: false});
+
+/* Touch */
+let touchY0 = 0;
+window.addEventListener('touchstart', e => { touchY0 = e.touches[0].clientY; }, {passive:true});
+window.addEventListener('touchend', e => {
+  const dy = touchY0 - e.changedTouches[0].clientY;
+  if (Math.abs(dy) > 40) goTo(current + (dy > 0 ? 1 : -1));
+}, {passive:true});
+
+/* Keyboard */
+window.addEventListener('keydown', e => {
+  if (e.key === 'ArrowDown'||e.key === 'ArrowRight') goTo(current+1);
+  if (e.key === 'ArrowUp'  ||e.key === 'ArrowLeft')  goTo(current-1);
+});
+
+/* Dot click */
+dots.forEach(d => d.addEventListener('click', () => goTo(+d.dataset.index)));
+
+/* Resize all canvases */
+function sizeCanvas(canvas) {
+  canvas.width  = window.innerWidth  * devicePixelRatio;
+  canvas.height = window.innerHeight * devicePixelRatio;
+}
+
+/* ════════════════════════════════════════════
+   SCENE 0 — Particle Neural Network
+   Cursor repels; particles self-connect within radius
+════════════════════════════════════════════ */
+(function() {
+  const canvas = document.getElementById('c0');
+  const ctx    = canvas.getContext('2d');
+  let W, H, mouse = {x:-9999,y:-9999};
+  const N = 120;
+  const particles = [];
+
+  class Particle {
+    constructor() { this.reset(true); }
+    reset(rand) {
+      this.x  = rand ? Math.random()*W : W/2 + (Math.random()-0.5)*80;
+      this.y  = rand ? Math.random()*H : H/2 + (Math.random()-0.5)*80;
+      this.vx = (Math.random()-0.5)*0.6;
+      this.vy = (Math.random()-0.5)*0.6;
+      this.r  = Math.random()*1.8+0.4;
+      const hues = [185,200,215,260,280];
+      this.hue = hues[Math.floor(Math.random()*hues.length)];
+    }
+    update() {
+      /* cursor repulsion */
+      const dx = this.x - mouse.x, dy = this.y - mouse.y;
+      const dist = Math.sqrt(dx*dx+dy*dy);
+      if (dist < 100) {
+        const f = (100-dist)/100;
+        this.vx += dx/dist * f * 0.8;
+        this.vy += dy/dist * f * 0.8;
+      }
+      /* velocity damping */
+      this.vx *= 0.98; this.vy *= 0.98;
+      this.x += this.vx; this.y += this.vy;
+      /* wrap */
+      if (this.x < -5) this.x = W+5;
+      if (this.x > W+5) this.x = -5;
+      if (this.y < -5) this.y = H+5;
+      if (this.y > H+5) this.y = -5;
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x/devicePixelRatio, this.y/devicePixelRatio, this.r, 0, Math.PI*2);
+      ctx.fillStyle = `hsla(${this.hue},90%,72%,0.85)`;
+      ctx.fill();
+    }
+  }
+
+  function init() {
+    W = canvas.width  = window.innerWidth  * devicePixelRatio;
+    H = canvas.height = window.innerHeight * devicePixelRatio;
+    particles.length = 0;
+    for (let i=0;i<N;i++) particles.push(new Particle());
+  }
+
+  const LINK_DIST = 140 * devicePixelRatio;
+
+  function draw() {
+    ctx.fillStyle = 'rgba(4,6,18,0.18)';
+    ctx.fillRect(0,0,W,H);
+
+    /* connections */
+    for (let i=0;i<N;i++) {
+      for (let j=i+1;j<N;j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const d  = Math.sqrt(dx*dx+dy*dy);
+        if (d < LINK_DIST) {
+          const alpha = (1-d/LINK_DIST)*0.45;
+          const hue   = (particles[i].hue + particles[j].hue)/2;
+          ctx.strokeStyle = `hsla(${hue},80%,65%,${alpha})`;
+          ctx.lineWidth   = 0.8;
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x/devicePixelRatio, particles[i].y/devicePixelRatio);
+          ctx.lineTo(particles[j].x/devicePixelRatio, particles[j].y/devicePixelRatio);
+          ctx.stroke();
+        }
+      }
+    }
+
+    particles.forEach(p => { p.update(); p.draw(); });
+  }
+
+  let raf0;
+  function loop() { draw(); raf0 = requestAnimationFrame(loop); }
+
+  /* Lazy start / stop */
+  const obs0 = new IntersectionObserver(([e]) => {
+    if (e.isIntersecting) { init(); loop(); }
+    else cancelAnimationFrame(raf0);
+  },{threshold:0.1});
+  obs0.observe(document.getElementById('s0'));
+
+  window.addEventListener('mousemove', e => {
+    mouse.x = e.clientX * devicePixelRatio;
+    mouse.y = e.clientY * devicePixelRatio;
+  });
+  window.addEventListener('resize', () => { if (document.getElementById('s0').classList.contains('active')) init(); });
+})();
+
+
+/* ════════════════════════════════════════════
+   SCENE 1 — Morphing Blobs
+   Catmull-Rom control points oscillate with unique freq
+════════════════════════════════════════════ */
+(function() {
+  const canvas = document.getElementById('c1');
+  const ctx    = canvas.getContext('2d');
+  let W, H, t = 0;
+
+  const BLOBS = [
+    { cx:0.50, cy:0.50, r:0.22, pts:7, speed:0.0012, hue:270, sat:80, lit:65, a:0.65 },
+    { cx:0.38, cy:0.44, r:0.15, pts:5, speed:0.0019, hue:310, sat:85, lit:60, a:0.50 },
+    { cx:0.62, cy:0.56, r:0.13, pts:6, speed:0.0016, hue:230, sat:90, lit:68, a:0.45 },
+    { cx:0.48, cy:0.60, r:0.10, pts:5, speed:0.0023, hue:190, sat:95, lit:72, a:0.40 },
+  ];
+
+  function init() {
+    W = canvas.width  = window.innerWidth  * devicePixelRatio;
+    H = canvas.height = window.innerHeight * devicePixelRatio;
+  }
+
+  function catmullRom(ctx, pts) {
+    const n = pts.length;
+    ctx.moveTo(pts[0].x, pts[0].y);
+    for (let i = 0; i < n; i++) {
+      const p0 = pts[(i-1+n)%n], p1 = pts[i], p2 = pts[(i+1)%n], p3 = pts[(i+2)%n];
+      const cp1x = p1.x + (p2.x-p0.x)/6;
+      const cp1y = p1.y + (p2.y-p0.y)/6;
+      const cp2x = p2.x - (p3.x-p1.x)/6;
+      const cp2y = p2.y - (p3.y-p1.y)/6;
+      ctx.bezierCurveTo(cp1x,cp1y, cp2x,cp2y, p2.x, p2.y);
+    }
+    ctx.closePath();
+  }
+
+  function getBlobPts(blob, t) {
+    const cx = blob.cx * W / devicePixelRatio;
+    const cy = blob.cy * H / devicePixelRatio;
+    const r  = blob.r  * Math.min(W,H) / devicePixelRatio;
+    const pts = [];
+    for (let i = 0; i < blob.pts; i++) {
+      const angle = (i / blob.pts) * Math.PI * 2;
+      const noise1 = Math.sin(t * blob.speed * 1000 + i * 1.7) * 0.18;
+      const noise2 = Math.cos(t * blob.speed * 700  + i * 2.3) * 0.14;
+      const rad    = r * (1 + noise1 + noise2);
+      pts.push({ x: cx + Math.cos(angle)*rad, y: cy + Math.sin(angle)*rad });
+    }
+    return pts;
+  }
+
+  function draw() {
+    ctx.clearRect(0,0,W,H);
+    /* deep bg */
+    ctx.fillStyle = '#0a0010';
+    ctx.fillRect(0,0,W,H);
+
+    /* ambient glow behind */
+    const grd = ctx.createRadialGradient(W*.5/devicePixelRatio, H*.5/devicePixelRatio, 0,
+                                          W*.5/devicePixelRatio, H*.5/devicePixelRatio, H*.55/devicePixelRatio);
+    grd.addColorStop(0,'rgba(120,40,200,0.15)');
+    grd.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle = grd;
+    ctx.fillRect(0,0,W/devicePixelRatio,H/devicePixelRatio);
+
+    BLOBS.forEach(b => {
+      const pts = getBlobPts(b, t);
+      /* glow */
+      ctx.save();
+      ctx.filter = 'blur(40px)';
+      ctx.beginPath(); catmullRom(ctx, pts);
+      ctx.fillStyle = `hsla(${b.hue},${b.sat}%,${b.lit}%,0.35)`;
+      ctx.fill();
+      ctx.restore();
+      /* main */
+      ctx.beginPath(); catmullRom(ctx, pts);
+      const grad = ctx.createRadialGradient(
+        b.cx*W/devicePixelRatio, b.cy*H/devicePixelRatio, 0,
+        b.cx*W/devicePixelRatio, b.cy*H/devicePixelRatio, b.r*Math.min(W,H)/devicePixelRatio
+      );
+      grad.addColorStop(0,`hsla(${b.hue+20},${b.sat}%,${b.lit+10}%,${b.a})`);
+      grad.addColorStop(1,`hsla(${b.hue-20},${b.sat}%,${b.lit-10}%,${b.a*0.4})`);
+      ctx.fillStyle = grad;
+      ctx.fill();
+    });
+
+    /* orbiting dots */
+    for (let i=0;i<8;i++) {
+      const ang = t * 0.0008 * (i%2===0?1:-1) + i*Math.PI/4;
+      const orb = 0.28 * Math.min(W,H)/devicePixelRatio;
+      const x = W*.5/devicePixelRatio + Math.cos(ang)*orb;
+      const y = H*.5/devicePixelRatio + Math.sin(ang)*orb;
+      ctx.beginPath();
+      ctx.arc(x,y,2.5,0,Math.PI*2);
+      ctx.fillStyle = `hsla(${200+i*20},90%,75%,0.7)`;
+      ctx.fill();
+    }
+
+    t++;
+  }
+
+  let raf1;
+  function loop() { draw(); raf1 = requestAnimationFrame(loop); }
+  const obs1 = new IntersectionObserver(([e]) => {
+    if (e.isIntersecting) { init(); loop(); }
+    else cancelAnimationFrame(raf1);
+  },{threshold:0.1});
+  obs1.observe(document.getElementById('s1'));
+  window.addEventListener('resize', () => { if (document.getElementById('s1').classList.contains('active')) init(); });
+})();
+
+
+/* ════════════════════════════════════════════
+   SCENE 2 — 3D Wave Grid
+   Perspective grid with sin-wave Z displacement
+════════════════════════════════════════════ */
+(function() {
+  const canvas = document.getElementById('c2');
+  const ctx    = canvas.getContext('2d');
+  let W, H;
+  let t2 = 0;
+
+  const COLS = 30, ROWS = 30;
+  const FOV  = 500;
+
+  function init() {
+    W = canvas.width  = window.innerWidth  * devicePixelRatio;
+    H = canvas.height = window.innerHeight * devicePixelRatio;
+  }
+
+  function project(x,y,z) {
+    const scale = FOV / (FOV + z);
+    return { x: x*scale + W/(2*devicePixelRatio), y: y*scale + H/(2*devicePixelRatio), s: scale };
+  }
+
+  function draw() {
+    ctx.fillStyle = 'rgba(2,4,20,0.22)';
+    ctx.fillRect(0,0,W/devicePixelRatio,H/devicePixelRatio);
+
+    const gw = 40, gh = 40;
+    const ox = (COLS/2)*gw, oz = (ROWS/2)*gh;
+    const tilt = -0.45; /* radians */
+
+    for (let pass = 0; pass < 2; pass++) {
+      /* pass 0 = horizontal lines, pass 1 = vertical */
+      for (let a = 0; a <= (pass===0 ? ROWS : COLS); a++) {
+        ctx.beginPath();
+        for (let b = 0; b <= (pass===0 ? COLS : ROWS); b++) {
+          const ci = pass===0 ? b : a;
+          const ri = pass===0 ? a : b;
+          const gx = ci*gw - ox;
+          const gz = ri*gh - oz;
+          const wave = Math.sin(ci*0.4 + t2*0.035) * Math.cos(ri*0.35 + t2*0.028) * 60;
+          const gy3  = wave;
+          /* apply tilt: rotate around X */
+          const ry = gy3*Math.cos(tilt) - gz*Math.sin(tilt);
+          const rz = gy3*Math.sin(tilt) + gz*Math.cos(tilt);
+          const p   = project(gx, ry, rz);
+          if (b===0 || (pass===1 && a===0)) ctx.moveTo(p.x,p.y);
+          else ctx.lineTo(p.x,p.y);
+        }
+        /* color by "height" */
+        const rowRatio = a / (pass===0?ROWS:COLS);
+        const hue = 200 + rowRatio*80;
+        const alpha = 0.12 + rowRatio*0.35;
+        ctx.strokeStyle = `hsla(${hue},85%,68%,${alpha})`;
+        ctx.lineWidth   = 0.7;
+        ctx.stroke();
+      }
+    }
+
+    /* animated bright ridge */
+    const ridge = Math.floor(((Math.sin(t2*0.02)+1)/2)*ROWS);
+    ctx.beginPath();
+    for (let ci=0;ci<=COLS;ci++) {
+      const gx = ci*gw - ox;
+      const gz = ridge*gh - oz;
+      const wave = Math.sin(ci*0.4+t2*0.035)*Math.cos(ridge*0.35+t2*0.028)*60;
+      const ry   = wave*Math.cos(tilt) - gz*Math.sin(tilt);
+      const rz   = wave*Math.sin(tilt) + gz*Math.cos(tilt);
+      const p    = project(gx,ry,rz);
+      if (ci===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y);
+    }
+    ctx.strokeStyle = 'rgba(120,220,255,0.8)';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+
+    t2++;
+  }
+
+  let raf2;
+  function loop() { draw(); raf2 = requestAnimationFrame(loop); }
+  const obs2 = new IntersectionObserver(([e]) => {
+    if (e.isIntersecting) { init(); loop(); }
+    else cancelAnimationFrame(raf2);
+  },{threshold:0.1});
+  obs2.observe(document.getElementById('s2'));
+  window.addEventListener('resize', () => { if (document.getElementById('s2').classList.contains('active')) init(); });
+})();
+
+
+/* ════════════════════════════════════════════
+   SCENE 3 — Gravity Orbs (elastic collision)
+   Click to add orbs; trails fade; warm palette
+════════════════════════════════════════════ */
+(function() {
+  const canvas = document.getElementById('c3');
+  const ctx    = canvas.getContext('2d');
+  let W, H;
+
+  const orbs = [];
+  const GRAVITY = 0.06;
+
+  const PALETTE = [
+    [22,200,70],[35,220,65],[48,210,68],[15,190,72],[30,230,60]
+  ];
+
+  class Orb {
+    constructor(x,y,r,idx) {
+      this.x  = x; this.y = y;
+      this.vx = (Math.random()-0.5)*3;
+      this.vy = (Math.random()-0.5)*3 - 2;
+      this.r  = r || 18+Math.random()*28;
+      this.m  = this.r*this.r;
+      const c = PALETTE[idx%PALETTE.length];
+      this.hue = c[0]; this.sat = c[1]; this.lit = c[2];
+      this.trail = [];
+    }
+    update() {
+      this.vy += GRAVITY;
+      this.x  += this.vx;
+      this.y  += this.vy;
+      /* floor/ceiling */
+      if (this.y + this.r > H/devicePixelRatio) { this.y = H/devicePixelRatio - this.r; this.vy *= -0.72; this.vx *= 0.88; }
+      if (this.y - this.r < 0)                  { this.y = this.r; this.vy *= -0.72; }
+      if (this.x + this.r > W/devicePixelRatio)  { this.x = W/devicePixelRatio - this.r; this.vx *= -0.82; }
+      if (this.x - this.r < 0)                  { this.x = this.r; this.vx *= -0.82; }
+      this.trail.push({x:this.x,y:this.y});
+      if (this.trail.length > 18) this.trail.shift();
+    }
+    draw() {
+      /* trail */
+      for (let i=1;i<this.trail.length;i++) {
+        const a = (i/this.trail.length)*0.25;
+        ctx.beginPath();
+        ctx.arc(this.trail[i].x, this.trail[i].y, this.r*(i/this.trail.length)*0.5, 0, Math.PI*2);
+        ctx.fillStyle = `hsla(${this.hue},${this.sat}%,${this.lit}%,${a})`;
+        ctx.fill();
+      }
+      /* glow */
+      const g = ctx.createRadialGradient(this.x,this.y,0,this.x,this.y,this.r*2);
+      g.addColorStop(0,`hsla(${this.hue},${this.sat}%,${this.lit}%,0.15)`);
+      g.addColorStop(1,'rgba(0,0,0,0)');
+      ctx.beginPath(); ctx.arc(this.x,this.y,this.r*2,0,Math.PI*2);
+      ctx.fillStyle = g; ctx.fill();
+      /* body */
+      const grd = ctx.createRadialGradient(this.x-this.r*.3,this.y-this.r*.3,0,this.x,this.y,this.r);
+      grd.addColorStop(0,`hsla(${this.hue},${this.sat}%,${this.lit+18}%,0.95)`);
+      grd.addColorStop(1,`hsla(${this.hue},${this.sat}%,${this.lit-12}%,0.85)`);
+      ctx.beginPath(); ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
+      ctx.fillStyle = grd; ctx.fill();
+    }
+  }
+
+  function collide() {
+    for (let i=0;i<orbs.length;i++) {
+      for (let j=i+1;j<orbs.length;j++) {
+        const a=orbs[i], b=orbs[j];
+        const dx=b.x-a.x, dy=b.y-a.y;
+        const dist=Math.sqrt(dx*dx+dy*dy);
+        const minD=a.r+b.r;
+        if (dist<minD && dist>0.1) {
+          const nx=dx/dist, ny=dy/dist;
+          const overlap=(minD-dist)/2;
+          a.x-=nx*overlap; a.y-=ny*overlap;
+          b.x+=nx*overlap; b.y+=ny*overlap;
+          /* elastic collision */
+          const dvx=a.vx-b.vx, dvy=a.vy-b.vy;
+          const dot=dvx*nx+dvy*ny;
+          const I=2*dot/(a.m+b.m);
+          a.vx-=I*b.m*nx; a.vy-=I*b.m*ny;
+          b.vx+=I*a.m*nx; b.vy+=I*a.m*ny;
+        }
+      }
+    }
+  }
+
+  function init() {
+    W = canvas.width  = window.innerWidth  * devicePixelRatio;
+    H = canvas.height = window.innerHeight * devicePixelRatio;
+    orbs.length = 0;
+    const n = Math.min(14, Math.floor(W*H/(devicePixelRatio*devicePixelRatio*28000)+5));
+    for (let i=0;i<n;i++) {
+      const r = 18+Math.random()*28;
+      orbs.push(new Orb(
+        r + Math.random()*(W/devicePixelRatio-2*r),
+        H/devicePixelRatio*0.3 + Math.random()*(H/devicePixelRatio*0.4),
+        r, i
+      ));
+    }
+  }
+
+  function draw() {
+    ctx.fillStyle = 'rgba(8,4,2,0.30)';
+    ctx.fillRect(0,0,W/devicePixelRatio,H/devicePixelRatio);
+    orbs.forEach(o => o.update());
+    collide();
+    orbs.forEach(o => o.draw());
+  }
+
+  canvas.addEventListener('click', e => {
+    const rect = canvas.getBoundingClientRect();
+    orbs.push(new Orb(e.clientX-rect.left, e.clientY-rect.top, 20+Math.random()*18, orbs.length));
+    if (orbs.length > 30) orbs.shift();
+  });
+
+  let raf3;
+  function loop() { draw(); raf3 = requestAnimationFrame(loop); }
+  const obs3 = new IntersectionObserver(([e]) => {
+    if (e.isIntersecting) { init(); loop(); }
+    else cancelAnimationFrame(raf3);
+  },{threshold:0.1});
+  obs3.observe(document.getElementById('s3'));
+  window.addEventListener('resize', () => { if (document.getElementById('s3').classList.contains('active')) init(); });
+})();
+
+
+/* ════════════════════════════════════════════
+   SCENE 4 — Flow Field
+   Perlin-like noise field; cursor creates vortex;
+   rainbow particle trails accumulate on dark bg
+════════════════════════════════════════════ */
+(function() {
+  const canvas = document.getElementById('c4');
+  const ctx    = canvas.getContext('2d');
+  let W, H;
+  let mouse4 = {x:-9999,y:-9999};
+  let t4 = 0;
+
+  /* Simple noise via value-interpolation */
+  const NOISE_TAB = new Float32Array(512);
+  for (let i=0;i<256;i++) NOISE_TAB[i] = NOISE_TAB[i+256] = Math.random()*2-1;
+  function lerp(a,b,t){return a+(b-a)*t}
+  function fade(t){return t*t*t*(t*(t*6-15)+10)}
+  function noise2(x,y) {
+    const X=Math.floor(x)&255, Y=Math.floor(y)&255;
+    const xf=x-Math.floor(x), yf=y-Math.floor(y);
+    const u=fade(xf), v=fade(yf);
+    const a=NOISE_TAB[X+NOISE_TAB[Y]&511];
+    const b=NOISE_TAB[X+1+NOISE_TAB[Y]&511];
+    const c=NOISE_TAB[X+NOISE_TAB[Y+1]&511];
+    const d=NOISE_TAB[X+1+NOISE_TAB[Y+1]&511];
+    return lerp(lerp(a,b,u),lerp(c,d,u),v);
+  }
+
+  const NP = 800;
+  const particles4 = [];
+
+  class FP {
+    constructor() { this.reset(); }
+    reset() {
+      this.x = Math.random() * (W/devicePixelRatio);
+      this.y = Math.random() * (H/devicePixelRatio);
+      this.life = 0;
+      this.maxLife = 200 + Math.random()*200;
+      this.hue = Math.random()*360;
+      this.speed = 1.2 + Math.random()*1.2;
+      this.px = this.x;
+      this.py = this.y;
+    }
+    update() {
+      this.px = this.x;
+      this.py = this.y;
+      const scale = 0.003;
+      const angle = noise2(this.x*scale, this.y*scale + t4*0.004) * Math.PI * 4;
+      let vx = Math.cos(angle)*this.speed;
+      let vy = Math.sin(angle)*this.speed;
+      /* vortex around cursor */
+      const dx = this.x - mouse4.x, dy = this.y - mouse4.y;
+      const d2 = dx*dx+dy*dy;
+      if (d2 < 22500) {
+        const d = Math.sqrt(d2);
+        const f = (150-d)/150 * 2.5;
+        vx += -dy/d*f;
+        vy +=  dx/d*f;
+      }
+      this.x += vx;
+      this.y += vy;
+      this.hue = (this.hue + 0.4) % 360;
+      this.life++;
+      if (this.life > this.maxLife || this.x<-5 || this.x>W/devicePixelRatio+5 || this.y<-5 || this.y>H/devicePixelRatio+5)
+        this.reset();
+    }
+    draw() {
+      const a = Math.sin((this.life/this.maxLife)*Math.PI)*0.6;
+      ctx.strokeStyle = `hsla(${this.hue},85%,62%,${a})`;
+      ctx.lineWidth   = 1.1;
+      ctx.beginPath();
+      ctx.moveTo(this.px,this.py);
+      ctx.lineTo(this.x,this.y);
+      ctx.stroke();
+    }
+  }
+
+  function init() {
+    W = canvas.width  = window.innerWidth  * devicePixelRatio;
+    H = canvas.height = window.innerHeight * devicePixelRatio;
+    ctx.fillStyle = '#060410';
+    ctx.fillRect(0,0,W/devicePixelRatio,H/devicePixelRatio);
+    particles4.length = 0;
+    for (let i=0;i<NP;i++) particles4.push(new FP());
+  }
+
+  function draw() {
+    /* very subtle fade so trails accumulate but clear slowly */
+    ctx.fillStyle = 'rgba(6,4,16,0.04)';
+    ctx.fillRect(0,0,W/devicePixelRatio,H/devicePixelRatio);
+    particles4.forEach(p => { p.update(); p.draw(); });
+    t4++;
+  }
+
+  document.getElementById('s4').addEventListener('mousemove', e => {
+    const r = canvas.getBoundingClientRect();
+    mouse4.x = e.clientX - r.left;
+    mouse4.y = e.clientY - r.top;
+  });
+
+  let raf4;
+  function loop() { draw(); raf4 = requestAnimationFrame(loop); }
+  const obs4 = new IntersectionObserver(([e]) => {
+    if (e.isIntersecting) { init(); loop(); }
+    else cancelAnimationFrame(raf4);
+  },{threshold:0.1});
+  obs4.observe(document.getElementById('s4'));
+  window.addEventListener('resize', () => { if (document.getElementById('s4').classList.contains('active')) init(); });
+})();
+</script>
+</body>
+</html>
