@@ -6,7 +6,7 @@
   <title>VIVE — Painel Executive</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="css/variables.css"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -18,13 +18,23 @@
       background: var(--bg);
       color: var(--text);
       display: flex;
+      position: relative;
+    }
+    body::before {
+      content: '';
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(ellipse 60vw 50vh at 5% 10%,  rgba(8,145,178,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 50vw 45vh at 95% 90%, rgba(124,58,237,0.05) 0%, transparent 70%);
     }
 
     /* ── Sidebar ─────────────────────────────────── */
     .sidebar {
       width: 240px; flex-shrink: 0;
-      background: var(--bg-1);
-      border-right: 1px solid var(--text-15);
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-right: 1px solid rgba(8,145,178,0.10);
       display: flex; flex-direction: column;
       padding: 24px 16px;
       height: 100vh;
@@ -37,7 +47,7 @@
     }
     .sidebar-logo-icon {
       width: 32px; height: 32px;
-      background: var(--mint); border-radius: 50%;
+      background: var(--cyan); border-radius: 50%; box-shadow: 0 4px 12px rgba(8,145,178,0.3);
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
     }
@@ -61,16 +71,16 @@
       text-decoration: none;
     }
     .nav-item svg { width: 18px; height: 18px; flex-shrink: 0; opacity: 0.6; }
-    .nav-item:hover { background: var(--bg-3); color: var(--text); }
+    .nav-item:hover { background: rgba(240,247,255,0.85); color: var(--text); }
     .nav-item:hover svg { opacity: 1; }
-    .nav-item.active { background: var(--mint-dim); color: var(--mint); }
-    .nav-item.active svg { opacity: 1; color: var(--mint); }
+    .nav-item.active { background: var(--cyan-dim); color: var(--cyan); }
+    .nav-item.active svg { opacity: 1; color: var(--cyan); }
 
     .nav-badge {
       margin-left: auto; font-size: 10px; font-weight: 700;
-      padding: 2px 7px; background: var(--mint-dim);
-      border: 1px solid var(--mint-border);
-      border-radius: var(--r-full); color: var(--mint);
+      padding: 2px 7px; background: var(--cyan-dim);
+      border: 1px solid var(--cyan-border);
+      border-radius: var(--r-full); color: var(--cyan);
     }
 
     .sidebar-footer {
@@ -83,16 +93,16 @@
       padding: 8px 8px; border-radius: var(--r-md); cursor: pointer;
       transition: background 0.2s var(--ease);
     }
-    .user-row:hover { background: var(--bg-3); }
+    .user-row:hover { background: rgba(240,247,255,0.85); }
     .user-avatar {
       width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
-      background: linear-gradient(135deg, var(--indigo), var(--mint));
+      background: linear-gradient(135deg, var(--cyan), var(--violet));
       display: flex; align-items: center; justify-content: center;
       font-family: var(--font-head); font-size: 13px; font-weight: 700;
       color: var(--bg);
     }
     .user-name { font-size: 13px; font-weight: 600; color: var(--text); }
-    .user-plan { font-size: 11px; color: var(--mint); }
+    .user-plan { font-size: 11px; color: var(--cyan); }
 
     /* ── Main ────────────────────────────────────── */
     .main {
@@ -104,8 +114,10 @@
     /* Topbar */
     .topbar {
       position: sticky; top: 0; z-index: 10;
-      background: var(--bg-1);
-      border-bottom: 1px solid var(--text-15);
+      background: rgba(255,255,255,0.90);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(8,145,178,0.10);
       padding: 0 28px;
       height: 60px;
       display: flex; align-items: center; justify-content: space-between;
@@ -114,34 +126,34 @@
     .topbar-greeting {
       font-family: var(--font-head); font-size: 15px; font-weight: 600;
     }
-    .topbar-greeting span { color: var(--mint); }
+    .topbar-greeting span { color: var(--cyan); }
 
     .topbar-right { display: flex; align-items: center; gap: 12px; }
 
     .topbar-search {
       display: flex; align-items: center; gap: 8px;
       padding: 8px 14px;
-      background: var(--bg-3); border: 1px solid var(--text-15);
+      background: rgba(240,247,255,0.85); border: 1px solid var(--text-15);
       border-radius: var(--r-full);
       font-size: 13px; color: var(--text-50);
       cursor: pointer; transition: border-color 0.2s var(--ease);
     }
     .topbar-search svg { width: 14px; height: 14px; }
-    .topbar-search:hover { border-color: var(--mint-border); }
+    .topbar-search:hover { border-color: var(--cyan-border); }
 
     .topbar-btn {
       width: 36px; height: 36px; border-radius: 50%;
-      background: var(--bg-3); border: 1px solid var(--text-15);
+      background: rgba(240,247,255,0.85); border: 1px solid var(--text-15);
       display: flex; align-items: center; justify-content: center;
       cursor: pointer; transition: all 0.2s var(--ease); position: relative;
     }
     .topbar-btn svg { width: 16px; height: 16px; color: var(--text-50); }
-    .topbar-btn:hover { border-color: var(--mint-border); background: var(--mint-dim); }
-    .topbar-btn:hover svg { color: var(--mint); }
+    .topbar-btn:hover { border-color: var(--cyan-border); background: var(--cyan-dim); }
+    .topbar-btn:hover svg { color: var(--cyan); }
     .notif-dot {
       position: absolute; top: 6px; right: 6px;
       width: 7px; height: 7px; border-radius: 50%;
-      background: var(--mint); border: 2px solid var(--bg-1);
+      background: var(--cyan); border: 2px solid var(--bg-1);
     }
 
     /* Content area */
@@ -160,7 +172,7 @@
       font-size: 13px; font-weight: 500; cursor: pointer;
       color: var(--text-50); transition: all 0.2s var(--ease);
     }
-    .tab.active { background: var(--bg-3); color: var(--text); }
+    .tab.active { background: rgba(240,247,255,0.85); color: var(--text); }
 
     /* Dashboard tab */
     .dashboard-panel { display: none; }
@@ -172,7 +184,7 @@
       margin-bottom: 24px;
     }
     .stat-card {
-      background: var(--bg-2); border: 1px solid var(--text-15);
+      background: rgba(255,255,255,0.82); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.75); box-shadow: 0 4px 24px rgba(8,145,178,0.06);
       border-radius: var(--r-lg); padding: 20px 20px 16px;
     }
     .stat-label {
@@ -181,7 +193,7 @@
     }
     .stat-val {
       font-family: var(--font-head); font-size: 28px; font-weight: 700;
-      background: linear-gradient(135deg, var(--mint), var(--indigo));
+      background: linear-gradient(135deg, var(--cyan), var(--violet));
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       background-clip: text; line-height: 1;
     }
@@ -199,7 +211,7 @@
 
     /* Panel */
     .panel {
-      background: var(--bg-2); border: 1px solid var(--text-15);
+      background: rgba(255,255,255,0.82); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.75); box-shadow: 0 4px 24px rgba(8,145,178,0.06);
       border-radius: var(--r-xl); padding: 24px;
     }
     .panel-header {
@@ -210,7 +222,7 @@
       font-family: var(--font-head); font-size: 14px; font-weight: 600;
     }
     .panel-action {
-      font-size: 12px; color: var(--mint); cursor: pointer; text-decoration: none;
+      font-size: 12px; color: var(--cyan); cursor: pointer; text-decoration: none;
       transition: opacity 0.2s var(--ease);
     }
     .panel-action:hover { opacity: 0.7; }
@@ -224,7 +236,7 @@
     .usage-label { font-size: 13px; color: var(--text-70); }
     .usage-pct {
       font-family: var(--font-head); font-size: 12px; font-weight: 700;
-      color: var(--mint);
+      color: var(--cyan);
     }
     .usage-pct.warn { color: var(--warn); }
     .usage-pct.empty { color: var(--text-30); }
@@ -234,7 +246,7 @@
     }
     .bar-fill {
       height: 100%; border-radius: 3px;
-      background: linear-gradient(90deg, var(--indigo), var(--mint));
+      background: linear-gradient(90deg, var(--cyan-light), var(--cyan));
       transition: width 1s var(--ease);
     }
     .bar-fill.warn { background: linear-gradient(90deg, var(--warn), #F5C523); }
@@ -243,17 +255,17 @@
     .appt-list { display: flex; flex-direction: column; gap: 12px; }
     .appt-item {
       display: flex; align-items: center; gap: 14px;
-      padding: 14px; background: var(--bg-3);
+      padding: 14px; background: rgba(240,247,255,0.85);
       border: 1px solid var(--text-15); border-radius: var(--r-lg);
       transition: border-color 0.2s var(--ease);
     }
-    .appt-item:hover { border-color: var(--mint-border); }
+    .appt-item:hover { border-color: var(--cyan-border); }
     .appt-date {
       text-align: center; min-width: 44px;
     }
     .appt-date-day {
       font-family: var(--font-head); font-size: 22px; font-weight: 700;
-      color: var(--mint); line-height: 1;
+      color: var(--cyan); line-height: 1;
     }
     .appt-date-mon { font-size: 10px; text-transform: uppercase; color: var(--text-50); letter-spacing: 1px; }
     .appt-info { flex: 1; }
@@ -267,7 +279,7 @@
       font-size: 10px; font-weight: 600;
       padding: 3px 8px; border-radius: var(--r-full);
     }
-    .appt-status.confirmed { background: rgba(16,245,160,0.12); color: var(--mint); }
+    .appt-status.confirmed { background: rgba(16,245,160,0.12); color: var(--cyan); }
     .appt-status.pending   { background: rgba(245,166,35,0.12);  color: var(--warn); }
 
     /* Quick actions */
@@ -275,12 +287,12 @@
     .quick-btn {
       display: flex; flex-direction: column; align-items: center; gap: 8px;
       padding: 16px 8px;
-      background: var(--bg-3); border: 1px solid var(--text-15);
+      background: rgba(240,247,255,0.85); border: 1px solid var(--text-15);
       border-radius: var(--r-lg); cursor: pointer;
       transition: all 0.2s var(--ease);
     }
-    .quick-btn:hover { border-color: var(--mint-border); background: var(--mint-dim); }
-    .quick-btn svg { width: 22px; height: 22px; color: var(--mint); }
+    .quick-btn:hover { border-color: var(--cyan-border); background: var(--cyan-dim); }
+    .quick-btn svg { width: 22px; height: 22px; color: var(--cyan); }
     .quick-btn span { font-size: 11px; color: var(--text-50); text-align: center; }
 
     /* Chat panel */
@@ -301,7 +313,7 @@
     .chat-msg.mine { flex-direction: row-reverse; }
     .chat-avatar {
       width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
-      background: linear-gradient(135deg, var(--indigo), var(--mint));
+      background: linear-gradient(135deg, var(--cyan), var(--violet));
       display: flex; align-items: center; justify-content: center;
       font-size: 11px; font-weight: 700; color: var(--bg);
     }
@@ -310,12 +322,12 @@
       border-radius: 16px; font-size: 13px; line-height: 1.5;
     }
     .chat-msg:not(.mine) .chat-bubble {
-      background: var(--bg-3); color: var(--text-70);
+      background: rgba(240,247,255,0.85); color: var(--text-70);
       border-bottom-left-radius: 4px;
     }
     .chat-msg.mine .chat-bubble {
-      background: var(--mint-dim); color: var(--text);
-      border: 1px solid var(--mint-border);
+      background: var(--cyan-dim); color: var(--text);
+      border: 1px solid var(--cyan-border);
       border-bottom-right-radius: 4px;
     }
     .chat-input-row {
@@ -323,16 +335,16 @@
     }
     .chat-input {
       flex: 1; padding: 10px 14px;
-      background: var(--bg-3); border: 1px solid var(--text-15);
+      background: rgba(240,247,255,0.85); border: 1px solid var(--text-15);
       border-radius: var(--r-full); font-family: var(--font-body);
       font-size: 13px; color: var(--text); outline: none;
       transition: border-color 0.2s var(--ease);
     }
     .chat-input::placeholder { color: var(--text-30); }
-    .chat-input:focus { border-color: var(--mint-border); }
+    .chat-input:focus { border-color: var(--cyan-border); }
     .chat-send {
       width: 38px; height: 38px; border-radius: 50%;
-      background: var(--mint); border: none; cursor: pointer;
+      background: var(--cyan); border: none; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
       transition: opacity 0.2s var(--ease);
     }
@@ -365,7 +377,7 @@
     .dc-top { display: flex; justify-content: space-between; align-items: flex-start; }
     .dc-logo-row { display: flex; align-items: center; gap: 8px; }
     .dc-logo-icon {
-      width: 28px; height: 28px; background: var(--mint); border-radius: 50%;
+      width: 28px; height: 28px; background: var(--cyan); border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
     }
     .dc-logo-icon svg { width: 15px; height: 15px; }
@@ -375,9 +387,9 @@
     }
     .dc-plan-badge {
       font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
-      text-transform: uppercase; color: var(--mint);
-      padding: 3px 10px; border: 1px solid var(--mint-border);
-      border-radius: var(--r-full); background: var(--mint-dim);
+      text-transform: uppercase; color: var(--cyan);
+      padding: 3px 10px; border: 1px solid var(--cyan-border);
+      border-radius: var(--r-full); background: var(--cyan-dim);
     }
     .dc-mid {}
     .dc-name {
@@ -408,7 +420,7 @@
       transition: all 0.2s var(--ease);
     }
     .card-action-btn svg { width: 16px; height: 16px; }
-    .card-action-btn:hover { border-color: var(--mint-border); color: var(--mint); }
+    .card-action-btn:hover { border-color: var(--cyan-border); color: var(--cyan); }
 
     /* Bottom nav (mobile) */
     .bottom-nav {
@@ -432,7 +444,7 @@
       .main { height: auto; overflow: visible; }
       .bottom-nav {
         display: flex; position: fixed; bottom: 0; left: 0; right: 0;
-        background: var(--bg-1); border-top: 1px solid var(--text-15);
+        background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid rgba(8,145,178,0.10);
         padding: 8px 0 max(8px, env(safe-area-inset-bottom)); z-index: 50;
         justify-content: space-around;
       }
@@ -443,7 +455,7 @@
         transition: color 0.2s var(--ease);
       }
       .bottom-nav-item svg { width: 22px; height: 22px; }
-      .bottom-nav-item.active { color: var(--mint); }
+      .bottom-nav-item.active { color: var(--cyan); }
       .content { padding: 16px 16px 80px; }
       .topbar { padding: 0 16px; }
       .stats-row { grid-template-columns: 1fr 1fr; }
@@ -459,7 +471,7 @@
       <div class="sidebar-logo-icon">
         <svg viewBox="0 0 30 30" fill="none">
           <polyline points="4,15 8,15 10.5,8 13,22 16,10 18.5,18 21,15 26,15"
-            stroke="#07080E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
       <span class="sidebar-logo-text">VIVE</span>
@@ -733,7 +745,7 @@
             <div class="panel">
               <div class="panel-header">
                 <span class="panel-title">Concierge</span>
-                <span style="width:8px;height:8px;border-radius:50%;background:var(--mint);display:inline-block;box-shadow:0 0 8px var(--mint)"></span>
+                <span style="width:8px;height:8px;border-radius:50%;background:var(--cyan);display:inline-block;box-shadow:0 0 8px var(--cyan)"></span>
               </div>
               <div class="chat-panel">
                 <div class="chat-messages">
@@ -774,7 +786,7 @@
                 <div class="dc-logo-icon">
                   <svg viewBox="0 0 30 30" fill="none">
                     <polyline points="4,15 8,15 10.5,8 13,22 16,10 18.5,18 21,15 26,15"
-                      stroke="#07080E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
                 </div>
                 <span class="dc-logo-text">VIVE</span>
@@ -793,7 +805,7 @@
                 </div>
                 <div class="dc-info">
                   <div class="dc-info-label">Cobertura</div>
-                  <div class="dc-info-val" style="color:var(--mint)">Nacional</div>
+                  <div class="dc-info-val" style="color:var(--cyan)">Nacional</div>
                 </div>
               </div>
               <div class="dc-qr" title="QR Code">
@@ -866,7 +878,7 @@
               <div class="user-avatar">DM</div>
               <div>
                 <div style="font-family:var(--font-head);font-size:14px;font-weight:600">Dra. Marina Souza</div>
-                <div style="font-size:11px;color:var(--mint)">● Online agora</div>
+                <div style="font-size:11px;color:var(--cyan)">● Online agora</div>
               </div>
             </div>
           </div>
@@ -990,12 +1002,14 @@
 
   <style>
     .btn-primary {
-      background: var(--mint); border: none; border-radius: var(--r-lg);
-      font-family: var(--font-head); font-size: 15px; font-weight: 600;
-      color: var(--bg); cursor: pointer; letter-spacing: 0.5px;
-      transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
+      background: linear-gradient(135deg, var(--cyan), #0EA5E9);
+      border: none; border-radius: var(--r-lg);
+      font-family: var(--font-body); font-size: 15px; font-weight: 600;
+      color: #fff; cursor: pointer; letter-spacing: 0.3px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(8,145,178,0.28);
     }
-    .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(16,245,160,0.3); }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 28px rgba(8,145,178,0.40); }
   </style>
 </body>
 </html>

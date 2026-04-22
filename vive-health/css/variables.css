@@ -1,38 +1,50 @@
 /* ================================================
    VIVE — Executive Health Platform
-   Design Tokens v1.0
+   Design Tokens v2.0 — Light Glassmorphism
    ================================================ */
 :root {
   /* ── Core Brand ──────────────────────────────── */
-  --bg:           #07080E;
-  --bg-1:         #0D1018;
-  --bg-2:         #131923;
-  --bg-3:         #192030;
+  --bg:           #FAFCFF;
+  --bg-1:         #FFFFFF;
+  --bg-2:         #F0F7FF;
+  --bg-3:         #E4F1FD;
 
-  --mint:         #10F5A0;
-  --mint-dim:     rgba(16, 245, 160, 0.12);
-  --mint-glow:    rgba(16, 245, 160, 0.25);
-  --mint-border:  rgba(16, 245, 160, 0.18);
+  --cyan:         #0891B2;
+  --cyan-mid:     #0EA5E9;
+  --cyan-light:   #22D3EE;
+  --cyan-dim:     rgba(8,145,178,0.08);
+  --cyan-glow:    rgba(8,145,178,0.18);
+  --cyan-border:  rgba(8,145,178,0.18);
 
-  --indigo:       #5B6BFF;
-  --indigo-dim:   rgba(91, 107, 255, 0.12);
-  --indigo-glow:  rgba(91, 107, 255, 0.3);
+  --emerald:      #059669;
+  --emerald-dim:  rgba(5,150,105,0.10);
+  --emerald-border: rgba(5,150,105,0.22);
 
-  --text:         #F2F5FF;
-  --text-70:      rgba(242,245,255,0.70);
-  --text-50:      rgba(242,245,255,0.50);
-  --text-30:      rgba(242,245,255,0.30);
-  --text-15:      rgba(242,245,255,0.15);
+  --violet:       #7C3AED;
+  --violet-dim:   rgba(124,58,237,0.07);
+
+  /* ── Text ───────────────────────────────────── */
+  --text:         #0F172A;
+  --text-70:      rgba(15,23,42,0.70);
+  --text-50:      rgba(15,23,42,0.50);
+  --text-30:      rgba(15,23,42,0.30);
+  --text-15:      rgba(15,23,42,0.08);
+
+  /* ── Glass ──────────────────────────────────── */
+  --glass:        rgba(255,255,255,0.82);
+  --glass-strong: rgba(255,255,255,0.92);
+  --glass-border: rgba(255,255,255,0.75);
+  --glass-blur:   24px;
 
   /* ── Semantic ───────────────────────────────── */
-  --ok:      #10F5A0;
-  --warn:    #F5A623;
-  --err:     #FF4D6A;
-  --info:    #5B6BFF;
+  --ok:    #059669;
+  --warn:  #D97706;
+  --err:   #DC2626;
+  --info:  #0891B2;
 
   /* ── Typography ─────────────────────────────── */
-  --font-head: 'Space Grotesk', system-ui, sans-serif;
-  --font-body: 'DM Sans',       system-ui, sans-serif;
+  --font-head: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
 
   /* ── Radius ─────────────────────────────────── */
   --r-sm:   6px;
@@ -43,9 +55,11 @@
   --r-full: 9999px;
 
   /* ── Shadow ─────────────────────────────────── */
-  --shadow-card:  0 4px 28px rgba(0,0,0,0.45);
-  --shadow-glow:  0 0 40px rgba(16,245,160,0.18);
-  --shadow-indig: 0 8px 32px rgba(91,107,255,0.35);
+  --shadow-card:  0 4px 32px rgba(8,145,178,0.08), 0 1px 4px rgba(0,0,0,0.04);
+  --shadow-hover: 0 12px 48px rgba(8,145,178,0.14), 0 2px 8px rgba(0,0,0,0.06);
+  --shadow-nav:   0 2px 20px rgba(8,145,178,0.10), 0 1px 3px rgba(0,0,0,0.04);
+  --shadow-btn:   0 4px 20px rgba(8,145,178,0.28);
+  --shadow-btn-h: 0 8px 32px rgba(8,145,178,0.40);
 
   /* ── Transition ─────────────────────────────── */
   --ease:        cubic-bezier(0.4,0,0.2,1);
@@ -64,7 +78,6 @@
   --z-modal:   50;
 }
 
-/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *,*::before,*::after {
     animation-duration:       0.01ms !important;
