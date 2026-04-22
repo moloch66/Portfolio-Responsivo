@@ -46,7 +46,7 @@
     const revealObserver = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
+          entry.target.classList.add('in');
           revealObserver.unobserve(entry.target);
         }
       });
