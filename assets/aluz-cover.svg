@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <!-- Background -->
+    <radialGradient id="aluzBg" cx="30%" cy="40%" r="75%">
+      <stop offset="0%" stop-color="#241E17"/>
+      <stop offset="100%" stop-color="#120E0B"/>
+    </radialGradient>
+
+    <!-- Gold glow -->
+    <filter id="goldGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="24" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- Soft bloom -->
+    <filter id="goldBloom" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="45" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- Card shadow -->
+    <filter id="cardShadow" x="-15%" y="-10%" width="140%" height="135%">
+      <feDropShadow dx="0" dy="20" stdDeviation="32" flood-color="#000" flood-opacity="0.75"/>
+    </filter>
+
+    <!-- Gold gradient -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE380"/>
+      <stop offset="50%" stop-color="#E5C158"/>
+      <stop offset="100%" stop-color="#B89228"/>
+    </linearGradient>
+
+    <!-- Card glass gradient -->
+    <linearGradient id="glassGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2C2419"/>
+      <stop offset="100%" stop-color="#18130D"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="500" fill="url(#aluzBg)"/>
+
+  <!-- Ambient orbs -->
+  <ellipse cx="600" cy="220" rx="280" ry="220" fill="#E5C158" fill-opacity="0.08" filter="url(#goldBloom)"/>
+  <ellipse cx="200" cy="380" rx="200" ry="160" fill="#B89228" fill-opacity="0.06" filter="url(#goldBloom)"/>
+
+  <!-- Subtle grid lines -->
+  <g stroke="#E5C158" stroke-opacity="0.04" stroke-width="1">
+    <line x1="0" y1="100" x2="800" y2="100"/>
+    <line x1="0" y1="200" x2="800" y2="200"/>
+    <line x1="0" y1="300" x2="800" y2="300"/>
+    <line x1="0" y1="400" x2="800" y2="400"/>
+    <line x1="160" y1="0" x2="160" y2="500"/>
+    <line x1="320" y1="0" x2="320" y2="500"/>
+    <line x1="480" y1="0" x2="480" y2="500"/>
+    <line x1="640" y1="0" x2="640" y2="500"/>
+  </g>
+
+  <!-- ── Left Copy ── -->
+  <text x="64" y="98" font-family="system-ui,sans-serif"
+    font-size="8" font-weight="700" letter-spacing="4"
+    fill="#E5C158" fill-opacity="0.9">IDENTIDADE VISUAL &amp; UX/UI</text>
+
+  <text x="62" y="134" font-family="'Cormorant Garamond', Georgia, serif"
+    font-size="42" font-weight="700" fill="#FFFDF8" fill-opacity="0.95">ALUZ Cosméticos</text>
+  <text x="62" y="174" font-family="'Cormorant Garamond', Georgia, serif"
+    font-size="40" font-weight="300" font-style="italic" fill="url(#goldGrad)">Beleza Inspirada pelo Sol</text>
+
+  <!-- Divider -->
+  <line x1="62" y1="200" x2="260" y2="200" stroke="#E5C158" stroke-opacity="0.3" stroke-width="1"/>
+
+  <text x="62" y="226" font-family="system-ui,sans-serif"
+    font-size="11" fill="#FAF6ED" fill-opacity="0.6" letter-spacing="0.3">Releitura Digital · Efeitos de Rolagem · React</text>
+
+  <!-- Tags -->
+  <rect x="62" y="248" width="110" height="24" rx="12"
+    fill="#E5C158" fill-opacity="0.12" stroke="#E5C158" stroke-opacity="0.4" stroke-width="0.8"/>
+  <text x="117" y="264" text-anchor="middle"
+    font-family="system-ui,sans-serif" font-size="9" font-weight="600" fill="#E5C158">Identidade Visual</text>
+
+  <rect x="180" y="248" width="90" height="24" rx="12"
+    fill="#E5C158" fill-opacity="0.08" stroke="#E5C158" stroke-opacity="0.25" stroke-width="0.8"/>
+  <text x="225" y="264" text-anchor="middle"
+    font-family="system-ui,sans-serif" font-size="9" font-weight="500" fill="#FFFDF8" fill-opacity="0.7">UX / UI React</text>
+
+  <rect x="62" y="280" width="70" height="24" rx="12"
+    fill="#FFFDF8" fill-opacity="0.05" stroke="#FFFDF8" stroke-opacity="0.15" stroke-width="0.8"/>
+  <text x="97" y="296" text-anchor="middle"
+    font-family="system-ui,sans-serif" font-size="9" fill="#FFFDF8" fill-opacity="0.6">Efeitos 3D</text>
+
+  <rect x="140" y="280" width="46" height="24" rx="12"
+    fill="#FFFDF8" fill-opacity="0.05" stroke="#FFFDF8" stroke-opacity="0.15" stroke-width="0.8"/>
+  <text x="163" y="296" text-anchor="middle"
+    font-family="system-ui,sans-serif" font-size="9" fill="#FFFDF8" fill-opacity="0.6">2026</text>
+
+  <!-- ── Interactive UI Glass Showcase Card ── -->
+  <g transform="translate(440, 50)" filter="url(#cardShadow)">
+    <!-- Main Card Body -->
+    <rect x="0" y="0" width="310" height="400" rx="24"
+      fill="url(#glassGrad)"
+      stroke="#E5C158" stroke-width="1" stroke-opacity="0.35"/>
+
+    <!-- Sun Halo Effect inside Card -->
+    <circle cx="155" cy="170" r="95" fill="#E5C158" fill-opacity="0.12" filter="url(#goldGlow)"/>
+
+    <!-- Card Header / Brand -->
+    <circle cx="155" cy="55" r="18" fill="#E5C158" fill-opacity="0.15" stroke="#E5C158" stroke-width="1"/>
+    <!-- Sun Ray Icon -->
+    <circle cx="155" cy="55" r="7" fill="url(#goldGrad)"/>
+    <text x="155" y="92" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, serif" font-size="22" font-weight="700" letter-spacing="4" fill="#FFFDF8">ALUZ</text>
+    <text x="155" y="106" text-anchor="middle" font-family="system-ui" font-size="7" font-weight="600" letter-spacing="3" fill="#E5C158">COSMÉTICOS DE SOL</text>
+
+    <!-- Product Dropper Bottle Silhouette -->
+    <g transform="translate(155, 200)">
+      <!-- Dropper cap -->
+      <rect x="-10" y="-60" width="20" height="16" rx="4" fill="#E5C158"/>
+      <rect x="-6" y="-72" width="12" height="14" rx="6" fill="#F3E5AB"/>
+      <!-- Gold Rim -->
+      <rect x="-14" y="-44" width="28" height="8" rx="2" fill="url(#goldGrad)"/>
+      <!-- Glass bottle body -->
+      <rect x="-26" y="-36" width="52" height="76" rx="14" fill="#FFFDF8" fill-opacity="0.25" stroke="url(#goldGrad)" stroke-width="1.5"/>
+      <!-- Liquid inside -->
+      <rect x="-22" y="-12" width="44" height="48" rx="8" fill="url(#goldGrad)" fill-opacity="0.6"/>
+      <!-- Label -->
+      <rect x="-18" y="-18" width="36" height="32" rx="4" fill="#FFFDF8" fill-opacity="0.9"/>
+      <text x="0" y="2" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-size="10" font-weight="700" fill="#2C2216">ALUZ</text>
+    </g>
+
+    <!-- Product Title & Price Badge -->
+    <text x="155" y="280" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-size="16" font-weight="700" fill="#FFFDF8">Sérum Facial Restaurador</text>
+    <text x="155" y="296" text-anchor="middle" font-family="system-ui" font-size="9" fill="#E5C158">Rosa Mosqueta &amp; Açaí</text>
+
+    <!-- Price CTA Button -->
+    <rect x="75" y="320" width="160" height="36" rx="18" fill="url(#goldGrad)"/>
+    <text x="155" y="343" text-anchor="middle" font-family="system-ui" font-size="11" font-weight="700" fill="#1C140A" letter-spacing="1">R$ 134,00 • COMPRAR</text>
+  </g>
+
+</svg>
